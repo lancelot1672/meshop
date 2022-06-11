@@ -1,0 +1,158 @@
+
+.auth-section{
+    height: 40px;
+    border-bottom: 1px solid rgb(161, 161, 161);
+
+    display: flex;
+
+    /* 주축 방향 정렬*/
+    justify-content: end;
+
+    /* 교차축 방향 정렬 */
+    align-items: center;
+}
+.nav-auth {
+    display: flex;
+    flex-direction: row;
+
+
+    margin-right: 50px;
+}
+/* 로그인 회원가입 */
+.nav-auth>li {
+    display: inline-block;
+
+}
+.nav-auth>li::after{
+    padding-left: 5px;
+    padding-right: 5px;
+    content: "";
+}
+.nav-auth>li:last-child::after {
+    content: "";
+}
+.auth-menu {
+    color: #112B3C;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 13px;
+    color: #222222CC;
+    transition: all 0.4s;
+}
+.auth-menu:hover{
+    color: gray;
+    text-decoration: underline;
+}
+
+.container { 
+    display: flex;
+    height: 100px;
+
+}
+
+.logo {
+    margin-left: 50px;
+    width: 20%;
+
+    display: flex;
+    /* 주축 방향 정렬*/
+    justify-content: left;
+
+    /* 교차 축 방향 정렬 */
+    align-items: center;
+}
+.logo img {
+    height: 80px;
+}
+/* header 2. 검색 구역*/
+.search-section {
+    width: 50%;
+
+    display: flex;
+    /* 주축 방향 정렬*/
+    justify-content: right;
+
+    /* 교차 축 방향 정렬 */
+    align-items: center;
+}
+/* 검색 구역 - 검색창*/
+.search-bar {
+    width: 670px;
+    height: 40px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+/* 검색 창 입력 */
+.search-bar>input{
+    font-size: 16px;
+    width: 550px;
+    padding: 11px;
+    border: 0px;
+    outline: none;
+    float: left;
+    margin-left: 10px;
+
+}
+/* 검색 창 - 버튼 */
+.search-bar>button{
+    font-size: 13px;
+    width: 50px;
+    padding: 12px;
+    margin-right: 10px;
+    border: 0px;
+    outline: none;
+    float: right;
+
+    background-color: white;
+}
+
+.search-bar>button>i {
+    font-size: 15px;
+}
+/* 3. 메뉴 */
+.menu {
+    width: 30%;
+
+    margin-right: 60px;
+
+    display: flex;
+
+    /* 주축 방향 정렬*/
+    justify-content: right;
+
+    /* 교차 축 방향 정렬 */
+    align-items: center;
+}
+
+.nav-menu>li {
+    display: inline-block;
+
+}
+.nav-menu>li::after{
+    content: "|";
+    padding: 1px;
+    font-size: 15px;
+    color:gray;
+    float : right;
+    display: block;
+}
+.nav-menu>li:last-child::after {
+    content: "";
+}
+.nav-menu>li>a:hover{
+    color: gray;
+}
+
+.nav-menu>li>a {
+    color: #112B3C;
+    text-decoration: none;
+
+
+    font-weight: 500;
+    font-size: 16px;
+
+    transition: all 0.4s;
+
+    /*크기*/
+    padding:  0 10px;
+}
