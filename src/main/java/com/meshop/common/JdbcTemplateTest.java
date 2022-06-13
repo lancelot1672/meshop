@@ -11,7 +11,7 @@ public class JdbcTemplateTest {
 	
 	public void test() {
 		Connection conn = getConnection();
-		String sql = "select * from board";
+		String sql = "select * from member";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
@@ -20,7 +20,7 @@ public class JdbcTemplateTest {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				String title = rs.getString("title");
+				String title = rs.getString("member_id");
 				System.out.println(title);
 			}
 		}catch(SQLException e) {
