@@ -16,7 +16,8 @@ import com.meshop.product.entity.ProductExt;
 
 public class ProductDAOImpl implements ProductDAO{
     private Properties properties = new Properties();
-	public ProductDAOImpl(){  
+	public ProductDAOImpl(){
+		//생성됨과 동시에 쿼리 설정 파일 가져오기
 		String filename = ProductDAOImpl.class.getResource("/sql/product-query.properties").getPath();
         try{
             properties.load(new FileReader(filename));
@@ -33,11 +34,15 @@ public class ProductDAOImpl implements ProductDAO{
 		Connection conn = getConnection();
         PreparedStatement pstmt = null;
         ResultSet rset = null;
+        
+        // SQL
         String sql = properties.getProperty("findThumbnail");
         System.out.println(sql);
         
         List<ProductExt> list = new ArrayList<>();
         
+        
+        //DB 로직
         try {
         	pstmt = conn.prepareStatement(sql);
         	rset = pstmt.executeQuery();
