@@ -11,8 +11,6 @@
 <title>관리자 페이지</title>
   <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/main.css" />
   <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/admin.css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
