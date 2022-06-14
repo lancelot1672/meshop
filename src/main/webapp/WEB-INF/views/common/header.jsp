@@ -7,6 +7,7 @@
   <title>#MESHOP</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" />
   <script src="https://kit.fontawesome.com/69223d03fa.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="header">
