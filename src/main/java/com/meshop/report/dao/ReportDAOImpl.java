@@ -1,5 +1,8 @@
-package com.meshop.product.dao;
-import static com.meshop.common.JdbcTemplate.*;
+package com.meshop.report.dao;
+
+import static com.meshop.common.JdbcTemplate.close;
+import static com.meshop.common.JdbcTemplate.getConnection;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -10,15 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.meshop.product.entity.Attachment;
 import com.meshop.product.entity.Product;
-import com.meshop.product.entity.ProductExt;
+import com.meshop.report.entity.Report;
 
-public class ProductDAOImpl implements ProductDAO{
+public class ReportDAOImpl implements ReportDAO{
     private Properties properties = new Properties();
-	public ProductDAOImpl(){
+	public ReportDAOImpl() {
 		//생성됨과 동시에 쿼리 설정 파일 가져오기
-		String filename = ProductDAOImpl.class.getResource("/sql/product-query.properties").getPath();
+		String filename = ReportDAOImpl.class.getResource("/sql/report-query.properties").getPath();
         try{
             properties.load(new FileReader(filename));
 
@@ -28,19 +30,24 @@ public class ProductDAOImpl implements ProductDAO{
         }
         System.out.println("filename = " + filename);
 	}
+
 	@Override
-	public List<ProductExt> findAll() {
+	public List<Report> findByprodutId(String productId) {
+		return null;
+	}
+
+	@Override
+	public List<Report> findAll() {
         //준비
 		Connection conn = getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         
         // SQL
-        String sql = properties.getProperty("findThumbnail");
+        String sql = properties.getProperty("findAll");
         System.out.println(sql);
         
-        List<ProductExt> list = new ArrayList<>();
-        
+        List<Report> list = new ArrayList<>();
         
         //DB 로직
         try {
@@ -48,23 +55,16 @@ public class ProductDAOImpl implements ProductDAO{
         	rs = pstmt.executeQuery();
         	
         	while(rs.next()) {
-        		ProductExt p = new ProductExt();
+        		Report report = new Report();
+        		Product p = new Product();
         		
-        		//상품 미리보기 정보
+        		p.setProductId(rs.getInt("product_id"));
         		p.setTitle(rs.getString("title"));
-        		p.setPrice(rs.getInt("price"));
-        		p.setBrand(rs.getString("brand"));
         		
-        		//대표 이미지 파일
-        		Attachment a = new Attachment();
-        		a.setOriginalFilename(rs.getString("original_name"));
-        		a.setRenamedFilename(rs.getString("renamed_name"));
+        		report.setCount(rs.getInt("count"));
+        		report.setProduct(p);
         		
-        		//첨부파일 추가
-        		p.setAttachment(a);
-        		
-        		//썸네일 리스트에 추가
-        		list.add(p);
+        		list.add(report);
         	}
         }catch(SQLException e) {
         	String message = e.getMessage();
@@ -79,18 +79,5 @@ public class ProductDAOImpl implements ProductDAO{
         System.out.println(list.toString());
 		return list;
 	}
-
-	@Override
-	public int insertProduct(Product product) {
-		return 0;
-	}
-
-	@Override
-	public int getTotalProducts() {
-		return 0;
-	}
-//	public static void main(String[] args) {
-//		ProductDAOImpl p = new ProductDAOImpl();
-//		p.findAll();
-//	}
+	
 }
