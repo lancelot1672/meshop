@@ -7,14 +7,6 @@
 	List<ProductExt> list = (List<ProductExt>) request.getAttribute("productList");
 	Member loginMember = (Member) session.getAttribute("loginMember");
 %>
-<!DOCTYPE html>
-<head>
-  <meta charset="UTF-8">
-  <title>#MESHOP</title>
-  <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/main.css" />
-  <script src="https://kit.fontawesome.com/69223d03fa.js" crossorigin="anonymous"></script>
-</head>
-<body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<!-- 바디 -->
     <div class="banner">
@@ -86,10 +78,14 @@
     <div class="btn-section">
         <button class="btn-more">더보기</button>
     </div>
+	<script>
+        window.addEventListener('load',()=>{
+           //헤더 높이 구하기
+           const header = document.querySelector('.header');
 
-    <footer>
-
-    </footer>
+           //메인 컨텐츠의 padding top 높이 조절하기
+           const frame = document.querySelector('.frame');
+           frame.style.paddingTop = `\${header.offsetHeight}px`;
+        });
+	</script>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-</body>
-</html>
