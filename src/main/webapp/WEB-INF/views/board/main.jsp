@@ -34,7 +34,7 @@
             <% if(loginMember != null){ %>
             	<button class="wish-btn" onclick=""><i class="fa-solid fa-heart"></i></button>
             <% }else{ %>
-            	<button class="wish-btn" onclick=""><i class="fa-regular fa-heart"></i></button>
+            	<button class="wish-btn" onclick="location.href='<%=request.getContextPath() %>/member/login';"><i class="fa-regular fa-heart"></i></button>
             <% } %>
                 <a class="item-inner" href="#">
                     <div class="item">
