@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.meshop.chat.entity.Message;
 import com.meshop.chat.service.ChatServiceImpl;
-@WebServlet(name = "chatListServlet", urlPatterns = "/chat/content")
-public class ChatListServlet extends HttpServlet{
+@WebServlet(name = "chatInsertServlet", urlPatterns = "/chat/add")
+public class ChatInsertServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	ChatServiceImpl chatService = new ChatServiceImpl();
 	
@@ -25,19 +25,20 @@ public class ChatListServlet extends HttpServlet{
 		String senderId = request.getParameter("senderId");
 		String receiverId = request.getParameter("receiverId");
 		int productId = Integer.parseInt(request.getParameter("productId"));
+		String chat = request.getParameter("chat");
 		System.out.println(senderId + receiverId + productId);
-		Message m = new Message();
 		
+		Message m = new Message();
 		m.setSenderId(senderId);
 		m.setReceiverId(receiverId);
 		m.setProductId(productId);
+		m.setMessage(chat);
 		
 		// 2. 업무로직
-		List<Message> messageList = chatService.findChat(m);
+		int result = chatService.insertChat(m);
 		
 		// 3. 응답처리 json
 		response.setContentType("application/json; charset=utf-8");
-		response.getWriter().append(new Gson().toJson(messageList));
+		response.getWriter().append(new Gson().toJson(result));
 	}
-	
 }

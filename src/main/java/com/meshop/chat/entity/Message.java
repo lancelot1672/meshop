@@ -6,26 +6,36 @@ public class Message {
 	private int no;
 	private String senderId;
 	private String receiverId;
+	private int productId;
 	private String message;
 	private Date sendDate;
 	
 	public Message() {
 		
 	}
-	public Message(int no, String senderId, String receiverId, String message, Date sendDate) {
-		super();
+	
+	
+	public Message(int no, String senderId, String receiverId, int productId, String message, Date sendDate) {
 		this.no = no;
 		this.senderId = senderId;
 		this.receiverId = receiverId;
+		this.productId = productId;
 		this.message = message;
 		this.sendDate = sendDate;
 	}
+
 	@Override
 	public String toString() {
-		return "Message [no=" + no + ", senderId=" + senderId + ", receiverId=" + receiverId + ", message=" + message
-				+ ", sendDate=" + sendDate + "]";
+		return "Message [no=" + no + ", senderId=" + senderId + ", receiverId=" + receiverId + ", productId="
+				+ productId + ", message=" + message + ", sendDate=" + sendDate + "]";
 	}
-	
+
+	public int getProductId() {
+		return productId;
+	}
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
 	public int getNo() {
 		return no;
 	}

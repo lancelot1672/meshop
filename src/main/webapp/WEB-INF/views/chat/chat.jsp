@@ -80,11 +80,30 @@
         //textarea 값 가져오기
         const value = document.querySelector('#chat_area').value;
         console.log(value);
-
+        let senderId = 'abcd';
+        let receiverId = 'qwer';
+        let productId = 1;
+        //입력버튼
+        $.ajax({
+            url : "<%=request.getContextPath() %>/chat/add",
+            data : {
+                senderId : senderId,
+                receiverId : receiverId,
+                productId : productId,
+				chat : value
+            },
+            method : "POST",
+            success(response){
+                addChat(value);
+            },
+            error: console.log
+        });
+    });
+    const addChat = (value) =>{
         const ul = document.querySelector('.chat-container ul');
-        let html = `<li class="me"><p>$\{value}</p></li>`;
+        let html = `<li class="me"><p class="message">\${value}</p></li>`;
         ul.insertAdjacentHTML('beforeend',html);
         document.querySelector('#chat_area').value = "";
-    });
+    }
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
