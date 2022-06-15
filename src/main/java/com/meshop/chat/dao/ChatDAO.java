@@ -1,5 +1,7 @@
 package com.meshop.chat.dao;
 
+import static com.meshop.common.JdbcTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.meshop.chat.entity.Chatroom;
 import com.meshop.chat.entity.Message;
 
 
@@ -28,7 +31,7 @@ public class ChatDAO {
         System.out.println("filename = " + filename);
 	}
 	
-	public List<Message> findChat(Connection conn, String senderId, String receiverId, int productId) {
+	public List<Message> findChat(Connection conn, Message message) {
 		//준비
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -40,11 +43,11 @@ public class ChatDAO {
         
         try {
         	pstmt = conn.prepareStatement(sql);
-        	pstmt.setString(1, senderId);
-        	pstmt.setString(2, receiverId);
-        	pstmt.setString(3, receiverId);
-        	pstmt.setString(4, senderId);
-        	pstmt.setInt(5, productId);
+        	pstmt.setString(1, message.getSenderId());
+        	pstmt.setString(2, message.getReceiverId());
+        	pstmt.setString(3, message.getReceiverId());
+        	pstmt.setString(4,  message.getSenderId());
+        	pstmt.setInt(5, message.getProductId());
         	
         	rs = pstmt.executeQuery();
         	
@@ -60,7 +63,71 @@ public class ChatDAO {
         	}
         }catch(SQLException e) {
         	e.printStackTrace();
+        }finally {
+        	close(rs);
+        	close(pstmt);
         }
 		return messageList;
+	}
+	public List<Chatroom> findAllChat(Connection conn, String memberId) {
+		//준비
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<Chatroom> list = new ArrayList<>();
+        
+        // SQL
+        //select c.*, m.store_name, m.member_id from chatroom c left outer join  member m on (c.seller_id = ? or c.buyer_id = ?) where m.member_id != ?
+        String sql = properties.getProperty("findAllChat");
+        
+        try {
+        	pstmt = conn.prepareStatement(sql);
+        	pstmt.setString(1, memberId);
+        	pstmt.setString(2, memberId);
+        	pstmt.setString(3, memberId);
+        	
+        	rs = pstmt.executeQuery();
+        	
+        	while(rs.next()) {
+        		Chatroom c = new Chatroom();
+		
+        		c.setNo(rs.getInt("no"));
+        		c.setSellerId(rs.getString("seller_id"));
+        		c.setBuyerId(rs.getString("buyer_id"));
+        		c.setProductId(rs.getInt("product_id"));
+        		c.setTitle(rs.getString("title"));
+        		c.setStoreName(rs.getString("store_name"));
+        		
+        		list.add(c);
+        	}
+        }catch(SQLException e) {
+        	e.printStackTrace();
+        }finally {
+        	close(rs);
+        	close(pstmt);
+        }
+		return list;
+	}
+	public int insertChat(Connection conn, Message message) {
+		//준비
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String sql = properties.getProperty("insertChat");
+        System.out.println(sql);
+        try {
+        	pstmt = conn.prepareStatement(sql);
+        	pstmt.setString(1, message.getSenderId());
+        	pstmt.setString(2, message.getReceiverId());
+        	pstmt.setInt(3, message.getProductId());
+        	pstmt.setString(4,  message.getMessage());
+        	
+        	result = pstmt.executeUpdate();
+        }catch(SQLException e) {
+        	e.printStackTrace();
+        	//에러 던지기!
+        }finally {
+        	close(pstmt);
+        }
+		
+        return result;
 	}
 }
