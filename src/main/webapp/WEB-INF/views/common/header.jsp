@@ -29,7 +29,7 @@
             </div>
             <div class="menu">
                 <ul class="nav-menu">
-                    <li><a class="" href="#">글쓰기</a></li>
+                    <li><a class="" href="<%= request.getContextPath() %>/product/productEnroll">글쓰기</a></li>
                     <li><a class="" href="#">채팅방</a></li>
                     <li><a class="" href="#">내 상점</a></li>
                 </ul>

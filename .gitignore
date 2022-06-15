@@ -161,3 +161,4 @@ $RECYCLE.BIN/
 datasource.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,eclipse,java
+/build/

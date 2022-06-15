@@ -13,6 +13,7 @@ import java.util.Properties;
 import com.meshop.product.entity.Attachment;
 import com.meshop.product.entity.Product;
 import com.meshop.product.entity.ProductExt;
+import com.meshop.product.exception.ProductException;
 
 public class ProductDAOImpl implements ProductDAO{
     private Properties properties = new Properties();
@@ -81,8 +82,69 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 
 	@Override
-	public int insertProduct(Product product) {
-		return 0;
+	public int insertProduct(Connection conn, ProductExt product) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = properties.getProperty("insertProduct");
+		try {
+			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, product.getMemberId());
+			pstmt.setString(1, "qwer");
+			pstmt.setString(2, product.getTitle());
+			pstmt.setString(3, product.getContent());
+			pstmt.setString(4, product.getCategory());
+//			pstmt.setString(5, product.getPlace());
+			pstmt.setString(5, "마포구");
+			pstmt.setString(6, String.valueOf(product.getStatus()));
+			pstmt.setInt(7, product.getPrice());
+			pstmt.setString(8, product.getBrand());
+			
+			result = pstmt.executeUpdate();
+		} catch(SQLException e) {
+			throw new ProductException("판매 게시글 등록 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	@Override
+	public int findCurrentProductId(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = properties.getProperty("findCurrentProductId");
+		int no = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) no = rset.getInt(1);
+		} catch(SQLException e) {
+			throw new ProductException("게시글 번호 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return no;
+	}
+	
+	@Override
+	public int insertAttachment(Connection conn, Attachment attach) {
+		PreparedStatement pstmt = null;
+		String sql = properties.getProperty("insertAttachment");
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, attach.getProductId());
+			pstmt.setString(2, attach.getOriginalFilename());
+			pstmt.setString(3, attach.getRenamedFilename());
+			pstmt.setString(4, String.valueOf(attach.getAttachtype()));
+			result = pstmt.executeUpdate();
+		} catch(SQLException e) {
+			throw new ProductException("첨부파일 등록 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 	@Override
