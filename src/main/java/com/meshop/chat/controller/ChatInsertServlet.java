@@ -19,19 +19,18 @@ public class ChatInsertServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
 		
 		// 1. 사용자 값 처리
 		String senderId = request.getParameter("senderId");
 		String receiverId = request.getParameter("receiverId");
-		int productId = Integer.parseInt(request.getParameter("productId"));
+		int chatroomId = Integer.parseInt(request.getParameter("chatroomId"));
 		String chat = request.getParameter("chat");
-		System.out.println(senderId + receiverId + productId);
+		System.out.println(senderId + receiverId + chatroomId);
 		
 		Message m = new Message();
 		m.setSenderId(senderId);
 		m.setReceiverId(receiverId);
-		m.setProductId(productId);
+		m.setProductId(chatroomId);
 		m.setMessage(chat);
 		
 		// 2. 업무로직
