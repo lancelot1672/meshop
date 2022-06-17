@@ -31,7 +31,7 @@ public class ChatDAO {
         System.out.println("filename = " + filename);
 	}
 	
-	public List<Message> findChat(Connection conn, Message message) {
+	public List<Message> findChat(Connection conn, int chatroomId) {
 		//준비
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -43,11 +43,7 @@ public class ChatDAO {
         
         try {
         	pstmt = conn.prepareStatement(sql);
-        	pstmt.setString(1, message.getSenderId());
-        	pstmt.setString(2, message.getReceiverId());
-        	pstmt.setString(3, message.getReceiverId());
-        	pstmt.setString(4,  message.getSenderId());
-        	pstmt.setInt(5, message.getProductId());
+        	pstmt.setInt(1, chatroomId);
         	
         	rs = pstmt.executeQuery();
         	
@@ -96,7 +92,7 @@ public class ChatDAO {
         		c.setProductId(rs.getInt("product_id"));
         		c.setTitle(rs.getString("title"));
         		c.setStoreName(rs.getString("store_name"));
-        		
+        		System.out.println(c);
         		list.add(c);
         	}
         }catch(SQLException e) {
@@ -115,9 +111,9 @@ public class ChatDAO {
         System.out.println(sql);
         try {
         	pstmt = conn.prepareStatement(sql);
-        	pstmt.setString(1, message.getSenderId());
-        	pstmt.setString(2, message.getReceiverId());
-        	pstmt.setInt(3, message.getProductId());
+        	pstmt.setInt(1, message.getProductId());
+        	pstmt.setString(2, message.getSenderId());
+        	pstmt.setString(3, message.getReceiverId());
         	pstmt.setString(4,  message.getMessage());
         	
         	result = pstmt.executeUpdate();

@@ -19,21 +19,15 @@ public class ChatListServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
 		
 		// 1. 사용자 값 처리
-		String senderId = request.getParameter("senderId");
-		String receiverId = request.getParameter("receiverId");
-		int productId = Integer.parseInt(request.getParameter("productId"));
-		System.out.println(senderId + receiverId + productId);
-		Message m = new Message();
-		
-		m.setSenderId(senderId);
-		m.setReceiverId(receiverId);
-		m.setProductId(productId);
+//		String senderId = request.getParameter("senderId");
+//		String receiverId = request.getParameter("receiverId");
+//		int productId = Integer.parseInt(request.getParameter("productId"));
+		int chatroomId = Integer.parseInt(request.getParameter("chatroomId"));
 		
 		// 2. 업무로직
-		List<Message> messageList = chatService.findChat(m);
+		List<Message> messageList = chatService.findChat(chatroomId);
 		
 		// 3. 응답처리 json
 		response.setContentType("application/json; charset=utf-8");

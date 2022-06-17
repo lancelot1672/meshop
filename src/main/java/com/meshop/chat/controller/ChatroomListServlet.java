@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.meshop.chat.entity.Chatroom;
 import com.meshop.chat.service.ChatServiceImpl;
 
@@ -24,6 +25,10 @@ public class ChatroomListServlet extends HttpServlet{
 		String memberId = request.getParameter("memberId");
 		
 		List<Chatroom> list = chatService.findChatroomList(memberId);
+		
+		// 3. 응답처리 json
+		response.setContentType("application/json; charset=utf-8");
+		response.getWriter().append(new Gson().toJson(list));
 	}
 	
 }

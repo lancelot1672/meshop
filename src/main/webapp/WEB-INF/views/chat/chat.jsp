@@ -5,33 +5,20 @@
   <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/chatroom.css">
 <div class="frame">
     <div class="chatroom-section">
-        <div class="chatroom">
-            <a href="#">
-            <div class="room-content">
-                <span class="chat-store-name">동동목장</span>
-                <span class="chat-title">타이들타이틀</span>
-            </div>
-            </a>
-        </div>
-        <div class="chatroom">
-            <a href="#">
-            <div class="room-content">
-                <span class="chat-store-name">동동목장</span>
-                <span class="chat-title">타이들타이틀</span>
-            </div>
-            </a>
-        </div>
+
     </div>
     <div class="chat-section">
        <div class="chatroom-info">
-           <h2>TitleTitleTitleTitleTitle</h2>
-           <span>동동목장</span>
+           <h2></h2>
+           <span></span>
        </div>
        <div class="chat-container">
            <ul>
            </ul>
        </div>
        <div class="input-section">
+       		<input type=hidden id="chatroom_id">
+       		<input type=hidden id="opponent">
            <textarea id="chat_area"></textarea>
            <button id="chat_btn">전송</button>
        </div>
@@ -46,16 +33,99 @@
         const frame = document.querySelector('.frame');
         frame.style.paddingTop = `\${header.offsetHeight}px`;
         
+        // 회원 아이디에 따른 채팅 리스트 가져오기
+        getChatList('abcd');
+        
+        let chatroomId = 1;
+        getChatContent(chatroomId,'','');
+        
+    });
+    
+    chat_btn.addEventListener('click',()=>{
+        //textarea 값 가져오기
+        const value = document.querySelector('#chat_area').value;
+        console.log(value);
+        
+        //대화 정보
         let senderId = 'abcd';
-        let receiverId = 'qwer';
-        let productId = 1;
+        let receiverId = document.querySelector('#opponent').value;
+        let chatroom_id = document.querySelector('#chatroom_id').value;
+        
+        console.log('receiverId', receiverId);
+        console.log('chatroom_id', chatroom_id);
+        
+        //데이터베이스 입력 요청
+        $.ajax({
+            url : "<%=request.getContextPath() %>/chat/add",
+            data : {
+                senderId : senderId,
+                receiverId : receiverId,
+                chatroomId : chatroom_id,
+				chat : value
+            },
+            method : "POST",
+            success(response){
+                addChat(value);
+            },
+            error: console.log
+        });
+        
+    });
+    const getChatList = (memberId) =>{
+        $.ajax({
+            url : "<%=request.getContextPath() %>/chat/chatlist",
+            method : "POST",
+            data : {
+                memberId : memberId
+            },
+            success(response){
+                // 채팅방 리스트 가져오기
+				let html = "";
+                response.forEach((chatroom)=>{
+                	const {no, sellerId, buyerId, productId, title, storeName} = chatroom;
+                	
+                	let opponent = "";
+                	
+                	//상대방 뽑기
+                	if(sellerId === 'abcd'){
+                		opponent = buyerId;
+                	}else{
+                		opponent = sellerId;
+                	}
+                	
+                	//채팅방 리스트 HTML
+                    html += `<div class="chatroom">
+                        <a onclick="getChatContent(\${no},'\${storeName}','\${title}','\${opponent}')">
+                        <div class="room-content">
+                            <span class="chat-store-name">\${storeName}</span>
+                            <span class="chat-title">\${title}</span>
+                        </div>
+                        </a>
+                    </div>`;
+                });
+                const div = document.querySelector('.chatroom-section');
+                div.innerHTML = html;
+            },
+            error : console.log
+        });
+    };
+    const getChatContent = (chatroomId, storeName, title, opponent) =>{
+    	//채팅 내용 가져오기
+    	console.log(chatroomId);
+    	document.querySelector('.chatroom-info h2').innerHTML = title;
+    	document.querySelector('.chatroom-info span').innerHTML = storeName;
+    	
+    	//전송버튼 chatroomId, 상대방 아이디 매핑
+    	document.querySelector('#chatroom_id').value = chatroomId;
+    	document.querySelector('#opponent').value = opponent;
+    	
+    	console.log(document.querySelector('#chatroom_id').value);
+    	//채팅 내용 가져오기
         $.ajax({
             url : "<%=request.getContextPath() %>/chat/content",
             method : "POST",
             data : {
-                senderId : senderId,
-                receiverId : receiverId,
-                productId : productId
+                chatroomId : chatroomId
             },
             success(response){
                 console.log(response);
@@ -68,37 +138,14 @@
                     if(senderId === 'abcd'){
                         html = `<li class="me"><p class="message">\${message}</p></li>`;
                     }else{
-                        html = `<li class="you"><p class="who">김동동 : </p><p class="message">\${message}</p></li>`;
+                        html = `<li class="you"><p class="who">\${storeName} : </p><p class="message">\${message}</p></li>`;
                     }
                     ul.insertAdjacentHTML('beforeend',html);
                 });
             },
             error: console.log
         });
-    });
-    chat_btn.addEventListener('click',()=>{
-        //textarea 값 가져오기
-        const value = document.querySelector('#chat_area').value;
-        console.log(value);
-        let senderId = 'abcd';
-        let receiverId = 'qwer';
-        let productId = 1;
-        //입력버튼
-        $.ajax({
-            url : "<%=request.getContextPath() %>/chat/add",
-            data : {
-                senderId : senderId,
-                receiverId : receiverId,
-                productId : productId,
-				chat : value
-            },
-            method : "POST",
-            success(response){
-                addChat(value);
-            },
-            error: console.log
-        });
-    });
+    }
     const addChat = (value) =>{
         const ul = document.querySelector('.chat-container ul');
         let html = `<li class="me"><p class="message">\${value}</p></li>`;

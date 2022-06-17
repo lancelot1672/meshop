@@ -12,12 +12,12 @@ import com.meshop.chat.entity.Message;
 
 public class ChatServiceImpl {
 	ChatDAO chatDAO = new ChatDAO();
-	public List<Message> findChat(Message m){
+	public List<Message> findChat(int chatroomId){
 		Connection conn = getConnection();
 		List<Message> list = null;
 		
 		try {
-			list = chatDAO.findChat(conn,m);
+			list = chatDAO.findChat(conn, chatroomId);
 		}catch(Exception e) {
 			
 		}finally {
