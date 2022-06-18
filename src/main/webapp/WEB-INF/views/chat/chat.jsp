@@ -25,7 +25,11 @@
    </div>
 </div>
 <script>
+	const memberId = "<%=loginMember.getMemberId() %>";
+	
     window.addEventListener('load',()=>{
+    	//멤버 아이디 구하기
+    	console.log(memberId);
         //헤더 높이 구하기
         const header = document.querySelector('.header');
 
@@ -34,10 +38,10 @@
         frame.style.paddingTop = `\${header.offsetHeight}px`;
         
         // 회원 아이디에 따른 채팅 리스트 가져오기
-        getChatList('abcd');
+        getChatList(memberId);
         
-        let chatroomId = 1;
-        getChatContent(chatroomId,'','');
+        //let chatroomId = 1;
+        //getChatContent(chatroomId,'','');
         
     });
     
@@ -47,7 +51,7 @@
         console.log(value);
         
         //대화 정보
-        let senderId = 'abcd';
+        let senderId = memberId;
         let receiverId = document.querySelector('#opponent').value;
         let chatroom_id = document.querySelector('#chatroom_id').value;
         
@@ -87,7 +91,7 @@
                 	let opponent = "";
                 	
                 	//상대방 뽑기
-                	if(sellerId === 'abcd'){
+                	if(sellerId === memberId){
                 		opponent = buyerId;
                 	}else{
                 		opponent = sellerId;
@@ -135,7 +139,7 @@
                     // 구조분해 할당
                     const {no,senderId,receiverId, message, sendDate} = chat;
                     let html = "";
-                    if(senderId === 'abcd'){
+                    if(senderId === memberId){
                         html = `<li class="me"><p class="message">\${message}</p></li>`;
                     }else{
                         html = `<li class="you"><p class="who">\${storeName} : </p><p class="message">\${message}</p></li>`;
@@ -152,5 +156,18 @@
         ul.insertAdjacentHTML('beforeend',html);
         document.querySelector('#chat_area').value = "";
     }
+    
+	const host = location.host;	//localhost (접속하고 있는 서버 도메인)
+	const ws = new WebSocket(`ws://\${host}<%= request.getContextPath()%>/chat/ws`);
+
+	ws.onopen = (e) => {
+		console.log('open', e);
+	}
+	ws.onmessage = (e) => {
+		console.log('message', e);
+		const payload = JSON.parse(e.data);
+		const {type, sender, receiver,msg, time} = payload;
+		console.log(type, sender, msg, time);
+	};
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

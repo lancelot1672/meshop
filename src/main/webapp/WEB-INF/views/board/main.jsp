@@ -5,7 +5,6 @@
     pageEncoding="UTF-8" %>
 <%
 	List<ProductExt> list = (List<ProductExt>) request.getAttribute("productList");
-	Member loginMember = (Member) session.getAttribute("loginMember");
 %>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<!-- 바디 -->
@@ -84,7 +83,7 @@
            const header = document.querySelector('.header');
 
            //메인 컨텐츠의 padding top 높이 조절하기
-           const frame = document.querySelector('.frame');
+           const frame = document.querySelector('.banner');
            frame.style.paddingTop = `\${header.offsetHeight}px`;
         });
 	</script>
