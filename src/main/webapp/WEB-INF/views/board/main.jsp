@@ -1,10 +1,12 @@
 <%@page import="java.util.List"%>
+<%@page import="java.text.*"%>
 <%@page import="com.meshop.product.entity.*"%>
 <%@page import="com.meshop.member.entity.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%
 	List<ProductExt> list = (List<ProductExt>) request.getAttribute("productList");
+	DecimalFormat df = new DecimalFormat("###,###");
 %>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<!-- 바디 -->
@@ -18,16 +20,18 @@
     </div>
     <div class="item-list-wrap">
         <div class="item-list">
-        <% for(int i=0; i<4; i++){ 
+        <% for(int i=1; i<5; i++){ 
         	ProductExt product = list.get(i);
         %>
             <div class="item-box">
-            <% if(loginMember != null){ %>
-            	<button class="wish-btn" onclick=""><i class="fa-solid fa-heart"></i></button>
+            <% if(loginMember != null && wishList.contains(product.getProductId())){ %>
+            	<button class="wish-btn" onclick="wishBtnEvent(this,'<%=product.getProductId()%>','<%= loginMember.getMemberId() %>')"><i class="fa-solid fa-heart"></i></button>
+            <% }else if(loginMember != null){ %>
+            	<button class="wish-btn" onclick="wishBtnEvent(this,'<%=product.getProductId()%>','<%= loginMember.getMemberId() %>')"><i class="fa-regular fa-heart"></i></button>
             <% }else{ %>
             	<button class="wish-btn" onclick="location.href='<%=request.getContextPath() %>/member/login';"><i class="fa-regular fa-heart"></i></button>
             <% } %>
-                <a class="item-inner" href="#">
+                <a class="item-inner" href="<%=request.getContextPath()%>/product/productId=<%=product.getProductId() %>">
                     <div class="item">
                         <img src="<%=request.getContextPath() %>/images/<%= product.getAttachment().getOriginalFilename() %>"/>
           		
@@ -37,7 +41,7 @@
                             </div>
                             <p class="product-title"><%=product.getTitle() %></p>
                             <div class="price">
-                                <em class="num"> <%=product.getPrice() %>원</em>
+                                <em class="num"> <%=df.format(product.getPrice()) %>원</em>
                             </div>
                         </div>
                     </div>
@@ -46,7 +50,7 @@
             <%} %>
         </div>
         <div class="item-list">
-        <% for(int i=0; i<4; i++){ 
+        <% for(int i=1; i<5; i++){ 
         	ProductExt product = list.get(i);
         %>
             <div class="item-box">
@@ -55,7 +59,7 @@
             <% }else{ %>
             	<button class="wish-btn" onclick=""><i class="fa-regular fa-heart"></i></button>
             <% } %>
-                <a class="item-inner" href="#">
+                <a class="item-inner" href="<%=request.getContextPath()%>/product/productId=<%=product.getProductId() %>">
                     <div class="item">
                         <img src="<%=request.getContextPath() %>/images/<%= product.getAttachment().getOriginalFilename() %>"/>
           
@@ -65,7 +69,7 @@
                             </div>
                             <p class="product-title"><%=product.getTitle() %></p>
                             <div class="price">
-                                <em class="num"> <%=product.getPrice() %>원</em>
+                                <em class="num"> <%=df.format(product.getPrice()) %>원</em>
                             </div>
                         </div>
                     </div>
@@ -86,5 +90,42 @@
            const frame = document.querySelector('.banner');
            frame.style.paddingTop = `\${header.offsetHeight}px`;
         });
+        
+        const wishBtnEvent = (e, productId, memberId) =>{
+        	if(e.innerHTML === '<i class="fa-regular fa-heart"></i>'){
+                //빈 하트이면
+                $.ajax({
+                    url:"<%=request.getContextPath() %>/wish/addWish",
+                    data:{
+                    	
+                        memberId : memberId,
+                        productId : productId
+                    },
+                    method : "POST",
+                    success(response){
+                    	//꽉 찬 하트로 변경
+                    	console.log("찜하기 성공");
+                        e.innerHTML = '<i class="fa-solid fa-heart"></i>';
+                    },
+                    error:console.log
+                });
+        	}else{
+                //찬 하트이면
+                $.ajax({
+                    url:"<%=request.getContextPath() %>/wish/delWish",
+                    data:{
+                        memberId : memberId,
+                        productId : productId
+                    },
+                    method : "POST",
+                    success(response){
+                    	//빈 하트로 변경
+                    	console.log("찜하기 해제");
+                        e.innerHTML = '<i class="fa-regular fa-heart"></i>';
+                    },
+                    error:console.log
+                });
+            }
+        }
 	</script>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>

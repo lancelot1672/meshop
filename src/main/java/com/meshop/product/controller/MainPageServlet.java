@@ -13,7 +13,7 @@ import com.meshop.product.entity.ProductExt;
 import com.meshop.product.service.ProductService;
 import com.meshop.product.service.ProductServiceImpl;
 
-@WebServlet(name="mainPageServlet", urlPatterns = "/")
+@WebServlet(name="mainPageServlet", urlPatterns = "/main")
 public class MainPageServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -29,7 +29,6 @@ public class MainPageServlet extends HttpServlet{
 		//request.getRequestDispatcher("/index.jsp")
 			.forward(request, response);
 	}
-
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

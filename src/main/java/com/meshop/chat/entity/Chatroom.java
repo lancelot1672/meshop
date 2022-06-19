@@ -1,5 +1,7 @@
 package com.meshop.chat.entity;
 
+import java.sql.Date;
+
 public class Chatroom {
 	private int no;
 	private String sellerId;
@@ -7,24 +9,17 @@ public class Chatroom {
 	private int productId;
 	private String title;
 	private String storeName;
+	private CheckStatus checkstatus;
+	private Date createDate;
 	
-	public Chatroom() {
-		
-	}
-	public Chatroom(int no, String sellerId, String buyerId, int productId, String title, String storeName) {
-		super();
-		this.no = no;
-		this.sellerId = sellerId;
-		this.buyerId = buyerId;
-		this.productId = productId;
-		this.title = title;
-		this.storeName = storeName;
-	}
+	
 	@Override
 	public String toString() {
 		return "Chatroom [no=" + no + ", sellerId=" + sellerId + ", buyerId=" + buyerId + ", productId=" + productId
-				+ ", title=" + title + ", storeName=" + storeName + "]";
+				+ ", title=" + title + ", storeName=" + storeName + ", checkstatus=" + checkstatus + ", createDate="
+				+ createDate + "]";
 	}
+	
 	public int getNo() {
 		return no;
 	}
@@ -61,7 +56,18 @@ public class Chatroom {
 	public void setStoreName(String storeName) {
 		this.storeName = storeName;
 	}
-	
+	public CheckStatus getCheckstatus() {
+		return checkstatus;
+	}
+	public void setCheckstatus(CheckStatus checkstatus) {
+		this.checkstatus = checkstatus;
+	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 	
 	
 }

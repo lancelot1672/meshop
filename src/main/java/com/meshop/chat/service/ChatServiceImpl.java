@@ -30,7 +30,7 @@ public class ChatServiceImpl {
 		List<Chatroom> list = null;
 		
 		try {
-			list = chatDAO.findAllChat(conn,memberId);
+			list = chatDAO.findAllChatroom(conn,memberId);
 		}catch(Exception e) {
 			
 		}finally {
@@ -43,6 +43,18 @@ public class ChatServiceImpl {
 		int result = 0;
 		try {
 			result = chatDAO.insertChat(conn, m);
+		}catch(Exception e) {
+			
+		}finally {
+			close(conn);
+		}
+		return result;
+	}
+	public int updateCheckStatus(int chatroomId) {
+		Connection conn = getConnection();
+		int result =0;
+		try {
+			result = chatDAO.updateCheckStatus(conn, chatroomId);
 		}catch(Exception e) {
 			
 		}finally {
