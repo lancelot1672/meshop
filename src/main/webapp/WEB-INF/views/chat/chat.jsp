@@ -25,8 +25,31 @@
    </div>
 </div>
 <script>
-	const memberId = "<%=loginMember.getMemberId() %>";
+	const host = location.host;	//localhost (접속하고 있는 서버 도메인)
+	const ws = new WebSocket(`ws://\${host}<%= request.getContextPath()%>/chat/ws`);
 	
+	ws.onopen = (e) => {
+		console.log('open', e);
+	}
+	ws.onmessage = (e) => {
+		// onmessage 가 실행되었을 때
+		console.log('message', e);
+		
+		//string -> json 객체
+		const payload = JSON.parse(e.data);
+		
+		//구조분해 할당
+		const {type, senderId, receiverId, chat, time} = payload;
+		console.log(type, senderId, receiverId, chat);
+		
+		// 후에 Session에 storename 넣으면 바꾸기
+		alert(`\{senderId} : \${chat}`);
+		
+		//채팅방 리스트 새로고침
+		getChatList(memberId);
+	};
+	
+	const memberId = '<%=loginMember.getMemberId()%>';
     window.addEventListener('load',()=>{
     	//멤버 아이디 구하기
     	console.log(memberId);
@@ -46,26 +69,36 @@
     });
     
     chat_btn.addEventListener('click',()=>{
-        //textarea 값 가져오기
-        const value = document.querySelector('#chat_area').value;
-        console.log(value);
-        
-        //대화 정보
+        //채팅메시지 정보
         let senderId = memberId;
         let receiverId = document.querySelector('#opponent').value;
         let chatroom_id = document.querySelector('#chatroom_id').value;
-        
+        console.log('senderId', senderId);
         console.log('receiverId', receiverId);
         console.log('chatroom_id', chatroom_id);
+        
+        //textarea 값 가져오기
+        const value = document.querySelector('#chat_area').value;
+		//정규식 검사
+		if(!/^(.|\n)+$/.test(value)) return;
+		
+        console.log(value);
+        
+		//msg 객체 생성
+		const msg = {
+			type : "dm",
+			senderId : senderId,
+			receiverId : receiverId,
+			chatroomId : chatroom_id,
+			chat : value,
+			time : Date.now()
+		};
         
         //데이터베이스 입력 요청
         $.ajax({
             url : "<%=request.getContextPath() %>/chat/add",
             data : {
-                senderId : senderId,
-                receiverId : receiverId,
-                chatroomId : chatroom_id,
-				chat : value
+            	dm : JSON.stringify(msg)
             },
             method : "POST",
             success(response){
@@ -98,13 +131,11 @@
                 	}
                 	
                 	//채팅방 리스트 HTML
-                    html += `<div class="chatroom">
-                        <a onclick="getChatContent(\${no},'\${storeName}','\${title}','\${opponent}')">
+                    html += `<div class="chatroom" onclick="getChatContent(\${no},'\${storeName}','\${title}','\${opponent}',this)">
                         <div class="room-content">
                             <span class="chat-store-name">\${storeName}</span>
                             <span class="chat-title">\${title}</span>
                         </div>
-                        </a>
                     </div>`;
                 });
                 const div = document.querySelector('.chatroom-section');
@@ -113,7 +144,14 @@
             error : console.log
         });
     };
-    const getChatContent = (chatroomId, storeName, title, opponent) =>{
+    const getChatContent = (chatroomId, storeName, title, opponent, e) =>{
+    	//현재 채팅방 색 표시하기
+        const chatroomList = document.querySelectorAll('.chatroom');
+        chatroomList.forEach((chatroom)=>{
+            chatroom.style.backgroundColor = 'rgb(255,255,255)';
+        });
+        e.style.backgroundColor = "rgb(231, 231, 231)";
+        
     	//채팅 내용 가져오기
     	console.log(chatroomId);
     	document.querySelector('.chatroom-info h2').innerHTML = title;
@@ -145,6 +183,9 @@
                         html = `<li class="you"><p class="who">\${storeName} : </p><p class="message">\${message}</p></li>`;
                     }
                     ul.insertAdjacentHTML('beforeend',html);
+                    
+            		// 스크롤해서 하단부 노출!
+            		showRecentChat();
                 });
             },
             error: console.log
@@ -154,20 +195,17 @@
         const ul = document.querySelector('.chat-container ul');
         let html = `<li class="me"><p class="message">\${value}</p></li>`;
         ul.insertAdjacentHTML('beforeend',html);
+        
+		// 스크롤해서 하단부 노출!
+		showRecentChat();
+		
         document.querySelector('#chat_area').value = "";
     }
+    const showRecentChat = () =>{
+		const container = document.querySelector(".chat-container");
+		container.scrollTop = container.scrollHeight;
+    }
     
-	const host = location.host;	//localhost (접속하고 있는 서버 도메인)
-	const ws = new WebSocket(`ws://\${host}<%= request.getContextPath()%>/chat/ws`);
 
-	ws.onopen = (e) => {
-		console.log('open', e);
-	}
-	ws.onmessage = (e) => {
-		console.log('message', e);
-		const payload = JSON.parse(e.data);
-		const {type, sender, receiver,msg, time} = payload;
-		console.log(type, sender, msg, time);
-	};
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
