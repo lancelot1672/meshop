@@ -14,7 +14,7 @@
 
     </div>
     <div class="product_section_title">
-        <div class="title">
+        <div class="section_title">
             판매 중인 상품
         </div>
     </div>
@@ -29,20 +29,22 @@
             <% }else if(loginMember != null){ %>
             	<button class="wish-btn" onclick="wishBtnEvent(this,'<%=product.getProductId()%>','<%= loginMember.getMemberId() %>')"><i class="fa-regular fa-heart"></i></button>
             <% }else{ %>
-            	<button class="wish-btn" onclick="location.href='<%=request.getContextPath() %>/member/login';"><i class="fa-regular fa-heart"></i></button>
+            	<button class="wish-btn" onclick="location.href='<%=request.getContextPath() %>/login';"><i class="fa-regular fa-heart"></i></button>
             <% } %>
                 <a class="item-inner" href="<%=request.getContextPath()%>/product/productId=<%=product.getProductId() %>">
                     <div class="item">
                         <img src="<%=request.getContextPath() %>/images/<%= product.getAttachment().getRenamedFilename() %>"/>
           		
-                        <div class="info-box">
-                            <div class="brand">
-                                <p><%= product.getBrand() %></p>
-                            </div>
-                            <p class="product-title"><%=product.getTitle() %></p>
+                        <div class="productInfo">
+                            <div class="brand"><%= product.getBrand() %></div>
+                            <div class="title"><%= product.getStatus() == ProductStatus.N ? "[새상품] " : "" %><%=product.getTitle() %></div>
                             <div class="price">
                                 <em class="num"> <%=df.format(product.getPrice()) %>원</em>
                             </div>
+                            <div class="other">
+	    						<span class="place">서울시 <%= product.getPlace() %></span>
+								<span class="date"><%= product.getRegDate() %></span>
+	             			</div>
                         </div>
                     </div>
                 </a>
@@ -54,23 +56,27 @@
         	ProductExt product = list.get(i);
         %>
             <div class="item-box">
-            <% if(loginMember != null){ %>
-            	<button class="wish-btn" onclick=""><i class="fa-solid fa-heart"></i></button>
+            <% if(loginMember != null && wishList.contains(product.getProductId())){ %>
+            	<button class="wish-btn" onclick="wishBtnEvent(this,'<%=product.getProductId()%>','<%= loginMember.getMemberId() %>')"><i class="fa-solid fa-heart"></i></button>
+            <% }else if(loginMember != null){ %>
+            	<button class="wish-btn" onclick="wishBtnEvent(this,'<%=product.getProductId()%>','<%= loginMember.getMemberId() %>')"><i class="fa-regular fa-heart"></i></button>
             <% }else{ %>
-            	<button class="wish-btn" onclick=""><i class="fa-regular fa-heart"></i></button>
+            	<button class="wish-btn" onclick="location.href='<%=request.getContextPath() %>/login';"><i class="fa-regular fa-heart"></i></button>
             <% } %>
                 <a class="item-inner" href="<%=request.getContextPath()%>/product/productId=<%=product.getProductId() %>">
                     <div class="item">
-                        <img src="<%=request.getContextPath() %>/images/<%= product.getAttachment().getOriginalFilename() %>"/>
-          
-                        <div class="info-box">
-                            <div class="brand">
-                                <p><%= product.getBrand() %></p>
-                            </div>
-                            <p class="product-title"><%=product.getTitle() %></p>
+                        <img src="<%=request.getContextPath() %>/images/<%= product.getAttachment().getRenamedFilename() %>"/>
+          		
+                        <div class="productInfo">
+                            <div class="brand"><%= product.getBrand() %></div>
+                            <div class="title"><%= product.getStatus() == ProductStatus.N ? "[새상품] " : "" %><%=product.getTitle() %></div>
                             <div class="price">
                                 <em class="num"> <%=df.format(product.getPrice()) %>원</em>
                             </div>
+                            <div class="other">
+	    						<span class="place">서울시 <%= product.getPlace() %></span>
+								<span class="date"><%= product.getRegDate() %></span>
+	             			</div>
                         </div>
                     </div>
                 </a>

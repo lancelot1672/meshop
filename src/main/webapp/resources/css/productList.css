@@ -129,6 +129,7 @@ input[name=wishBtn] + label {
     border-radius: 10px;
     width: 160px; height: 160px;
     position: relative;
+    background-color : rgb(244, 244, 244);
 }
 .wish-btn {
 	position: absolute;
@@ -147,6 +148,9 @@ input[name=wishBtn] + label {
 .brand, .price {
     font-weight: bold;
     font-size: 14px;
+}
+.productInfo {
+	margin-top: 10px;
 }
 .productInfo .price {
     padding: 5px 0;
