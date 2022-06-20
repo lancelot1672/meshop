@@ -1,5 +1,7 @@
 package com.meshop.product.dao;
-import static com.meshop.common.JdbcTemplate.*;
+import static com.meshop.common.JdbcTemplate.close;
+import static com.meshop.common.JdbcTemplate.getConnection;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,7 +14,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.meshop.product.entity.Attachment;
-import com.meshop.product.entity.Product;
 import com.meshop.product.entity.ProductExt;
 import com.meshop.product.entity.ProductStatus;
 import com.meshop.product.exception.ProductException;
@@ -51,24 +52,26 @@ public class ProductDAOImpl implements ProductDAO{
         	rs = pstmt.executeQuery();
         	
         	while(rs.next()) {
-        		ProductExt p = new ProductExt();
+        		ProductExt product = new ProductExt();
         		
         		//상품 미리보기 정보
-           		p.setProductId(rs.getInt("product_id"));
-        		p.setTitle(rs.getString("title"));
-        		p.setPrice(rs.getInt("price"));
-        		p.setBrand(rs.getString("brand"));
-
-        		//대표 이미지 파일
-        		Attachment a = new Attachment();
-        		a.setOriginalFilename(rs.getString("original_name"));
-        		a.setRenamedFilename(rs.getString("renamed_name"));
+        		product.setProductId(rs.getInt("product_id"));
+        		product.setTitle(rs.getString("title"));
+        		product.setPrice(rs.getInt("price"));
+        		product.setBrand(rs.getString("brand"));
+        		product.setPlace(rs.getString("place"));
+        		product.setRegDate(rs.getDate("reg_date"));
+        		product.setStatus(ProductStatus.valueOf(rs.getString("status")));
+        		
+        		Attachment attach = new Attachment();
+        		attach.setOriginalFilename(rs.getString("original_name"));
+        		attach.setRenamedFilename(rs.getString("renamed_name"));
         		
         		//첨부파일 추가
-        		p.setAttachment(a);
+        		product.setAttachment(attach);
         		
         		//썸네일 리스트에 추가
-        		list.add(p);
+        		list.add(product);
         	}
         }catch(SQLException e) {
         	String message = e.getMessage();

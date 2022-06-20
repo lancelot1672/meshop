@@ -56,6 +56,12 @@
     height: 100px;
     width: 100%;
 }
+.chatroom-title {
+    margin-left: 20px;
+}
+.chatroom-info>span {
+    margin-left: 20px;
+}
 .chat-container {
     border: 1px solid blueviolet;
     width: 100%;
