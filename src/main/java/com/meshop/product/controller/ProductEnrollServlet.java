@@ -45,7 +45,7 @@ public class ProductEnrollServlet extends HttpServlet {
 		try {
 			// MultipartRequest 객체 생성
 			ServletContext application = getServletContext();
-			String saveDirectory = application.getRealPath("/") + "/upload/product";
+			String saveDirectory = application.getRealPath("/") + "/images";
 			int maxPostSize = 1024 * 1024 * 10;
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new MeshopFileRenamePolicy();
@@ -72,9 +72,10 @@ public class ProductEnrollServlet extends HttpServlet {
 			product.setContent(content);
 			
 			// 2. 업무 로직
+			int result = 0;
 			if("buyBoard".equals(boardType)) {
 				// 구매글인 경우
-//				int result = productService.insertProduct(product);
+				result = productService.insertProductBuy(product);
 			} else {
 				// 판매글인 경우
 				File productImage = multiReq.getFile("productImage");
@@ -85,11 +86,11 @@ public class ProductEnrollServlet extends HttpServlet {
 					attachments.add(attach);
 				}
 				product.setAttachments(attachments);
-				int result = productService.insertProduct(product);
+				result = productService.insertProduct(product);
 			}
 			
 			// 3. 리다이렉트
-//			response.sendRedirect(request.getContextPath() + "/product/productList");
+			response.sendRedirect(request.getContextPath() + "/product/productList");
 		} catch(Exception e) {
 			e.printStackTrace();
 			throw e;

@@ -8,11 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import com.meshop.product.entity.Attachment;
 import com.meshop.product.entity.Product;
 import com.meshop.product.entity.ProductExt;
+import com.meshop.product.entity.ProductStatus;
 import com.meshop.product.exception.ProductException;
 
 public class ProductDAOImpl implements ProductDAO{
@@ -56,7 +58,7 @@ public class ProductDAOImpl implements ProductDAO{
         		p.setTitle(rs.getString("title"));
         		p.setPrice(rs.getInt("price"));
         		p.setBrand(rs.getString("brand"));
- 
+
         		//대표 이미지 파일
         		Attachment a = new Attachment();
         		a.setOriginalFilename(rs.getString("original_name"));
@@ -149,11 +151,97 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 
 	@Override
-	public int getTotalProducts() {
-		return 0;
+	public int insertProductBuy(Connection conn, ProductExt product) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = properties.getProperty("insertProductBuy");
+		try {
+			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, product.getMemberId());
+			pstmt.setString(1, "qwer");
+			pstmt.setString(2, product.getTitle());
+			pstmt.setString(3, product.getContent());
+			pstmt.setString(4, product.getCategory());
+//			pstmt.setString(5, product.getPlace());
+			pstmt.setString(5, "마포구");
+			pstmt.setString(6, String.valueOf(product.getStatus()));
+			pstmt.setInt(7, product.getPrice());
+			pstmt.setString(8, product.getBrand());
+			
+			result = pstmt.executeUpdate();
+		} catch(SQLException e) {
+			throw new ProductException("구매 게시글 등록 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	@Override
+	public List<ProductExt> findAllOrderBy(Connection conn, Map<String, Integer> param, String sort) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<ProductExt> productList = new ArrayList<>();
+		String sql = properties.getProperty("findAllOrderBy");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			// 오름차순, 내림차순
+			sort = "price".equals(sort) ? sort : sort + " desc";
+			pstmt.setString(1, sort);
+			pstmt.setInt(2, param.get("start"));
+			pstmt.setInt(3, param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				ProductExt product = handleProductExtResultSet(rset);
+        		productList.add(product);
+			}
+		} catch(SQLException e) {
+			throw new ProductException("모든 상품 게시글 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return productList;
 	}
 //	public static void main(String[] args) {
 //		ProductDAOImpl p = new ProductDAOImpl();
 //		p.findAll();
 //	}
+	private ProductExt handleProductExtResultSet(ResultSet rset) throws SQLException {
+		ProductExt product = new ProductExt();
+		
+		product.setTitle(rset.getString("title"));
+		product.setPrice(rset.getInt("price"));
+		product.setBrand(rset.getString("brand"));
+		product.setPlace(rset.getString("place"));
+		product.setRegDate(rset.getDate("reg_date"));
+		product.setStatus(ProductStatus.valueOf(rset.getString("status")));
+		
+		Attachment attach = new Attachment();
+		attach.setOriginalFilename(rset.getString("original_name"));
+		attach.setRenamedFilename(rset.getString("renamed_name"));
+		
+		//첨부파일 추가
+		product.setAttachment(attach);
+		return product;
+	}
+	
+	@Override
+	public int getTotalProducts(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalProducts = 0;
+		String sql = properties.getProperty("getTotalProducts");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) totalProducts = rset.getInt(1);
+		} catch(SQLException e) {
+			throw new ProductException("전체 상품수 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalProducts;
+	}
 }
