@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.meshop.member.dao.MemberDAO;
-import com.meshop.member.dao.MemberDAO;
 import com.meshop.member.entity.Member;
 
 
@@ -99,6 +98,7 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 	
+	@Override
 	public List<Member> findAllMember(){
 		List<Member> list = new ArrayList<>();
 		Connection conn = getConnection();
