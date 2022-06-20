@@ -35,14 +35,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>01</td>
-                        <td>abcd</td>
-                        <td>김동률</td>
-                        <td>5</td>
-                        <td>5.0</td>
-                        <td>2022-06-13</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -63,6 +55,7 @@
                 success(response){
                     console.log(response);
                     const html = getMemberTableHTML(response);
+                    document.querySelector('.table-section').innerHTML = html;
                 },
                 error : console.log
             });
@@ -73,8 +66,8 @@
                 <thead>
                     <tr>
                         <th>Index</th>
-                        <th>ID</th>
-                        <th>Store</th>
+                        <th>Store_Name</th>
+                        <th>Name</th>
                         <th>게시글 수</th>
                         <th>평점</th>
                         <th>가입 날짜</th>
@@ -85,13 +78,14 @@
             //response => List
             response.forEach((member)=>{
                 //구조 분해 할당
-                const {memberId, storeName, count, storeGrade, joinDate} = response;
+                const {memberId, memberName, StoreName, store_grade, boardCount, joinDate} = member;
                 let tr = "<tr>";
-                    tr += `<td>${memberId}</td>`;
-                    tr += `<td>${storeName}</td>`;
-                    tr += `<td>${count}</td>`;
-                    tr += `<td>${storeGrade}</td>`;
-                    tr += `<td>${joinDate}</td>`;
+                    tr += `<td>\${memberId}</td>`;
+                    tr += `<td>\${StoreName}</td>`;
+                    tr += `<td>\${memberName}</td>`;
+                    tr += `<td>\${boardCount}</td>`;
+                    tr += `<td>\${store_grade}</td>`;
+                    tr += `<td>\${joinDate}</td>`;
                     tr += "</tr>";
                 html += tr;
             });
