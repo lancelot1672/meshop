@@ -33,11 +33,11 @@
             <ul class="nav-auth">
             <% if(loginMember == null){ %>
             	<li><a class="auth-menu" href="<%= request.getContextPath() %>/mypage">마이페이지</a></li>
-                <li><a class="auth-menu" href="<%= request.getContextPath() %>/member/login">로그인</a></li>
+                <li><a class="auth-menu" href="<%= request.getContextPath() %>/login">로그인</a></li>
             	<li><a class="auth-menu" href="<%= request.getContextPath() %>/member/join">회원가입</a></li>
             <%}else{ %>
             	<li><a class="auth-menu" href="<%= request.getContextPath() %>/mypage">마이페이지</a></li>
-            	<li><a class="auth-menu" href="<%= request.getContextPath() %>/member/logout">로그아웃</a></li>
+            	<li><a class="auth-menu" href="<%= request.getContextPath() %>/logout">로그아웃</a></li>
             <%} %>
             </ul>
         </div>

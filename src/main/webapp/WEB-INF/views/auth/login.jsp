@@ -8,7 +8,7 @@
 </head>
 <body>
 <!-- 로그인폼 시작 -->
-<form id="loginFrm" name="loginFrm" method="POST" action="<%= request.getContextPath() %>/member/login">
+<form id="loginFrm" name="loginFrm" method="POST" action="<%= request.getContextPath() %>/login">
 	<table>
 		<tr>
 			<td><input type="text" name="memberId" id="memberId" placeholder="아이디" tabindex="1"></td>
