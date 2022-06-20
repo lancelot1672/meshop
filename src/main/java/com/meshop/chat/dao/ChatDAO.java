@@ -1,6 +1,6 @@
 package com.meshop.chat.dao;
 
-import static com.meshop.common.JdbcTemplate.close;
+import static com.meshop.common.JdbcTemplate.*;
 
 import java.io.FileReader;
 import java.io.IOException;

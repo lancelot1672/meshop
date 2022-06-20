@@ -20,7 +20,7 @@
     </div>
     <div class="item-list-wrap">
         <div class="item-list">
-        <% for(int i=1; i<5; i++){ 
+        <% for(int i=0; i<4; i++){ 
         	ProductExt product = list.get(i);
         %>
             <div class="item-box">
@@ -33,7 +33,7 @@
             <% } %>
                 <a class="item-inner" href="<%=request.getContextPath()%>/product/productId=<%=product.getProductId() %>">
                     <div class="item">
-                        <img src="<%=request.getContextPath() %>/images/<%= product.getAttachment().getOriginalFilename() %>"/>
+                        <img src="<%=request.getContextPath() %>/images/<%= product.getAttachment().getRenamedFilename() %>"/>
           		
                         <div class="info-box">
                             <div class="brand">
@@ -50,7 +50,7 @@
             <%} %>
         </div>
         <div class="item-list">
-        <% for(int i=1; i<5; i++){ 
+        <% for(int i=2; i<6; i++){ 
         	ProductExt product = list.get(i);
         %>
             <div class="item-box">
