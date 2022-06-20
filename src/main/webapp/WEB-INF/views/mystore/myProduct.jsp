@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <title>내가 올린 상품</title>
+ <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/mystore.css">
  <div class="header">
         <h2><span class="material-symbols-outlined md-78">location_away</span> 님, 안녕하세요</h2>
     </div>
