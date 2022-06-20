@@ -1,24 +1,23 @@
-package com.meshop.member.service;
-import static com.meshop.common.JdbcTemplate.*;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.meshop.member.dao.MemberDAO;
+package com.meshop.member.service;
+
+import java.util.List;
+import java.util.Map;
+
 import com.meshop.member.entity.Member;
 
+public interface MemberService {
 
-
-public class MemberService {
-	private MemberDAO memberDao = new MemberDAO();
+	int insertMember(Member member);	
 	
-	public List<Member> findAllMember(){
-		List<Member> list = new ArrayList<>();
-		Connection conn = getConnection();
-		
-		list = memberDao.findAllMember(conn);
-		
-		close(conn);
-		return list;
-	}
+	int findMember(Member member);
+	
+	String findId(String name);
+	
+	String findPw(String id);
+	
+	int duplCheck(String id);
+	
+	List<Member> findAllMember();
 }
+

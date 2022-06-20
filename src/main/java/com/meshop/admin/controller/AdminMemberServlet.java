@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.meshop.member.entity.Member;
 import com.meshop.member.service.MemberService;
+import com.meshop.member.service.MemberServiceImpl;
 
 @WebServlet("/admin/member")
 public class AdminMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private MemberService memberSerivce = new MemberService();
+	private MemberService memberSerivce = new MemberServiceImpl();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
