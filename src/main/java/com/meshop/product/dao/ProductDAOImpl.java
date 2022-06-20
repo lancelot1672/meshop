@@ -210,6 +210,7 @@ public class ProductDAOImpl implements ProductDAO{
 	private ProductExt handleProductExtResultSet(ResultSet rset) throws SQLException {
 		ProductExt product = new ProductExt();
 		
+		product.setProductId(rset.getInt("product_id"));
 		product.setTitle(rset.getString("title"));
 		product.setPrice(rset.getInt("price"));
 		product.setBrand(rset.getString("brand"));
@@ -243,5 +244,23 @@ public class ProductDAOImpl implements ProductDAO{
 			close(pstmt);
 		}
 		return totalProducts;
+	}
+	
+	@Override
+	public ProductExt findOneByProductId(Connection conn, int productId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ProductExt product = null;
+		String sql = properties.getProperty("findOneByProductId");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, productId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) product = handleProductExtResultSet(rset);
+		} catch(SQLException e) {
+			close(rset);
+			close(pstmt);
+		}
+		return product;
 	}
 }
