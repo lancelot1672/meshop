@@ -16,7 +16,7 @@ main {
     justify-content: space-between;
 }
 #categoryToggle span {
-    font-size: 23px;
+    font-size: 15px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -26,8 +26,8 @@ main {
 }
 .categoryList {
     position: relative;
-    left: -1000px;
-    font-size: 18px;
+    left: -999em;
+    font-size: 15px;
     display: block;
     padding: 10px 35px;
     cursor: pointer;
@@ -106,7 +106,7 @@ main {
 .productSection {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 10px 0 30px 0;
 }
 input[name=wishBtn] {
@@ -120,8 +120,9 @@ input[name=wishBtn] + label {
     cursor: pointer;
 }
 .productBox {
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	padding: 0 15px;
+	width: 160px;
 }
 .productLink {
     text-decoration: none;

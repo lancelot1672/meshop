@@ -53,6 +53,7 @@
         <section id="listSection-list">
        	<% 
        		if(list != null && !list.isEmpty()) {
+       			int index = 0;
         		for(int i = 0; i < (int) Math.ceil((double) list.size() / 4); i++) {
        	%>
 			<div class="productSection">
@@ -60,23 +61,25 @@
 					for(int j = 0; j < 4; j++) {
 				%>
     			<div class="productBox">
-        			<a class="productLink" href="">
-	           			<div class="productImage" style="background-image: url('<%= request.getContextPath() %>/images/<%= list.get(j).getAttachment().getRenamedFilename() %>'); background-size: cover;">           
-							<input type="checkbox" name="wishBtn" id="wishBtn1">
-	    					<label for="wishBtn1">♡</label>
+        			<a class="productLink" href="<%= request.getContextPath() %>/product/productView?productId=<%= list.get(index).getProductId() %>">
+	           			<div class="productImage" style="background-image: url('<%= request.getContextPath() %>/images/<%= list.get(index).getAttachment().getRenamedFilename() %>'); background-size: cover;">           
+							<input type="checkbox" name="wishBtn" id="wishBtn<%= index %>">
+	    					<label for="wishBtn<%= index %>">♡</label>
 						</div>
 						<div class="productInfo">
-	    					<div class="brand"><%= list.get(i).getBrand() %></div>
-							<div class="title"><%= list.get(i).getStatus() == ProductStatus.N ? "[새상품]" : "" %> <%= list.get(i).getTitle() %></div>
-							<div class="price"><%= list.get(i).getPrice() %>원</div>
+	    					<div class="brand"><%= list.get(index).getBrand() %></div>
+							<div class="title"><%= list.get(index).getStatus() == ProductStatus.N ? "[새상품]" : "" %> <%= list.get(index).getTitle() %></div>
+							<div class="price"><%= list.get(index).getPrice() %>원</div>
 							<div class="other">
-	    						<span class="place">서울시 <%= list.get(i).getPlace() %></span>
-								<span class="date"><%= list.get(i).getRegDate() %></span>
+	    						<span class="place">서울시 <%= list.get(index).getPlace() %></span>
+								<span class="date"><%= list.get(index).getRegDate() %></span>
 	             			</div>
 	         			</div>
      				</a>
 				</div>
 				<%
+						index++;
+						if(index == list.size()) break;
 					}
 				%>
 			</div>
