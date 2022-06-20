@@ -9,7 +9,7 @@
     </div>
     <div class="chat-section">
        <div class="chatroom-info">
-           <h2></h2>
+           <h3 class="chatroom-title"></h3>
            <span></span>
        </div>
        <div class="chat-container">
@@ -154,7 +154,7 @@
         
     	//채팅 내용 가져오기
     	console.log(chatroomId);
-    	document.querySelector('.chatroom-info h2').innerHTML = title;
+    	document.querySelector('.chatroom-info h3').innerHTML = title;
     	document.querySelector('.chatroom-info span').innerHTML = storeName;
     	
     	//전송버튼 chatroomId, 상대방 아이디 매핑

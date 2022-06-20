@@ -120,6 +120,7 @@ input[name=wishBtn] + label {
 	padding: 0 15px;
 	width: 160px;
 }
+
 .productLink {
     text-decoration: none;
     color: black;
@@ -127,6 +128,17 @@ input[name=wishBtn] + label {
 .productImage {
     border-radius: 10px;
     width: 160px; height: 160px;
+    position: relative;
+}
+.wish-btn {
+	position: absolute;
+	right : 1px;
+    top : 5px;
+
+    /*버튼 크기*/
+    font-size: 15px;
+    border: 0px;
+    background: none;
 }
 .title {
 	height : 40px;

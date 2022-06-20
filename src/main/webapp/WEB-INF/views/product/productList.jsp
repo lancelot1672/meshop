@@ -59,6 +59,7 @@
 			<div class="productSection">
 				<% 
 					for(int j = 0; j < 4; j++) {
+			        	ProductExt product = list.get(i);
 				%>
     			<div class="productBox">
         			<a class="productLink" href="<%= request.getContextPath() %>/product/productView?productId=<%= list.get(index).getProductId() %>">
@@ -116,15 +117,42 @@ document.querySelectorAll('.categoryList').forEach((span) => {
     });
 });
 
-document.querySelectorAll('input[name=wishBtn]').forEach((input) => {
-    input.addEventListener('click', (e) => {
-        if(e.target.checked) {
-            e.target.nextElementSibling.innerHTML = "♥";
-        } else {
-            e.target.nextElementSibling.innerHTML = "♡"
-        }
-    });      
-});
+const wishBtnEvent = (e, productId, memberId) =>{
+	if(e.innerHTML === '<i class="fa-regular fa-heart"></i>'){
+        //빈 하트이면
+        $.ajax({
+            url:"<%=request.getContextPath() %>/wish/addWish",
+            data:{
+            	
+                memberId : memberId,
+                productId : productId
+            },
+            method : "POST",
+            success(response){
+            	//꽉 찬 하트로 변경
+            	console.log("찜하기 성공");
+                e.innerHTML = '<i class="fa-solid fa-heart"></i>';
+            },
+            error:console.log
+        });
+	}else{
+        //찬 하트이면
+        $.ajax({
+            url:"<%=request.getContextPath() %>/wish/delWish",
+            data:{
+                memberId : memberId,
+                productId : productId
+            },
+            method : "POST",
+            success(response){
+            	//빈 하트로 변경
+            	console.log("찜하기 해제");
+                e.innerHTML = '<i class="fa-regular fa-heart"></i>';
+            },
+            error:console.log
+        });
+    }
+}
 
 /* document.querySelectorAll('.date').forEach((date) => {
 	new Date()
