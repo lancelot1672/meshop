@@ -11,25 +11,21 @@ main {
     padding: 10px;
 }
 #categoryToggle {
-    padding: 10px 20px 25px 10px;
+    padding: 10px 20px 20px 10px;
     display: flex;
     justify-content: space-between;
 }
 #categoryToggle span {
-    font-size: 23px;
+    font-size: 17px;
     font-weight: bold;
     cursor: pointer;
 }
-#categoryToggle span#add {
-    position: relative;
-    bottom: 5px;
-}
 .categoryList {
     position: relative;
-    left: -1000px;
-    font-size: 18px;
+    left: -999em;
+    font-size: 15px;
     display: block;
-    padding: 10px 35px;
+    padding: 5px 35px;
     cursor: pointer;
 }
 .on .categoryList {
@@ -45,7 +41,7 @@ main {
 
 /* -------------- listSection-toggle ---------- */
 #listSection-toggle {
-    padding: 10px;
+    padding: 8px;
     display: flex;
     justify-content: space-between;
 }
@@ -90,7 +86,7 @@ main {
 }
 .content {
     position: relative;
-    bottom: 4px;
+    bottom: 5px;
     font-size: 13px;
 }
 /* 조회조건 리스트 */
@@ -106,7 +102,7 @@ main {
 .productSection {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 10px 0 30px 0;
 }
 input[name=wishBtn] {
@@ -120,9 +116,12 @@ input[name=wishBtn] + label {
     cursor: pointer;
 }
 .productBox {
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	padding: 0 15px;
+	width: 160px;
+	position: relative;
 }
+
 .productLink {
     text-decoration: none;
     color: black;
@@ -130,23 +129,40 @@ input[name=wishBtn] + label {
 .productImage {
     border-radius: 10px;
     width: 160px; height: 160px;
+    position: relative;
+    background-color : rgb(244, 244, 244);
+}
+.wish-btn {
+	position: absolute;
+	right : 18px;
+    top : 5px;
+
+    /*버튼 크기*/
+    font-size: 15px;
+    border: 0px;
+    background: none;
+    z-index: 10;
 }
 .title {
-	height : 60px;
+	height : 40px;
+	font-size: 12px;
 }
 .brand, .price {
     font-weight: bold;
+    font-size: 14px;
+}
+.productInfo {
+	margin-top: 10px;
 }
 .productInfo .price {
     padding: 5px 0;
-    font-size:18px;
 }
 .other {
     display: flex;
     justify-content: space-between;
 }
 .other span {
-    font-size: 10px;
+    font-size: 8px;
     color: rgb(188, 188, 188);
 }
 #pagebar {
@@ -155,4 +171,5 @@ input[name=wishBtn] + label {
 }
 #pagebar span {
 	padding: 30px 10px;
+	font-size: 14px;
 }

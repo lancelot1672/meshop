@@ -18,8 +18,9 @@ import com.meshop.member.service.MemberServiceImpl;
 import com.meshop.wish.service.WishService;
 import com.meshop.wish.service.WishServiceImpl;
 
-@WebServlet(name = "memberLoginServlet", urlPatterns = "/member/login")
-public class MemberLoginServlet extends HttpServlet {
+
+@WebServlet(name="memberLoginServlet", urlPatterns = "/login")
+public class MemberLoginServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	@Override

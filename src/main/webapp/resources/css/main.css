@@ -1,5 +1,8 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 body {
     margin: 0;
+    font-family: "Noto Sans KR", sans-serif;
+    
 }
 .header {
     position: fixed;
@@ -182,7 +185,7 @@ body {
     margin-top : 20px;
 
 }
-.product_section_title .title {
+.product_section_title .section_title {
     font-size : 20px;
     letter-spacing: -.1px;
     font-weight: 700;
@@ -192,7 +195,6 @@ body {
 /* 아이템 목록 */
 .item-list {
     display: flex;
-    border: 1px solid black;
     
     flex-direction: row;
 
@@ -204,7 +206,6 @@ body {
 .item-box {
     width: 25%;
 
-    border: 1px solid blueviolet;
 
     /*위치*/
     margin-top : 10px;
@@ -221,7 +222,7 @@ body {
 .item>img {
     width: 100%;
     height: 80%;
-    background-color : rgb(216, 215, 215);
+    background-color : rgb(244, 244, 244);
     border-radius: 10px;
 }
 /* 찜하기 버튼 */
@@ -231,25 +232,36 @@ body {
     top : 5px;
 
     /*버튼 크기*/
-    font-size: 15px;
+    font-size: 17px;
     border: 0px;
     background: none;
 }
-.info-box {
-    border: 1px solid black;
-    height: 150px;
+.title {
+	height : 40px;
+	font-size: 16px;
 }
-.brand>p {
-    margin: 10px 0 10px;
-}
-.product-title {
-    margin: 10px 0 10px;
+.brand, .price {
+    font-weight: bold;
     font-size: 14px;
 }
-.price>p {
+.brand {
+	text-decoration: underline;
+}
+.productInfo .price {
+    padding: 5px 0;
+}
+.price {
     margin: 10px 0 10px;
 }
-em, .brand>p {
+.other {
+    display: flex;
+    justify-content: space-between;
+}
+.other span {
+    font-size: 14px;
+    color: rgb(188, 188, 188);
+}
+em, .brand {
     font-style: normal;
     font-weight: 700;
 }

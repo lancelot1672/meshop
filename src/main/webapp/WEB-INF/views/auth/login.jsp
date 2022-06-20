@@ -16,6 +16,7 @@ String result =(String) request.getAttribute("result");
 </head>
 <body>
 <!-- 로그인폼 시작 -->
+<<<<<<< HEAD
  <div id="header">
        <img src="<%=request.getContextPath() %>/resources/images/me_shop_logo.png" id="logo"/>
     </div>
@@ -55,3 +56,19 @@ String result =(String) request.getAttribute("result");
 
 
 
+=======
+<form id="loginFrm" name="loginFrm" method="POST" action="<%= request.getContextPath() %>/login">
+	<table>
+		<tr>
+			<td><input type="text" name="memberId" id="memberId" placeholder="아이디" tabindex="1"></td>
+			<td><input type="submit" value="로그인" tabindex="3"></td>
+		</tr>
+		<tr>
+			<td><input type="password" name="password" id="password" placeholder="비밀번호" tabindex="2"></td>
+			<td></td>
+		</tr>
+	</table>
+</form>
+</body>
+</html>
+>>>>>>> branch 'master' of https://github.com/lancelot1672/meshop.git

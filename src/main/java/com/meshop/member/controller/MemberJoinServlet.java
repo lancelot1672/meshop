@@ -1,7 +1,6 @@
 package com.meshop.member.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,10 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.meshop.member.entity.Member;
+import com.meshop.member.entity.MemberRole;
 import com.meshop.member.service.MemberService;
 import com.meshop.member.service.MemberServiceImpl;
-import com.meshop.wish.service.WishService;
-import com.meshop.wish.service.WishServiceImpl;
 
 @WebServlet(name="memberJoinServlet", urlPatterns = "/member/join")
 public class MemberJoinServlet extends HttpServlet{
@@ -39,12 +37,13 @@ public class MemberJoinServlet extends HttpServlet{
 			String place =  request.getParameter("place");
 			
 			Member member = new Member();
+			
 			member.setMemberId(memberId);
 			member.setPassword(password);
 			member.setMemberName(name);
 			member.setStoreName(storeName);
 			member.setPlace(place);
-			member.setMemberRole("U");
+			member.setMemberRole(MemberRole.U);
 			
 			MemberService memberService = new MemberServiceImpl();
 			

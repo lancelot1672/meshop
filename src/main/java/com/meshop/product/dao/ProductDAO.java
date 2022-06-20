@@ -23,6 +23,8 @@ public interface ProductDAO {
 
 	List<ProductExt> findAllOrderBy(Connection conn, Map<String, Integer> param, String sort);
 
+	ProductExt findOneByProductId(Connection conn, int productId);
+
 	
 	
 }

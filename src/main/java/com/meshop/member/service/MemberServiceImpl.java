@@ -6,17 +6,17 @@ import static com.meshop.common.JdbcTemplate.getConnection;
 import static com.meshop.common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.meshop.member.dao.MemberDAO;
-import com.meshop.member.dao.MemberDAOImpl;
+import com.meshop.member.dao.MemberDAO;
 import com.meshop.member.entity.Member;
 
 
 public class MemberServiceImpl implements MemberService {
 	
-	MemberDAO memberDAO = new MemberDAOImpl();
+	MemberDAO memberDAO = new MemberDAO();
 
 	@Override
 	public int insertMember(Member member) {
@@ -99,6 +99,15 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 	
+	public List<Member> findAllMember(){
+		List<Member> list = new ArrayList<>();
+		Connection conn = getConnection();
+		
+		list = memberDAO.findAllMember(conn);
+		
+		close(conn);
+		return list;
+	}
 	
 
 }
