@@ -1,4 +1,5 @@
 <%@ page import="com.meshop.member.entity.Member" %>
+<%@ page import="com.meshop.member.entity.MemberRole" %>
 <%@page import="java.util.List"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -54,6 +55,11 @@
                     <li><a class="" href="<%= request.getContextPath() %>/product/productEnroll">글쓰기</a></li>
                     <li><a class="" href="<%= request.getContextPath() %>/chat">채팅방</a></li>
                     <li><a class="" href="<%= request.getContextPath() %>/mystore/myProduct">내 상점</a></li>
+                    <% if(loginMember != null && loginMember.getMemberRole() == MemberRole.A){ %>
+                    <li><a class="" href="<%= request.getContextPath() %>/admin">관리자페이지</a></li>
+                    <% }else{ %>
+                    <li><a class="" href="#">내 상점</a></li>
+                    <% } %>
                 </ul>
             </div>
         </div>

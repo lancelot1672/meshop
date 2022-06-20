@@ -32,7 +32,7 @@ public class ChatFilter implements Filter {
         
         if(loginMember == null) {
             // index로 리다이렉트
-            httpRes.sendRedirect(httpReq.getContextPath() + "/");
+            httpRes.sendRedirect(httpReq.getContextPath() + "/member/login");
             return; //조기 리턴
         }
         chain.doFilter(request, response);
