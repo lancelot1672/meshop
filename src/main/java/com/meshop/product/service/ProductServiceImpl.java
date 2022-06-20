@@ -1,8 +1,6 @@
 package com.meshop.product.service;
 
-import static com.meshop.common.JdbcTemplate.commit;
-import static com.meshop.common.JdbcTemplate.getConnection;
-import static com.meshop.common.JdbcTemplate.rollback;
+import static com.meshop.common.JdbcTemplate.*;
 
 import java.sql.Connection;
 import java.util.List;
@@ -19,11 +17,6 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<ProductExt> findAll() {
 		return productDAO.findAll();
-	}
-
-	@Override
-	public List<ProductExt> findAll(Map<String, Object> param) {
-		return null;
 	}
 
 	@Override
@@ -51,13 +44,40 @@ public class ProductServiceImpl implements ProductService{
 		} catch(Exception e) {
 			rollback(conn);
 			throw e;
+		} finally {
+			close(conn);
 		}
 		return result;
 	}
 
 	@Override
+	public int insertProductBuy(ProductExt product) {
+		int result = 0;
+		Connection conn = getConnection();
+		try {
+			result = productDAO.insertProductBuy(conn, product);
+			commit(conn);
+		} catch(Exception e) {
+			rollback(conn);
+			throw e;
+		}
+		return result;
+	}
+	
+	@Override
+	public List<ProductExt> findAllOrderBy(Map<String, Integer> param, String sort) {
+		Connection conn = getConnection();
+		List<ProductExt> productList = productDAO.findAllOrderBy(conn, param, sort);
+		close(conn);
+		return productList;
+	}
+	
+	@Override
 	public int getTotalProducts() {
-		return 0;
+		Connection conn = getConnection();
+		int totalProducts = productDAO.getTotalProducts(conn);
+		close(conn);
+		return totalProducts;
 	}
 
 }

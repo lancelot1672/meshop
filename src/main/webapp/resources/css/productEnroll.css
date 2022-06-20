@@ -123,7 +123,7 @@ input[name=productStatus]:checked + label .circle:after { opacity: 1; }
 #product-enroll-submit {
     position: fixed;
     bottom: 0px;
-    margin: 70px 0 0 0;
+    margin: 50px 0 0 0;
     width: 100%;
     text-align: right;
     background-color: white;

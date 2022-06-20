@@ -54,13 +54,11 @@ public class ProductDAOImpl implements ProductDAO{
         		ProductExt p = new ProductExt();
         		
         		//상품 미리보기 정보
+           		p.setProductId(rs.getInt("product_id"));
         		p.setTitle(rs.getString("title"));
         		p.setPrice(rs.getInt("price"));
         		p.setBrand(rs.getString("brand"));
-        		p.setPlace(rs.getString("place"));
-        		p.setRegDate(rs.getDate("reg_date"));
-        		p.setStatus(ProductStatus.valueOf(rs.getString("status")));
-        		
+
         		//대표 이미지 파일
         		Attachment a = new Attachment();
         		a.setOriginalFilename(rs.getString("original_name"));

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.meshop.chat.entity.Chatroom;
+import com.meshop.chat.entity.CheckStatus;
 import com.meshop.chat.entity.Message;
 
 
@@ -65,14 +66,15 @@ public class ChatDAO {
         }
 		return messageList;
 	}
-	public List<Chatroom> findAllChat(Connection conn, String memberId) {
+	public List<Chatroom> findAllChatroom(Connection conn, String memberId) {
+		// 회원 아이디에 맞는 채팅방 목록 가져오기
 		//준비
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         List<Chatroom> list = new ArrayList<>();
         
         // SQL
-        //select c.*, m.store_name, m.member_id from chatroom c left outer join  member m on (c.seller_id = ? or c.buyer_id = ?) where m.member_id != ?
+        //select * from v1 where (seller_id = ? or buyer_id = ?) and member_id != ?
         String sql = properties.getProperty("findAllChat");
         
         try {
@@ -92,6 +94,13 @@ public class ChatDAO {
         		c.setProductId(rs.getInt("product_id"));
         		c.setTitle(rs.getString("title"));
         		c.setStoreName(rs.getString("store_name"));
+        		if(rs.getString("check_status").equals("C")) {
+        			c.setCheckstatus(CheckStatus.C);
+        		}else {
+        			c.setCheckstatus(CheckStatus.N);
+        		}
+        		c.setCreateDate(rs.getDate("create_date"));
+        		
         		System.out.println(c);
         		list.add(c);
         	}
@@ -124,6 +133,27 @@ public class ChatDAO {
         	close(pstmt);
         }
 		
+        return result;
+	}
+	public int updateCheckStatus(Connection conn, int chatroomId) {
+		//준비
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String sql = properties.getProperty("updateCheckStatus");
+        System.out.println(sql);
+        
+        try {
+        	pstmt = conn.prepareStatement(sql);
+        	pstmt.setInt(1, chatroomId);
+        	
+        	result = pstmt.executeUpdate();
+        }catch(SQLException e) {
+        	e.printStackTrace();
+        	//에러 던지기!
+        }finally {
+        	close(pstmt);
+        }
+        
         return result;
 	}
 }

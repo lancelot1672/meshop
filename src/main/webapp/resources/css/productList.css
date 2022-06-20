@@ -1,0 +1,158 @@
+main {
+    margin: 200px auto;
+    width: 1024px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+/* category section */
+#categorySection {
+    width: 200px;
+    padding: 10px;
+}
+#categoryToggle {
+    padding: 10px 20px 25px 10px;
+    display: flex;
+    justify-content: space-between;
+}
+#categoryToggle span {
+    font-size: 23px;
+    font-weight: bold;
+    cursor: pointer;
+}
+#categoryToggle span#add {
+    position: relative;
+    bottom: 5px;
+}
+.categoryList {
+    position: relative;
+    left: -1000px;
+    font-size: 18px;
+    display: block;
+    padding: 10px 35px;
+    cursor: pointer;
+}
+.on .categoryList {
+    left: 0;
+}
+
+/* ---------------- listSection ---------------- */
+#listSection {
+    width: 800px;
+    padding: 10px 10px 10px 60px;
+    border-left: 1px solid rgb(197, 197, 197);
+}
+
+/* -------------- listSection-toggle ---------- */
+#listSection-toggle {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+/* 새상품, 내동네 toggle */
+#listSection-toggle input {
+    position: absolute;
+    left: -999em;
+}
+#listSection-toggle label {
+    cursor: pointer;
+    padding: 0 30px 0 0;
+}
+.toggleBtn {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    width: 35px; height: 16px;
+    background: #fff;
+    border: 2px solid rgb(104, 181, 130);
+    border-radius: 20px;
+    transition: 0.2s;
+}
+.toggleBtn:hover {
+    background-color: #efefef;
+}
+.onoff {
+    position: relative;
+    bottom: 3px; left: 3px;
+    display: inline-block;
+    width: 13px; height: 13px;
+    border-radius: 20px;
+    background: rgb(83, 147, 107);
+    transition: 0.2s;
+}
+#listSection-toggle input:checked + label .toggleBtn {
+    background-color: rgb(74, 165, 99);
+}
+#listSection-toggle input:checked + label .onoff {
+    left: 20px;
+    background-color: #fff;
+    box-shadow: 1px 2px 3px #00000020;
+}
+.content {
+    position: relative;
+    bottom: 4px;
+    font-size: 13px;
+}
+/* 조회조건 리스트 */
+#viewCondition {
+    border-style: none;
+}
+#viewCondition option {
+    border: 1px solid black;
+    border-radius: 0;
+}
+
+/* ---------------- listSection-list -------------- */
+.productSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0 30px 0;
+}
+input[name=wishBtn] {
+    position: absolute;
+    left: -999em;
+}
+input[name=wishBtn] + label {
+    position: relative;
+    top:5px; left: 130px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.productBox {
+	border: 1px solid black;
+	padding: 0 15px;
+}
+.productLink {
+    text-decoration: none;
+    color: black;
+}
+.productImage {
+    border-radius: 10px;
+    width: 160px; height: 160px;
+}
+.title {
+	height : 60px;
+}
+.brand, .price {
+    font-weight: bold;
+}
+.productInfo .price {
+    padding: 5px 0;
+    font-size:18px;
+}
+.other {
+    display: flex;
+    justify-content: space-between;
+}
+.other span {
+    font-size: 10px;
+    color: rgb(188, 188, 188);
+}
+#pagebar {
+	display: flex;
+	justify-content: center;
+}
+#pagebar span {
+	padding: 30px 10px;
+}

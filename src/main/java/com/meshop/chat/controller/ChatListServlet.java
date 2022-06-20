@@ -29,6 +29,9 @@ public class ChatListServlet extends HttpServlet{
 		// 2. 업무로직
 		List<Message> messageList = chatService.findChat(chatroomId);
 		
+		//채팅방 읽음 상태 변경
+		int result = chatService.updateCheckStatus(chatroomId);
+		
 		// 3. 응답처리 json
 		response.setContentType("application/json; charset=utf-8");
 		response.getWriter().append(new Gson().toJson(messageList));

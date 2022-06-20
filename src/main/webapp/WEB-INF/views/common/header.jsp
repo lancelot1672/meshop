@@ -1,6 +1,17 @@
+<%@ page import="com.meshop.member.entity.Member" %>
+<%@page import="java.util.List"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-
+<% 
+	Member loginMember = (Member) session.getAttribute("loginMember");
+	
+	List<Integer> wishList = null;
+	if(loginMember != null){
+		wishList = loginMember.getWish();
+		System.out.println("view" + wishList.toString());
+	}
+%>
 <!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
@@ -13,13 +24,18 @@
     <div class="header">
         <div class="auth-section">
             <ul class="nav-auth">
-                <li><a class="auth-menu" href="./login.html">로그인</a></li>
-                <li><a class="auth-menu" href="./joinForm.html">회원가입</a></li>
+            <% if(loginMember == null){ %>
+                <li><a class="auth-menu" href="<%= request.getContextPath() %>/member/login">로그인</a></li>
+            	<li><a class="auth-menu" href="<%= request.getContextPath() %>/member/join">회원가입</a></li>
+            <%}else{ %>
+            	<li><em><%=loginMember.getMemberId() %></em></li>
+            	<li><a class="auth-menu" href="<%= request.getContextPath() %>/member/logout">로그아웃</a></li>
+            <%} %>
             </ul>
         </div>
         <div class="container">
             <div class="logo">
-                <a href="#"><img id="logo-img" src="<%= request.getContextPath() %>/images/logo.png" alt="메인 페이지"></a>
+                <a href="<%= request.getContextPath() %>/main"><img id="logo-img" src="<%= request.getContextPath() %>/images/logo.png" alt="메인 페이지"></a>
             </div>
             <div class="search-section">
                 <div class="search-bar">
@@ -30,7 +46,7 @@
             <div class="menu">
                 <ul class="nav-menu">
                     <li><a class="" href="<%= request.getContextPath() %>/product/productEnroll">글쓰기</a></li>
-                    <li><a class="" href="#">채팅방</a></li>
+                    <li><a class="" href="<%= request.getContextPath() %>/chat">채팅방</a></li>
                     <li><a class="" href="#">내 상점</a></li>
                 </ul>
             </div>

@@ -27,13 +27,58 @@ public class WishDAOImpl implements WishDAO {
             String message = e.getMessage();
         	System.out.println(message);
         }
-        System.out.println("filename = " + filename);
 	}
 	
 	@Override
-	public List<Integer> findByMemberId(String memberId) {
-		//준비
-		Connection conn = getConnection();
+	public int insertWish(Connection conn, String memberId, int productId) {
+        PreparedStatement pstmt = null;
+        // insert into wish values(seq_wish_no.nextval, ?, ?)
+        String sql = properties.getProperty("insertWish");
+        
+        int result = 0;
+        try {
+        	pstmt = conn.prepareStatement(sql);
+        	pstmt.setString(1, memberId);
+        	pstmt.setInt(2, productId);
+        	
+        	result = pstmt.executeUpdate();
+        	
+        }catch(SQLException e) {
+            String message = e.getMessage();
+        	System.out.println(message);
+        }finally {
+        	//자원 반납.
+        	close(pstmt);
+        }
+		return result;
+	}
+
+	@Override
+	public int deleteWish(Connection conn, String memberId, int productId) {
+        PreparedStatement pstmt = null;
+        // delete wish where member_id = ? and product_id = ?
+        String sql = properties.getProperty("deleteWish");
+        
+        int result = 0;
+        try {
+        	pstmt = conn.prepareStatement(sql);
+        	pstmt.setString(1, memberId);
+        	pstmt.setInt(2, productId);
+        	
+        	result = pstmt.executeUpdate();
+        	
+        }catch(SQLException e) {
+            String message = e.getMessage();
+        	System.out.println(message);
+        }finally {
+        	//자원 반납.
+        	close(pstmt);
+        }
+		return result;
+	}
+
+	@Override
+	public List<Integer> findByMemberId(Connection conn, String memberId) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         // Integer 로 한 이유는?? => 한 아이디의 1,3번 상품이 wish라고 하면 list에 1과 3을 추가.
@@ -63,7 +108,6 @@ public class WishDAOImpl implements WishDAO {
         	//자원 반납.
         	close(rs);
         	close(pstmt);
-        	close(conn);
         }
 		return wishList;
 	}

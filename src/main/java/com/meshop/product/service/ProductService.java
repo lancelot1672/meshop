@@ -7,9 +7,14 @@ import com.meshop.product.entity.ProductExt;
 
 public interface ProductService {
 	List<ProductExt> findAll();
-	List<ProductExt> findAll(Map<String, Object> param);
 	
 	int insertProduct(ProductExt product);
 	
+	int insertProductBuy(ProductExt product);
+	
 	int getTotalProducts();
+	
+	// product List
+	int NUM_PER_PAGE = 16;
+	List<ProductExt> findAllOrderBy(Map<String, Integer> param, String sort);
 }
