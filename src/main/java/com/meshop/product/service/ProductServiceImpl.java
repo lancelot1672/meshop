@@ -79,5 +79,13 @@ public class ProductServiceImpl implements ProductService{
 		close(conn);
 		return totalProducts;
 	}
+	
+	@Override
+	public ProductExt findOneByProductId(int productId) {
+		Connection conn = getConnection();
+		ProductExt product = productDAO.findOneByProductId(conn, productId);
+		close(conn);
+		return product;
+	}
 
 }

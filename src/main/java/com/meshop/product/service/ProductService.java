@@ -17,4 +17,6 @@ public interface ProductService {
 	// product List
 	int NUM_PER_PAGE = 16;
 	List<ProductExt> findAllOrderBy(Map<String, Integer> param, String sort);
+
+	ProductExt findOneByProductId(int productId);
 }
