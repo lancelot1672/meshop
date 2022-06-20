@@ -119,6 +119,7 @@ input[name=wishBtn] + label {
 	/* border: 1px solid black; */
 	padding: 0 15px;
 	width: 160px;
+	position: relative;
 }
 
 .productLink {
@@ -133,13 +134,14 @@ input[name=wishBtn] + label {
 }
 .wish-btn {
 	position: absolute;
-	right : 1px;
+	right : 18px;
     top : 5px;
 
     /*버튼 크기*/
     font-size: 15px;
     border: 0px;
     background: none;
+    z-index: 10;
 }
 .title {
 	height : 40px;

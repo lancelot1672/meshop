@@ -59,13 +59,18 @@
 			<div class="productSection">
 				<% 
 					for(int j = 0; j < 4; j++) {
-			        	ProductExt product = list.get(i);
 				%>
     			<div class="productBox">
+					<% if(loginMember != null && wishList.contains(list.get(index).getProductId())){ %>
+		            	<button class="wish-btn" onclick="wishBtnEvent(this,'<%=list.get(index).getProductId()%>','<%= loginMember.getMemberId() %>')"><i class="fa-solid fa-heart"></i></button>
+		            <% }else if(loginMember != null){ %>
+		            	<button class="wish-btn" onclick="wishBtnEvent(this,'<%=list.get(index).getProductId()%>','<%= loginMember.getMemberId() %>')"><i class="fa-regular fa-heart"></i></button>
+		            <% }else{ %>
+		            	<button class="wish-btn" onclick="location.href='<%=request.getContextPath() %>/login';"><i class="fa-regular fa-heart"></i></button>
+		            <% } %>
         			<a class="productLink" href="<%= request.getContextPath() %>/product/productView?productId=<%= list.get(index).getProductId() %>">
 	           			<div class="productImage" style="background-image: url('<%= request.getContextPath() %>/images/<%= list.get(index).getAttachment().getRenamedFilename() %>'); background-size: cover;">           
-							<input type="checkbox" name="wishBtn" id="wishBtn<%= index %>">
-	    					<label for="wishBtn<%= index %>">♡</label>
+
 						</div>
 						<div class="productInfo">
 	    					<div class="brand"><%= list.get(index).getBrand() %></div>
