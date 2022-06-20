@@ -29,7 +29,7 @@
             <% }else if(loginMember != null){ %>
             	<button class="wish-btn" onclick="wishBtnEvent(this,'<%=product.getProductId()%>','<%= loginMember.getMemberId() %>')"><i class="fa-regular fa-heart"></i></button>
             <% }else{ %>
-            	<button class="wish-btn" onclick="location.href='<%=request.getContextPath() %>/member/login';"><i class="fa-regular fa-heart"></i></button>
+            	<button class="wish-btn" onclick="location.href='<%=request.getContextPath() %>/login';"><i class="fa-regular fa-heart"></i></button>
             <% } %>
                 <a class="item-inner" href="<%=request.getContextPath()%>/product/productId=<%=product.getProductId() %>">
                     <div class="item">
@@ -61,7 +61,7 @@
             <% }else if(loginMember != null){ %>
             	<button class="wish-btn" onclick="wishBtnEvent(this,'<%=product.getProductId()%>','<%= loginMember.getMemberId() %>')"><i class="fa-regular fa-heart"></i></button>
             <% }else{ %>
-            	<button class="wish-btn" onclick="location.href='<%=request.getContextPath() %>/member/login';"><i class="fa-regular fa-heart"></i></button>
+            	<button class="wish-btn" onclick="location.href='<%=request.getContextPath() %>/login';"><i class="fa-regular fa-heart"></i></button>
             <% } %>
                 <a class="item-inner" href="<%=request.getContextPath()%>/product/productId=<%=product.getProductId() %>">
                     <div class="item">
