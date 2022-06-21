@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.meshop.member.entity.Member;
 import com.meshop.product.entity.Attachment;
 import com.meshop.product.entity.ProductExt;
 import com.meshop.product.entity.ProductStatus;
@@ -219,6 +220,7 @@ public class ProductDAOImpl implements ProductDAO{
 		product.setBrand(rset.getString("brand"));
 		product.setPlace(rset.getString("place"));
 		product.setRegDate(rset.getDate("reg_date"));
+		product.setContent(rset.getString("content"));
 		product.setStatus(ProductStatus.valueOf(rset.getString("status")));
 		
 		Attachment attach = new Attachment();
@@ -259,7 +261,12 @@ public class ProductDAOImpl implements ProductDAO{
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, productId);
 			rset = pstmt.executeQuery();
-			if(rset.next()) product = handleProductExtResultSet(rset);
+			if(rset.next()) {
+				product = handleProductExtResultSet(rset);
+				Member member = new Member();
+				member.setStoreName(rset.getString("store_name"));
+				product.setMember(member);
+			}
 		} catch(SQLException e) {
 			close(rset);
 			close(pstmt);

@@ -84,7 +84,7 @@ main {
     background-color: #fff;
     box-shadow: 1px 2px 3px #00000020;
 }
-.content {
+.list-content {
     position: relative;
     bottom: 5px;
     font-size: 13px;
@@ -143,25 +143,25 @@ input[name=wishBtn] + label {
     background: none;
     z-index: 10;
 }
-.title {
+.list-title {
 	height : 40px;
 	font-size: 12px;
 }
-.brand, .price {
+.list-brand, .list-price {
     font-weight: bold;
     font-size: 14px;
 }
 .productInfo {
 	margin-top: 10px;
 }
-.productInfo .price {
+.productInfo .list-price {
     padding: 5px 0;
 }
-.other {
+.list-other {
     display: flex;
     justify-content: space-between;
 }
-.other span {
+.list-other span {
     font-size: 8px;
     color: rgb(188, 188, 188);
 }
