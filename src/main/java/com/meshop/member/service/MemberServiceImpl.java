@@ -19,6 +19,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int insertMember(Member member) {
+		//회원가입
+		
 		int result = 0;
 		Connection conn = getConnection();
 		try {
@@ -83,14 +85,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int duplCheck(String id) {
-		int result = 0;
+	public boolean duplCheck(String memberId) {
+		boolean result;
 		Connection conn = getConnection();
 		try {
-			result = memberDAO.duplCheck(conn, id);
-			commit(conn);
+			result = memberDAO.duplCheck(conn, memberId);
 		} catch(Exception e) {
-			rollback(conn);
 			throw e;
 		} finally {
 			close(conn);
@@ -98,6 +98,20 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 	
+	@Override
+	public boolean storeDuplCheck(String storeName) {
+		boolean result;
+		Connection conn = getConnection();
+		try {
+			result = memberDAO.storeDuplCheck(conn, storeName);
+		} catch(Exception e) {
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
 	@Override
 	public List<Member> findAllMember(){
 		List<Member> list = new ArrayList<>();

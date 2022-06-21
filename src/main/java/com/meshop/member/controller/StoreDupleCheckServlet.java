@@ -18,22 +18,19 @@ import com.meshop.member.service.MemberServiceImpl;
 import com.meshop.wish.service.WishService;
 import com.meshop.wish.service.WishServiceImpl;
 
-@WebServlet(name="memberDuplServlet", urlPatterns = "/member/id-check")
-public class MemberDupleCheckServlet extends HttpServlet{
+@WebServlet(name="storeDuplecheckServlet", urlPatterns = "/member/store-check")
+public class StoreDupleCheckServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1. 사용자 입력 값
-		String memberId = request.getParameter("memberId");
-		System.out.println("memberId : " + memberId);
+		String storeName = request.getParameter("storeName");
+		System.out.println("storeName : " + storeName);
 		
 		// 2. DB 로직
-		Member member = new Member();
-		member.setMemberId(memberId);
-		
 		MemberService memberService = new MemberServiceImpl();
-		boolean result = memberService.duplCheck(memberId);
+		boolean result = memberService.storeDuplCheck(storeName);
 		
 		// 3. view 전달
 		PrintWriter out = response.getWriter();

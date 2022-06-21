@@ -1,149 +1,243 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-    <%
-    
-    String result = (String)request.getAttribute("result");
-    %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+<%
+
+String result = (String)request.getAttribute("result");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-  <title>Me Shop | È¸¿ø°¡ÀÔ</title>
+  <title>Me Shop | íšŒì›ê°€ì…</title>
   <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/join.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body>
-
- <div id="header">
-        <img src="<%=request.getContextPath() %>/resources/images/me_shop_logo.png" id="logo"/>
-    </div>
+  <body>
+    <div id="header"><img src="<%=request.getContextPath() %>/resources/images/logo.png" id="logo"/></div>
 
     <div class="join_wrapper">
       <div class="join_content">
-        <form id="joinFrm" name="joinFrm" method="post" action="<%= request.getContextPath() %>/member/join">
+        <form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/join" method="post">
         <div>
           <h3 class="join_title">
-            <label for="id">¾ÆÀÌµğ</label>
+            <label for="id">ì•„ì´ë””<sup>*</sup></label>
           </h3>
-            <input type="text" name="id" id="id"  placeholder="³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä" />
-        	<div class="check_btn_area">
-        	<button type="button" id="duplCheck" onClick="check()" name="duplCheck">Áßº¹Ã¼Å©</button>
-       		</div>
+            <input type="text" id="id" name="memberId" placeholder="ì˜ë¬¸, ìˆ«ì (8~20)ì ì•„ì´ë””" />
+            <span class="validation" id="idValid"></span>
         </div>
         <div>
-          <h3 class="join_title"><label for="password">ºñ¹Ğ¹øÈ£</label></h3>
-            <input type="password" name="password" id="password"  placeholder="³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä" />
+          <h3 class="join_title"><label for="pswd1">ë¹„ë°€ë²ˆí˜¸<sup>*</sup></label></h3>
+            <input type="password" id="pswd1" name="password" placeholder="íŠ¹ìˆ˜ë¬¸ì, ì˜ë¬¸, ìˆ«ì ìµœì†Œ 8ì" />
+            <span class="validation" id="pswd1Valid"></span>
         </div>
 
         <div>
-          <h3 class="join_title"><label for="password2">ºñ¹Ğ¹øÈ£ È®ÀÎ</label></h3>
-            <input type="password" name="password2" id="password2"  placeholder="³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä" />
+          <h3 class="join_title"><label for="pswd2">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</label></h3>
+            <input type="password" id="pswd2"  placeholder="ë¹„ë°€ë²ˆí˜¸ í™•ì¸" />
+            <span class="validation" id="pswd2Valid"></span>
         </div>
         <div>
-          <h3 class="join_title"><label for="name">ÀÌ¸§</label></h3>
-            <input type="text" id="name" name="name" placeholder="³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä"/>
+          <h3 class="join_title"><label for="name">íšŒì› ì´ë¦„<sup>*</sup></label></h3>
+            <input type="text" id="name" name="memberName" placeholder="ì´ë¦„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”"/>
+            <span class="validation" id="nameValid"></span>
         </div>
- 		<div>
-          <h3 class="join_title"><label for="storeName">»óÁ¡ ÀÌ¸§</label></h3>
-            <input type="text" name="storeName" id="storeName"  placeholder="³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä"/>
-            
-        </div>        
-
         <div>
-          <h3 class="join_title"><label for="place">³» µ¿³× ¼³Á¤</label></h3>
-          <select name="place" id="place">
-            <option value="Á¾·Î±¸">Á¾·Î±¸</option>
-            <option value="µ¿´ë¹®±¸">µ¿´ë¹®±¸</option>
-            <option value="¼­´ë¹®±¸">¼­´ë¹®±¸</option>
-            <option value="¿ë»ê±¸">¿ë»ê±¸</option>
-            <option value="Áß±¸">Áß±¸</option>
+          <h3 class="join_title"><label for="storeName">ìƒì  ì´ë¦„<sup>*</sup></label></h3>
+            <input type="text" id="storeName" name="storeName" placeholder="ìƒì  ì´ë¦„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”"/>
+            <span class="validation" id="storeValid"></span>
+        </div>
+        <div>
+          <h3 class="join_title"><label for="region">ë‚´ ë™ë„¤ ì„¤ì •<sup>*</sup></label></h3>
+          <select name="region" id="region">
+            <option value="">ë™ë„¤ ì„ íƒ</option>
+            <option value="ì¢…ë¡œêµ¬">ì¢…ë¡œêµ¬</option>
+            <option value="ë™ëŒ€ë¬¸êµ¬">ë™ëŒ€ë¬¸êµ¬</option>
+            <option value="ì„œëŒ€ë¬¸êµ¬">ì„œëŒ€ë¬¸êµ¬</option>
+            <option value="ìš©ì‚°êµ¬">ìš©ì‚°êµ¬</option>
+            <option value="ì¤‘êµ¬">ì¤‘êµ¬</option>
           </select>
         </div>
 
         <div class="join_btn_area">
-        <input type="submit" value="°¡ÀÔÇÏ±â" >
+          <button type="submit" class="join">
+            <span>ê°€ì…í•˜ê¸°</span>
+          </button>
         </div>
       </form>
       </div>
     </div>
-    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-    
-</body>
+  </body>
+  <script>
+    let idCheck = false;
+    let pw1Check = false;
+    let pw2Check = false;
+    let nameCheck = false;
+    let storeCheck = false;
+    let placeCheck = false;
+    document.querySelector("#id").addEventListener('blur', (e)=>{
+      const memberId = e.target.value
+      console.log(memberId);
+
+      if(!/^.{4,20}$/.test(memberId)){
+        e.target.style.border = "2px solid red";
+        document.querySelector("#idValid").innerHTML = "ì•„ì´ë””ëŠ” 8~20ìë¦¬ ì´ì—¬ì•¼ í•©ë‹ˆë‹¤.";
+        idCheck = false;
+        return;
+      }
+
+      e.target.style.border = "1px solid black";
+      document.querySelector("#idValid").innerHTML = "";
+      idCheck = true;
+      
+      $.ajax({
+          url:"<%=request.getContextPath()%>/member/id-check",
+          method:"POST",
+          data:{
+            memberId : memberId
+          },
+          success(response){
+        	  console.log(response);
+            if(response === "true"){
+              e.target.style.border = "1px solid black";
+              document.querySelector("#idValid").innerHTML = "";
+               idCheck = true;
+            }else{
+              e.target.style.border = "2px solid red";
+              document.querySelector("#idValid").innerHTML = "ì´ë¯¸ ì‚¬ìš©ì¤‘ì¸ ì•„ì´ë””ì…ë‹ˆë‹¤.";
+              idCheck = false;
+            }
+          },
+          error:console.log
+        });
+     });
+     document.querySelector("#pswd1").addEventListener('blur',(e)=>{
+      //password 1
+      const password = e.target.value;
+
+      //ë¹„ë°€ë²ˆí˜¸ ì •ê·œì‹ ê²€ì‚¬
+      // ê¸¸ì´ê²€ì‚¬
+      if(!/^.{8,20}$/.test(password)){
+        e.target.style.border = "2px solid red";
+        document.querySelector("#pswd1Valid").innerHTML = "ë¹„ë°€ë²ˆí˜¸ëŠ” íŠ¹ìˆ˜ë¬¸ì, ì˜ë¬¸ì, ìˆ«ì 8~20ìë¦¬ ì´ì—¬ì•¼ í•©ë‹ˆë‹¤.";
+        pw1Check = false;
+        return;
+      }
+      // íŠ¹ìˆ˜ë¬¸ì í¬í•¨ì—¬ë¶€ !&/\*@
+      if(!/[!&/\\*@]/.test(password)){
+        e.target.style.border = "2px solid red";
+        document.querySelector("#pswd1Valid").innerHTML = "ë¹„ë°€ë²ˆí˜¸ëŠ” íŠ¹ìˆ˜ë¬¸ì, ì˜ë¬¸ì, ìˆ«ì 8~20ìë¦¬ ì´ì—¬ì•¼ í•©ë‹ˆë‹¤.";
+        pw1Check = false;
+        return;
+      }
+      // ìˆ«ì í¬í•¨ì—¬ë¶€
+      if(!/\d/.test(password)){
+        e.target.style.border = "2px solid red";
+        document.querySelector("#pswd1Valid").innerHTML = "ë¹„ë°€ë²ˆí˜¸ëŠ” íŠ¹ìˆ˜ë¬¸ì, ì˜ë¬¸ì, ìˆ«ì 8~20ìë¦¬ ì´ì—¬ì•¼ í•©ë‹ˆë‹¤.";
+        pw1Check = false;
+        return;
+      }
+      // ì˜ë¬¸ì í¬í•¨ì—¬ë¶€
+      if(!/[a-z]/i.test(password)){
+        e.target.style.border = "2px solid red";
+        document.querySelector("#pswd1Valid").innerHTML = "ë¹„ë°€ë²ˆí˜¸ëŠ” íŠ¹ìˆ˜ë¬¸ì, ì˜ë¬¸ì, ìˆ«ì 8~20ìë¦¬ ì´ì—¬ì•¼ í•©ë‹ˆë‹¤.";
+        pw1Check = false;
+        return;
+      }
+
+      e.target.style.border = "1px solid black";
+      document.querySelector("#pswd1Valid").innerHTML = "";
+      pw1Check = true;
+     });
+     document.querySelector("#pswd2").addEventListener('blur',(e)=>{
+      //password 2
+      const password2 = e.target.value;
+      if(pw1Check != true){
+        pw2Check = false;
+        return;
+      }
+      const password1 = document.querySelector("#pswd1").value;
+      console.log(password1);
+      console.log(password2);
+
+      // ë‘ ë¹„ë°€ë²ˆí˜¸ê°€ ê°™ì§€ ì•Šìœ¼ë©´
+      if(password1 != password2){
+        e.target.style.border = "2px solid red";
+        document.querySelector("#pswd1").style.border = "2px solid red";
+        document.querySelector("#pswd2Valid").innerHTML = "ì…ë ¥í•˜ì‹  ë‘ ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.";
+        pw2Check = false;
+        return;
+      }
+      // ì •ìƒ ë¡œì§
+      document.querySelector("#pswd1").style.border = "1px solid black";
+      document.querySelector("#pswd2").style.border = "1px solid black";
+      document.querySelector("#pswd2Valid").innerHTML = "";
+      pw2Check = true;
+
+     });
+
+     document.querySelector("#name").addEventListener('blur',(e)=>{
+      // íšŒì› ì´ë¦„ validation
+      const name = e.target.value;
+      if(name == ""){
+        document.querySelector("#name").style.border = "2px solid red";
+        document.querySelector("#nameValid").innerHTML = "ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”.";
+        nameCheck = false;
+        return;
+      }
+      document.querySelector("#name").style.border = "1px solid black";
+      document.querySelector("#nameValid").innerHTML = "";
+      nameCheck = true;
+     });
+
+     document.querySelector("#storeName").addEventListener('blur',(e)=>{
+      // ìƒì  ì´ë¦„ validation
+      const storeName = e.target.value;
+      if(storeName == ""){
+        document.querySelector("#storeName").style.border = "2px solid red";
+        document.querySelector("#storeValid").innerHTML = "ìƒì  ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”.";
+        storeCheck = false;
+        return;
+      }
+      //ìƒì  ì´ë¦„ ì¤‘ë³µë¶ˆê°€
+      $.ajax({
+        url:"<%=request.getContextPath()%>/member/store-check",
+        method:"POST",
+        data:{
+          storeName : storeName
+        },
+        success(response){
+        	console.log(response);
+          if(response === "true"){
+             document.querySelector("#storeName").style.border = "1px solid black";
+             document.querySelector("#storeValid").innerHTML = "";
+             storeCheck = true;
+          }else{
+            document.querySelector("#storeName").style.border = "2px solid red";
+            document.querySelector("#storeValid").innerHTML = "ì´ë¯¸ ì‚¬ìš©ì¤‘ì¸ ìƒì  ì´ë¦„ì…ë‹ˆë‹¤.";
+            storeCheck = false;
+          }
+        },
+        error:console.log
+      });
+     });
+
+     document.querySelector("#region").addEventListener('change',(e)=>{
+      // ë™ë„¤ validation
+      const place = e.target.value;
+      console.log(place);
+
+      if(place == ""){
+        placeCheck = false;
+        return;
+      }
+      placeCheck = true;
+     });
+
+     document.memberEnrollFrm.onsubmit = () =>{
+      if(!idCheck || !pw1Check || !pw2Check || !placeCheck || !nameCheck || !storeCheck){
+        alert("ëª¨ë“  ì…ë ¥ë€ì„ í™•ì¸í•´ì£¼ì„¸ìš”.");
+        return false;
+      }
+     }
+  </script>
 </html>
-<script>
-
-var result = "<%= result %>";
-var isCheckedUsername = false;
-
-function check(){
-	
-	var id = $('#id').val();
-	
-	console.log("od :", id);
-	
-	$.ajax({
-		type: 'get',
-		url: '/meshop/member/check?id=' + id
-	}).done(function(result){
-   	 	console.log(result);
-   	 	if(result==1){
-			alert("¾ÆÀÌµğ°¡ Áßº¹µÇ¾ú½À´Ï´Ù.");
-   	 	}else if(result==0){
-			alert("»ç¿ëÇÏ½Ç ¼ö ÀÖ´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
-			isCheckedUsername=true;		
-   	   	}else{
-			console.log('develop : ¼­¹ö ¿À·ù');
-   	   	}
- 	}).fail(function(error){
-   	 	console.log(error);
-
- 	});
-}
-
-// null check
-document.joinFrm.onsubmit = (e) => {
-	const frm = e.target;
-	// ¾ÆÀÌµğ
-	if(!/^.+$/.test(frm.id.value.trim())) {
-		alert("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
-		frm.id.select();
-		return false;
-	}
-	
-	// ÆĞ½º¿öµå
-	if(!/^.+$/.test(frm.password.value.trim())) {
-		alert("ÆĞ½º¿öµå¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
-		frm.password.select();
-		return false;
-	}
-
-	// ÆĞ½º¿öµå È®ÀÎ
-	if(!/^.+$/.test(frm.password2.value.trim())) {
-		alert("ÆĞ½º¿öµå È®ÀÎÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
-		frm.password2.select();
-		return false;
-	}
-
-	// ÀÌ¸§ 
-	if(!(frm.name.value)) {
-		alert("ÀÌ¸§À» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
-		frm.name.select();
-		return false;
-	}
-	
-	// »óÁ¡ ÀÌ¸§ 
-	if(!(frm.storeName.value)) {
-		alert("»óÁ¡ÀÌ¸§À» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
-		frm.storeName.select();
-		return false;
-	}
-	
-	if(!(frm.password2.value == frm.password.value)) {
-		alert("ºñ¹Ğ¹øÈ£ °ªÀÌ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
-		frm.password.select();
-		return false;
-	}
-	
-	
-}
-
-</script>
