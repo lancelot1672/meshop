@@ -33,6 +33,11 @@
 .room-content>span{
     margin-top: 5px;
     padding-left: 20px;
+    
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .chat-store-name {
 

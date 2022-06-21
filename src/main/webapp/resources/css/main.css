@@ -221,7 +221,7 @@ body {
 }
 .item>img {
     width: 100%;
-    height: 80%;
+    height: 275px;
     background-color : rgb(244, 244, 244);
     border-radius: 10px;
 }

@@ -1,10 +1,12 @@
 <%@ page import="com.meshop.member.entity.Member" %>
 <%@ page import="com.meshop.member.entity.MemberRole" %>
+<%@page import="java.text.*"%>
 <%@page import="java.util.List"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <% 
+	DecimalFormat df = new DecimalFormat("###,###");
 	Member loginMember = (Member) session.getAttribute("loginMember");
 	
 	List<Integer> wishList = null;
