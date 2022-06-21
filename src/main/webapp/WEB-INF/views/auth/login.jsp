@@ -1,74 +1,51 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
 
 <%
-
-String result =(String) request.getAttribute("result");
-
+	String result =(String) request.getAttribute("result");
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>·Î±×ÀÎ</title>
+<meta charset="UTF-8">
+<title>ë¡œê·¸ì¸</title>
  <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/login.css">
 </head>
 <body>
-<!-- ·Î±×ÀÎÆû ½ÃÀÛ -->
-<<<<<<< HEAD
+<!-- ë¡œê·¸ì¸í¼ ì‹œìž‘ -->
  <div id="header">
-       <img src="<%=request.getContextPath() %>/resources/images/me_shop_logo.png" id="logo"/>
+       <img src="<%=request.getContextPath() %>/resources/images/logo.png" id="logo"/>
     </div>
 
 
  <div class="login-wrapper">
       <div class="login_content">
-       <form id="loginFrm" name="loginFrm" method="POST" action="<%= request.getContextPath() %>/member/login">
+       <form id="loginFrm" name="loginFrm" method="POST" action="<%= request.getContextPath() %>/login">
         <div>
           <h3 class="login_title">
-            <label for="id">¾ÆÀÌµð</label>
+            <label for="id">ì•„ì´ë””</label>
           </h3>
-            <input type="text"  name="id" id="id" placeholder="¾ÆÀÌµð"/>
+            <input type="text"  name="memberId" id="id" placeholder="ì•„ì´ë””"/>
         </div>
         
         <div>
-          <h3 class="login_title"><label for="pswd1">ºñ¹Ð¹øÈ£</label></h3>
-            <input type="password" name="password" id="password" placeholder="ºñ¹Ð¹øÈ£" />
+          <h3 class="login_title"><label for="pswd1">ë¹„ë°€ë²ˆí˜¸</label></h3>
+            <input type="password" name="password" id="password" placeholder="ë¹„ë°€ë²ˆí˜¸" />
         </div>
 
         <div class="login_btn_area">
-          <input type="submit" value="·Î±×ÀÎ">
+          <input type="submit" value="ë¡œê·¸ì¸">
         </div>
       </form>
         <div class="service">
-          <a href="<%= request.getContextPath() %>/meshop/member/join"><span>È¸¿ø°¡ÀÔ</span></a>
+          <a href="<%= request.getContextPath() %>/member/join"><span>íšŒì›ê°€ìž…</span></a>
           <span>|</span>
-          <span>¾ÆÀÌµð Ã£±â</span>
+          <span>ì•„ì´ë”” ì°¾ê¸°</span>
           <span>|</span>
-           <a href="<%= request.getContextPath() %>/member/find/pw"><span>ºñ¹Ð¹øÈ£ Ã£±â</span></a>
+           <a href="<%= request.getContextPath() %>/member/find/pw"><span>ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°</span></a>
         </div>
       </div>
     </div>
   </body>
 </html>
-
-
-
-
-=======
-<form id="loginFrm" name="loginFrm" method="POST" action="<%= request.getContextPath() %>/login">
-	<table>
-		<tr>
-			<td><input type="text" name="memberId" id="memberId" placeholder="¾ÆÀÌµð" tabindex="1"></td>
-			<td><input type="submit" value="·Î±×ÀÎ" tabindex="3"></td>
-		</tr>
-		<tr>
-			<td><input type="password" name="password" id="password" placeholder="ºñ¹Ð¹øÈ£" tabindex="2"></td>
-			<td></td>
-		</tr>
-	</table>
-</form>
-</body>
-</html>
->>>>>>> branch 'master' of https://github.com/lancelot1672/meshop.git

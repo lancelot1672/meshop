@@ -35,11 +35,11 @@ public class Member {
 	public String toString() {
 		return "Member [memberId=" + memberId + ", password=" + password + ", memberName=" + memberName + ", storeName="
 				+ storeName + ", storeGrade=" + storeGrade + ", joinDate=" + joinDate + ", place=" + place
-				+ ", memberRole=" + memberRole + ", wish=" + wish + "]";
+				+ ", memberRole=" + memberRole + "]";
 	}
 
 	public Member(String memberId, String password, String memberName, String storeName, int storeGrade, Date joinDate,
-			String place, MemberRole memberRole, List<Integer> wish) {
+			String place, MemberRole memberRole) {
 		super();
 		this.memberId = memberId;
 		this.password = password;
@@ -49,7 +49,6 @@ public class Member {
 		this.joinDate = joinDate;
 		this.place = place;
 		this.memberRole = memberRole;
-		this.wish = wish;
 	}
 
 	public String getMemberId() {

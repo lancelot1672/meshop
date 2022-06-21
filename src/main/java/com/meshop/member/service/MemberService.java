@@ -10,13 +10,14 @@ public interface MemberService {
 
 	int insertMember(Member member);	
 	
-	int findMember(Member member);
+	Member findMember(Member member);
 	
 	String findId(String name);
 	
 	String findPw(String id);
 	
-	int duplCheck(String id);
+	boolean duplCheck(String id);
+	boolean storeDuplCheck(String storeName);
 	
 	List<Member> findAllMember();
 }
