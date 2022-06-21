@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.meshop.member.entity.Member;
+import com.meshop.member.exception.MemberException;
 import com.meshop.member.service.MemberService;
 import com.meshop.member.service.MemberServiceImpl;
 import com.meshop.wish.service.WishService;
@@ -35,41 +36,34 @@ public class MemberLoginServlet extends HttpServlet{
 			throws ServletException, IOException {
 		try {
 
-			String memberId = request.getParameter("id");
+			String memberId = request.getParameter("memberId");
 			String password = request.getParameter("password");
 
 			Member member = new Member();
 			member.setMemberId(memberId);
 			member.setPassword(password);
+				
+			System.out.println("memberId : " + memberId);
+			System.out.println("password : " + password);
 
+			Member findMember = null;
 			MemberService memberService = new MemberServiceImpl();
-			int result = memberService.findMember(member);
+			findMember = memberService.findMember(member);
 
-			// 로그인 했을 때 찜 목록 가져오기
-			WishService wishService = new WishServiceImpl();
-			List<Integer> wishList = wishService.findByMemberId(memberId);
-			member.setWish(wishList);
+			if(findMember != null) {
+				// 로그인 했을 때 찜 목록 가져오기
+				WishService wishService = new WishServiceImpl();
+				List<Integer> wishList = wishService.findByMemberId(memberId);
+				findMember.setWish(wishList);
 
-			HttpSession session = request.getSession();
+				HttpSession session = request.getSession();
 
-			session.setAttribute("loginMember", member);
-
-			request.setAttribute("result", result);
-
-			if (result != 0) {
-				response.sendRedirect(request.getContextPath() + "/main");
-			} else {
-				PrintWriter out = response.getWriter();
-				response.setContentType("text/html; charset=EUC-KR");
-				response.setCharacterEncoding("EUC-KR");
-				out.println("<script type=\"text/javascript\">");
-				out.println("alert('아이디 혹은 비밀번호가 틀렸습니다.');");
-				out.println("location='/meshop/member/login';");
-				out.println("</script>");
+				session.setAttribute("loginMember", findMember);
+				
+				response.sendRedirect(request.getContextPath() +"/main");
+			}else {
+				throw new MemberException("아이디 및 비밀번호 확인");
 			}
-
-//        RequestDispatcher reqDispatcher = request.getRequestDispatcher(request.getContextPath() + "/main");
-//        reqDispatcher.forward(request, response);
 
 		} catch (Exception e) {
 			e.printStackTrace();

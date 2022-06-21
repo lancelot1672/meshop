@@ -38,19 +38,18 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public int findMember(Member member) {
-		int result = 0;
+	public Member findMember(Member member) {
+		Member m = null;
+		//한명의 멤버를 찾는다.
 		Connection conn = getConnection();
 		try {
-			result = memberDAO.findMember(conn, member);
-			commit(conn);
+			m = memberDAO.findMember(conn, member);
 		} catch(Exception e) {
-			rollback(conn);
 			throw e;
 		} finally {
 			close(conn);
 		}
-		return result;
+		return m;
 	}
 
 	@Override

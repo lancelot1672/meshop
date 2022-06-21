@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.meshop.member.entity.Member;
+import com.meshop.member.entity.MemberRole;
 import com.meshop.member.exception.MemberException;
 import com.meshop.product.dao.ProductDAOImpl;
 
@@ -59,34 +60,40 @@ public class MemberDAO {
 	}
 
 	// Login
-	public int findMember(Connection conn, Member member) {
+	public Member findMember(Connection conn, Member member) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		Member m = new Member();
+		
+		//select * from member where member_id = ? and password = ?
 		String sql = properties.getProperty("findMember");
-		int no = 0;
+		System.out.println(sql);
+		System.out.println(member);
+		
 		try {
-			
-			System.out.println("member :" +  member );
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,member.getMemberId());
 			pstmt.setString(2, member.getPassword());
 			
 			rset = pstmt.executeQuery();
-			
-			if (rset.next()) {
-				no = rset.getInt(1);
+			while(rset.next()) {
+				m.setMemberId(rset.getString("member_id"));
+				m.setPassword(rset.getString("password"));
+				m.setMemberName(rset.getString("member_name"));
+				m.setStoreName(rset.getString("store_name"));
+				m.setStoreGrade(rset.getInt("store_grade"));
+				m.setJoinDate(rset.getDate("join_date"));
+				m.setPlace(rset.getString("place"));
+				m.setMemberRole(MemberRole.valueOf(rset.getString("member_role")));
 			}
-			
-			System.out.println("no : " + no);
-			
-			
 		} catch (SQLException e) {
 			throw new MemberException("로그인 과정 중에 오류가 발생하였습니다.", e);
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		return no;
+		System.out.println(m);
+		return m;
 	}
 
 	
