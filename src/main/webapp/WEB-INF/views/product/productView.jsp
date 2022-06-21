@@ -12,36 +12,12 @@
 <section id="headerr">
     <section id="imgSection">
     	<div class="productImg" style="background-image: url('<%= request.getContextPath() %>/images/<%= product.getAttachment().getRenamedFilename() %>'); background-size: cover;">
-        	<input type="radio" name="slide" id="slide1">
-        
+        	<input type="radio" name="slide" id="slide">
 	        <div class="bullets">
-	        	<label for="slide1">&nbsp;</label>
+	        	<label for="slide">&nbsp;</label>
 	        </div>
         </div>
     </section>
-<%-- 	<%
-		if(attachList != null && !attachList.isEmpty()) {
-			for(int i = 0; i < attachList.size(); i++) {
-	%>
-        <div class="productImg" style="backgorund-image: url('<%= request.getContextPath() %>/images/<%= attachList.get(i).getRenamedFilename() %>')">
-        	<input type="radio" name="slide" id="slide<%= i+1 %>" <% if(i==0) { %> checked <% } %>>
-        </div>
-    <%
-    		}
-    	}
-    %>
-        <div class="bullets">
-        <%
-     		if(attachList != null && !attachList.isEmpty()) {
-     			for(int i = 0; i < attachList.size(); i++) {
-     	%>
-     		<label for="slide<%= i+1 %>">&nbsp;</label>
-     	<%
-     			}
-     		}
-     	%>
-        </div>
-    </section> --%>
     <section id="infoSection">
         <div class="view-brand"><%= product.getBrand() %></div>
         <div class="view-title"><%= product.getStatus() == ProductStatus.N ? "[새상품] " : ""%><%= product.getTitle() %></div>
@@ -53,7 +29,6 @@
             <button id="wishBtn">
                 <span id="ht">♥</span>
                 <span id="ft">&nbsp;찜&nbsp;</span>
-                <span id="ct">120</span>
             </button>
             <button id="buyBtn">구매하기</button>
         </div>

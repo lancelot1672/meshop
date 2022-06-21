@@ -45,7 +45,6 @@
                 <select name="viewCondition" id="viewCondition">
                     <option value="orderByDay" selected>최신순&nbsp;&nbsp;</option>
                     <option value="orderByPrice">가격순</option>
-                    <option value="orderByView">조회순</option>
                 </select>
             </div>
         </section>
@@ -100,6 +99,27 @@
     </section>
 </main>
 <script>
+// 새 상품, 내 동네 toggle
+document.querySelectorAll('#listSection-toggle input').forEach((input) => {
+	input.addEventListener('change', (e) => {
+		console.log(e.target.name);
+		$.ajax({
+			url:"<%=request.getContextPath() %>/product/productSortToggle",
+            data:{
+            	<% if(loginMember != null) %>
+            		place : <%= loginMember.getPlace() %>,
+                statusToggle : statusToggle.checked,
+                placeToggle : placeToggle.checked
+            },
+            method : "GET",
+            success(response){
+            	console.log("성공");
+            },
+            error:console.log
+		})
+	});
+});
+
 document.querySelectorAll('#categoryToggle span').forEach((span) => {
     span.addEventListener('click', () => {
         if(categorySection.classList.contains('on')) {
@@ -157,10 +177,6 @@ const wishBtnEvent = (e, productId, memberId) =>{
         });
     }
 }
-
-/* document.querySelectorAll('.date').forEach((date) => {
-	new Date()
-}); */
 
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

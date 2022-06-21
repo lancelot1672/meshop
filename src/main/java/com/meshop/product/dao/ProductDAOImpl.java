@@ -95,13 +95,11 @@ public class ProductDAOImpl implements ProductDAO{
 		String sql = properties.getProperty("insertProduct");
 		try {
 			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, product.getMemberId());
-			pstmt.setString(1, "qwer");
+			pstmt.setString(1, product.getMemberId());
 			pstmt.setString(2, product.getTitle());
 			pstmt.setString(3, product.getContent());
 			pstmt.setString(4, product.getCategory());
-//			pstmt.setString(5, product.getPlace());
-			pstmt.setString(5, "마포구");
+			pstmt.setString(5, product.getPlace());
 			pstmt.setString(6, String.valueOf(product.getStatus()));
 			pstmt.setInt(7, product.getPrice());
 			pstmt.setString(8, product.getBrand());
