@@ -33,9 +33,10 @@ public class MemberDAO {
         System.out.println("filename = " + filename);
 	}
 
-	
+	//회원가입
 	public int insertMember(Connection conn, Member member) {
 		PreparedStatement pstmt = null;
+		//insertMember = insert into member(member_id, password, member_name, store_name, place, member_role) values(?, ?, ?, ?, ?, ?)
 		String sql = properties.getProperty("insertMember");
 		int result = 0;
 		try {
@@ -58,7 +59,6 @@ public class MemberDAO {
 	}
 
 	// Login
-	
 	public int findMember(Connection conn, Member member) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -133,23 +133,27 @@ public class MemberDAO {
 
 	
 	
-	public int duplCheck(Connection conn, String memberId) {
+	public boolean duplCheck(Connection conn, String memberId) {
 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		int result = 0;
+		String sql = properties.getProperty("memberIdDuplCheck");
 		try {
-			String sql = properties.getProperty("findDuplCheck");
+			
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberId);
 		
 			rset = pstmt.executeQuery();
 			
-			if (rset.next()) {
-				result = rset.getInt(1);
+			rset.next();
+			int dupl_check = rset.getInt("dupl_check");
+			
+			if(dupl_check == 1) {
+				return false;
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new MemberException("오류가 발생하였습니다.", e);
@@ -157,9 +161,36 @@ public class MemberDAO {
 			close(rset);
 			close(pstmt);
 		}
-		return result;
+		return true;
 	}
+	public boolean storeDuplCheck(Connection conn, String storeName) {
 
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = properties.getProperty("storeDuplCheck");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, storeName);
+		
+			rset = pstmt.executeQuery();
+			
+			rset.next();
+			int dupl_check = rset.getInt("dupl_check");
+			
+			if(dupl_check == 1) {
+				return false;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new MemberException("오류가 발생하였습니다.", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return true;
+	}
 	public List<Member> findAllMember(Connection conn){
 		//모든 멤버 정보 가져오기
 		

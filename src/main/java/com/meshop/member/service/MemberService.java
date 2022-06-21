@@ -16,7 +16,8 @@ public interface MemberService {
 	
 	String findPw(String id);
 	
-	int duplCheck(String id);
+	boolean duplCheck(String id);
+	boolean storeDuplCheck(String storeName);
 	
 	List<Member> findAllMember();
 }

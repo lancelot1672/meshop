@@ -26,37 +26,32 @@ public class MemberJoinServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			
-			request.setCharacterEncoding("EUC-KR");
-			response.setContentType("text/html; charset=EUC-KR");
-			
-			String memberId = request.getParameter("id");
-			String password = request.getParameter("password");
-			String name =  request.getParameter("name");
-			String storeName =  request.getParameter("storeName");
-			String place =  request.getParameter("place");
-			
-			Member member = new Member();
-			
-			member.setMemberId(memberId);
-			member.setPassword(password);
-			member.setMemberName(name);
-			member.setStoreName(storeName);
-			member.setPlace(place);
-			member.setMemberRole(MemberRole.U);
-			
-			MemberService memberService = new MemberServiceImpl();
-			
-			memberService.insertMember(member);
-			
-			HttpSession session = request.getSession();
-			
-			session.setAttribute("loginMember", member);
-			
-			response.sendRedirect(request.getContextPath() +"/main");
+		// 1. 사용자 입력값
+		String memberId = request.getParameter("memberId");
+		String password = request.getParameter("password");
+		String memberName =  request.getParameter("memberName");
+		String storeName =  request.getParameter("storeName");
+		String place =  request.getParameter("region");
 		
+		Member member = new Member();
+		
+		member.setMemberId(memberId);
+		member.setPassword(password);
+		member.setMemberName(memberName);
+		member.setStoreName(storeName);
+		member.setPlace(place);
+		member.setMemberRole(MemberRole.U);
+		
+		System.out.println(member);
+		
+		// 2. DB 로직
+		MemberService memberService = new MemberServiceImpl();
+		memberService.insertMember(member);
+		
+		response.sendRedirect(request.getContextPath() +"/main");
 		}catch(Exception e) {
-			e.printStackTrace();
+			// 예외던지기 - 톰캣에 통보
+			throw e;
 		}
 	}
 }
