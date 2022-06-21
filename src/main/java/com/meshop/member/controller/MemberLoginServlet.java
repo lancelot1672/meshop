@@ -50,7 +50,7 @@ public class MemberLoginServlet extends HttpServlet{
 			MemberService memberService = new MemberServiceImpl();
 			findMember = memberService.findMember(member);
 
-			if(findMember != null) {
+			if(findMember.getMemberId() != null && memberId.equals(findMember.getMemberId()) && password.equals(findMember.getPassword())) {
 				// 로그인 했을 때 찜 목록 가져오기
 				WishService wishService = new WishServiceImpl();
 				List<Integer> wishList = wishService.findByMemberId(memberId);
@@ -62,7 +62,9 @@ public class MemberLoginServlet extends HttpServlet{
 				
 				response.sendRedirect(request.getContextPath() +"/main");
 			}else {
-				throw new MemberException("아이디 및 비밀번호 확인");
+				response.setCharacterEncoding("utf-8");
+				response.setContentType("text/html; charset=utf-8");
+				response.getWriter().print("<script>alert('아이디 및 비밀번호 확인'); history.back();</script>");
 			}
 
 		} catch (Exception e) {
