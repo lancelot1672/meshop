@@ -10,7 +10,7 @@ public interface MemberService {
 
 	int insertMember(Member member);	
 	
-	int findMember(Member member);
+	Member findMember(Member member);
 	
 	String findId(String name);
 	
