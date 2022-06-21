@@ -13,7 +13,7 @@ String result = (String)request.getAttribute("result");
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
   <body>
-    <div id="header"><img src="<%=request.getContextPath() %>/resources/images/logo.png" id="logo"/></div>
+    <div id="header"><img onclick="location.href='<%= request.getContextPath() %>/main'" src="<%=request.getContextPath() %>/resources/images/logo.png" id="logo"/></div>
 
     <div class="join_wrapper">
       <div class="join_content">

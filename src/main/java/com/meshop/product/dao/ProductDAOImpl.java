@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.meshop.member.entity.Member;
 import com.meshop.product.entity.Attachment;
 import com.meshop.product.entity.ProductExt;
 import com.meshop.product.entity.ProductStatus;
@@ -94,13 +95,11 @@ public class ProductDAOImpl implements ProductDAO{
 		String sql = properties.getProperty("insertProduct");
 		try {
 			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, product.getMemberId());
-			pstmt.setString(1, "qwer");
+			pstmt.setString(1, product.getMemberId());
 			pstmt.setString(2, product.getTitle());
 			pstmt.setString(3, product.getContent());
 			pstmt.setString(4, product.getCategory());
-//			pstmt.setString(5, product.getPlace());
-			pstmt.setString(5, "마포구");
+			pstmt.setString(5, product.getPlace());
 			pstmt.setString(6, String.valueOf(product.getStatus()));
 			pstmt.setInt(7, product.getPrice());
 			pstmt.setString(8, product.getBrand());
@@ -181,7 +180,7 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 	
 	@Override
-	public List<ProductExt> findAllOrderBy(Connection conn, Map<String, Integer> param, String sort) {
+	public List<ProductExt> findAllOrderBy(Connection conn, Map<String, Object> param, String sort) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<ProductExt> productList = new ArrayList<>();
@@ -191,8 +190,8 @@ public class ProductDAOImpl implements ProductDAO{
 			// 오름차순, 내림차순
 			sort = "price".equals(sort) ? sort : sort + " desc";
 			pstmt.setString(1, sort);
-			pstmt.setInt(2, param.get("start"));
-			pstmt.setInt(3, param.get("end"));
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				ProductExt product = handleProductExtResultSet(rset);
@@ -219,6 +218,7 @@ public class ProductDAOImpl implements ProductDAO{
 		product.setBrand(rset.getString("brand"));
 		product.setPlace(rset.getString("place"));
 		product.setRegDate(rset.getDate("reg_date"));
+		product.setContent(rset.getString("content"));
 		product.setStatus(ProductStatus.valueOf(rset.getString("status")));
 		
 		Attachment attach = new Attachment();
@@ -250,6 +250,65 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 	
 	@Override
+	public int getStatusPlaceTotalProducts(Connection conn, String place) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalProducts = 0;
+		String sql = properties.getProperty("getStatusPlaceTotalProducts");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, place);
+			rset = pstmt.executeQuery();
+			if(rset.next()) totalProducts = rset.getInt(1);
+		} catch(SQLException e) {
+			throw new ProductException("전체 상품수 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalProducts;
+	}
+	
+	@Override
+	public int getStatusTotalProducts(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalProducts = 0;
+		String sql = properties.getProperty("getStatusTotalProducts");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) totalProducts = rset.getInt(1);
+		} catch(SQLException e) {
+			throw new ProductException("전체 상품수 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalProducts;
+	}
+	
+	@Override
+	public int getPlaceTotalProducts(Connection conn, String place) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalProducts = 0;
+		String sql = properties.getProperty("getPlaceTotalProducts");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, place);
+			rset = pstmt.executeQuery();
+			if(rset.next()) totalProducts = rset.getInt(1);
+		} catch(SQLException e) {
+			throw new ProductException("전체 상품수 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalProducts;
+	}
+	
+	@Override
 	public ProductExt findOneByProductId(Connection conn, int productId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -259,11 +318,100 @@ public class ProductDAOImpl implements ProductDAO{
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, productId);
 			rset = pstmt.executeQuery();
-			if(rset.next()) product = handleProductExtResultSet(rset);
+			if(rset.next()) {
+				product = handleProductExtResultSet(rset);
+				Member member = new Member();
+				member.setMemberId(rset.getString("member_id"));
+				member.setStoreName(rset.getString("store_name"));
+				product.setMember(member);
+			}
 		} catch(SQLException e) {
 			close(rset);
 			close(pstmt);
 		}
 		return product;
+	}
+	
+	@Override
+	public List<ProductExt> findByStatusPlace(Connection conn, Map<String, Object> param, String sort) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<ProductExt> productList = new ArrayList<>();
+		String sql = properties.getProperty("findByStatusPlace");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			// 오름차순, 내림차순
+			sort = "price".equals(sort) ? sort : sort + " desc";
+			pstmt.setString(1, sort);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			pstmt.setString(4, (String) param.get("place"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				ProductExt product = handleProductExtResultSet(rset);
+        		productList.add(product);
+			}
+		} catch(SQLException e) {
+			throw new ProductException("새 상품, 내 동네 게시글 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return productList;
+	}
+
+	@Override
+	public List<ProductExt> findByStatus(Connection conn, Map<String, Object> param, String sort) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<ProductExt> productList = new ArrayList<>();
+		String sql = properties.getProperty("findByStatus");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			// 오름차순, 내림차순
+			sort = "price".equals(sort) ? sort : sort + " desc";
+			pstmt.setString(1, sort);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				ProductExt product = handleProductExtResultSet(rset);
+        		productList.add(product);
+			}
+		} catch(SQLException e) {
+			throw new ProductException("새 상품 게시글 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return productList;
+	}
+	
+	@Override
+	public List<ProductExt> findByPlace(Connection conn, Map<String, Object> param, String sort) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<ProductExt> productList = new ArrayList<>();
+		String sql = properties.getProperty("findByPlace");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			// 오름차순, 내림차순
+			sort = "price".equals(sort) ? sort : sort + " desc";
+			pstmt.setString(1, sort);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			pstmt.setString(4, (String) param.get("place"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				ProductExt product = handleProductExtResultSet(rset);
+        		productList.add(product);
+			}
+		} catch(SQLException e) {
+			throw new ProductException("내 동네 게시글 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return productList;
 	}
 }

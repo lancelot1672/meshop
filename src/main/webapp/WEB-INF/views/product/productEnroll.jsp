@@ -95,6 +95,19 @@
     </div>
 </form>
 <script>
+document.querySelector('.attachments input').addEventListener('change', (e1) => {
+	if(e1.target.files && e1.target.files[0]) {
+		const reader = new FileReader();
+		reader.readAsDataURL(e1.target.files[0]);
+		reader.onload = function(e) {
+			console.log(e.target);
+			document.querySelector('.attachments label').style.backgroundImage = `url('\${e.target.result}')`;
+			document.querySelector('.attachments label').style.backgroundSize = "cover";
+		};
+	} else {
+		document.querySelector('.attachments label').style.backgroundImage = "";
+	}
+});
 // 판매글, 구매글 첨부파일 영역 구분
 document.querySelectorAll('.boardType input').forEach((input) => {
     input.addEventListener('click', (e) => {
@@ -110,6 +123,7 @@ document.querySelectorAll('.boardType input').forEach((input) => {
 });
 
 // 유효성 검사
+
 document.productEnrollFrm.onsubmit = (e) => {
 	const frm = e.target;
 	// 제목

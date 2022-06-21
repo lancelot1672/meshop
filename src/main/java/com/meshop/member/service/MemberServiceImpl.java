@@ -121,6 +121,22 @@ public class MemberServiceImpl implements MemberService {
 		close(conn);
 		return list;
 	}
+
+	@Override
+	public int updateMember(Member member) {
+		int result = 0;
+		Connection conn = getConnection();
+		try {
+			memberDAO.updateMember(conn, member);
+			commit(conn);
+		}catch(Exception e) {
+			rollback(conn);
+			throw e;
+		}finally {
+			close(conn);
+		}
+		return 0;
+	}
 	
 
 }

@@ -78,13 +78,13 @@
             //response => List
             response.forEach((member)=>{
                 //구조 분해 할당
-                const {memberId, memberName, StoreName, store_grade, boardCount, joinDate} = member;
+                const {memberId, memberName, storeName, storeGrade, BoardCount, joinDate} = member;
                 let tr = "<tr>";
                     tr += `<td>\${memberId}</td>`;
-                    tr += `<td>\${StoreName}</td>`;
+                    tr += `<td>\${storeName}</td>`;
                     tr += `<td>\${memberName}</td>`;
-                    tr += `<td>\${boardCount}</td>`;
-                    tr += `<td>\${store_grade}</td>`;
+                    tr += `<td>\${BoardCount}</td>`;
+                    tr += `<td>\${storeGrade}</td>`;
                     tr += `<td>\${joinDate}</td>`;
                     tr += "</tr>";
                 html += tr;

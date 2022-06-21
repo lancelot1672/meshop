@@ -7,7 +7,6 @@
 <% 
 	List<ProductExt> list = (List<ProductExt>) request.getAttribute("productList");
 	String pagebar = (String) request.getAttribute("pagebar");
-	int numPerPage = (int) request.getAttribute("numPerPage");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/productList.css">
 <main>
@@ -46,7 +45,6 @@
                 <select name="viewCondition" id="viewCondition">
                     <option value="orderByDay" selected>최신순&nbsp;&nbsp;</option>
                     <option value="orderByPrice">가격순</option>
-                    <option value="orderByView">조회순</option>
                 </select>
             </div>
         </section>
@@ -73,12 +71,12 @@
 
 						</div>
 						<div class="productInfo">
-	    					<div class="brand"><%= list.get(index).getBrand() %></div>
-							<div class="title"><%= list.get(index).getStatus() == ProductStatus.N ? "[새상품]" : "" %> <%= list.get(index).getTitle() %></div>
-							<div class="price"><%= list.get(index).getPrice() %>원</div>
-							<div class="other">
-	    						<span class="place">서울시 <%= list.get(index).getPlace() %></span>
-								<span class="date"><%= list.get(index).getRegDate() %></span>
+	    					<div class="list-brand"><%= list.get(index).getBrand() %></div>
+							<div class="list-title"><%= list.get(index).getStatus() == ProductStatus.N ? "[새상품]" : "" %> <%= list.get(index).getTitle() %></div>
+							<div class="list-price"><%= list.get(index).getPrice() %>원</div>
+							<div class="list-other">
+	    						<span class="list-place">서울시 <%= list.get(index).getPlace() %></span>
+								<span class="list-date"><%= list.get(index).getRegDate() %></span>
 	             			</div>
 	         			</div>
      				</a>
@@ -101,6 +99,35 @@
     </section>
 </main>
 <script>
+// 새 상품, 내 동네 toggle
+document.querySelectorAll('#listSection-toggle input').forEach((input) => {
+	input.addEventListener('change', (e) => {
+	<%
+		if(loginMember != null) {
+	%>
+		$.ajax({
+			url:"<%=request.getContextPath() %>/product/productSortToggle",
+            data:{
+            	place : "<%= loginMember.getPlace() %>",
+                statusToggle : statusToggle.checked,
+                placeToggle : placeToggle.checked
+            },
+            method : "GET",
+            success(response){
+            	for(let i = 0; i < response.length; i++) {
+            		
+            	}
+            },
+            error:console.log
+		})
+	<% } else { %>
+		alert('로그인이 필요합니다.');
+		e.target.checked = '';
+	<%	} %>
+	});
+
+});
+
 document.querySelectorAll('#categoryToggle span').forEach((span) => {
     span.addEventListener('click', () => {
         if(categorySection.classList.contains('on')) {
@@ -157,11 +184,7 @@ const wishBtnEvent = (e, productId, memberId) =>{
             error:console.log
         });
     }
-}
-
-/* document.querySelectorAll('.date').forEach((date) => {
-	new Date()
-}); */
+};
 
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

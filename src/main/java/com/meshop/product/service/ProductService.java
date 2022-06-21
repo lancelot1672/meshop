@@ -16,7 +16,19 @@ public interface ProductService {
 	
 	// product List
 	int NUM_PER_PAGE = 16;
-	List<ProductExt> findAllOrderBy(Map<String, Integer> param, String sort);
+	List<ProductExt> findAllOrderBy(Map<String, Object> param, String sort);
 
 	ProductExt findOneByProductId(int productId);
+
+	List<ProductExt> findByStatusPlace(Map<String, Object> param, String sort);
+
+	List<ProductExt> findByStatus(Map<String, Object> param, String sort);
+
+	List<ProductExt> findByPlace(Map<String, Object> param, String sort);
+
+	int getStatusPlaceTotalProducts(String place);
+
+	int getStatusTotalProducts();
+
+	int getPlaceTotalProducts(String place);
 }
