@@ -1,12 +1,10 @@
 <%@page import="java.util.List"%>
-<%@page import="java.text.*"%>
 <%@page import="com.meshop.product.entity.*"%>
 <%@page import="com.meshop.member.entity.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%
 	List<ProductExt> list = (List<ProductExt>) request.getAttribute("productList");
-	DecimalFormat df = new DecimalFormat("###,###");
 %>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<!-- 바디 -->
@@ -31,7 +29,7 @@
             <% }else{ %>
             	<button class="wish-btn" onclick="location.href='<%=request.getContextPath() %>/login';"><i class="fa-regular fa-heart"></i></button>
             <% } %>
-                <a class="item-inner" href="<%=request.getContextPath()%>/product/productId=<%=product.getProductId() %>">
+                <a class="item-inner" href="<%=request.getContextPath()%>/product/productView?productId=<%=product.getProductId() %>">
                     <div class="item">
                         <img src="<%=request.getContextPath() %>/images/<%= product.getAttachment().getRenamedFilename() %>"/>
           		
@@ -52,7 +50,7 @@
             <%} %>
         </div>
         <div class="item-list">
-        <% for(int i=2; i<6; i++){ 
+        <% for(int i=3; i<7; i++){ 
         	ProductExt product = list.get(i);
         %>
             <div class="item-box">
@@ -63,7 +61,7 @@
             <% }else{ %>
             	<button class="wish-btn" onclick="location.href='<%=request.getContextPath() %>/login';"><i class="fa-regular fa-heart"></i></button>
             <% } %>
-                <a class="item-inner" href="<%=request.getContextPath()%>/product/productId=<%=product.getProductId() %>">
+                <a class="item-inner" href="<%=request.getContextPath()%>/product/productView?productId=<%=product.getProductId() %>">
                     <div class="item">
                         <img src="<%=request.getContextPath() %>/images/<%= product.getAttachment().getRenamedFilename() %>"/>
           		

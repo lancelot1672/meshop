@@ -1,6 +1,6 @@
 package com.meshop.chat.service;
 
-import static com.meshop.common.JdbcTemplate.close;
+import static com.meshop.common.JdbcTemplate.*;
 import static com.meshop.common.JdbcTemplate.getConnection;
 
 import java.sql.Connection;
@@ -57,6 +57,33 @@ public class ChatServiceImpl {
 			result = chatDAO.updateCheckStatus(conn, chatroomId);
 		}catch(Exception e) {
 			
+		}finally {
+			close(conn);
+		}
+		return result;
+	}
+	public boolean existChatroom(Chatroom c) {
+		Connection conn = getConnection();
+        boolean exist = false;
+        try {
+        	exist = chatDAO.existChatroom(conn, c);
+        	
+        }catch(Exception e) {
+			
+		}finally {
+			close(conn);
+		}
+        return exist;
+	}
+	public int insertChatroom(Chatroom c) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = chatDAO.insertChatroom(conn, c);
+			commit(conn);
+		}catch(Exception e) {
+			rollback(conn);
+			// 오류 던져야함...
 		}finally {
 			close(conn);
 		}

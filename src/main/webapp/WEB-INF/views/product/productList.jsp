@@ -7,6 +7,7 @@
 <% 
 	List<ProductExt> list = (List<ProductExt>) request.getAttribute("productList");
 	String pagebar = (String) request.getAttribute("pagebar");
+	
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/productList.css">
 <main>
@@ -73,7 +74,7 @@
 						<div class="productInfo">
 	    					<div class="list-brand"><%= list.get(index).getBrand() %></div>
 							<div class="list-title"><%= list.get(index).getStatus() == ProductStatus.N ? "[새상품]" : "" %> <%= list.get(index).getTitle() %></div>
-							<div class="list-price"><%= list.get(index).getPrice() %>원</div>
+							<div class="list-price"><%= df.format(list.get(index).getPrice()) %>원</div>
 							<div class="list-other">
 	    						<span class="list-place">서울시 <%= list.get(index).getPlace() %></span>
 								<span class="list-date"><%= list.get(index).getRegDate() %></span>

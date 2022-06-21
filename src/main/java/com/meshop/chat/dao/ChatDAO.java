@@ -1,6 +1,6 @@
 package com.meshop.chat.dao;
 
-import static com.meshop.common.JdbcTemplate.*;
+import static com.meshop.common.JdbcTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -154,6 +154,65 @@ public class ChatDAO {
         	close(pstmt);
         }
         
+        return result;
+	}
+	public boolean existChatroom(Connection conn, Chatroom c) {
+		//준비
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        
+        boolean exist = false;
+        //select count(*) as exist from chatroom where (seller_id=? and buyer_id=?) and product_id=?
+        String sql = properties.getProperty("existChatroom");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, c.getSellerId());
+			pstmt.setString(2, c.getBuyerId());
+			pstmt.setInt(3, c.getProductId());
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int count = rs.getInt("exist");
+				
+				if(count == 0) {
+					//채팅방이 존재하지 않음.
+					exist = false;
+				}else {
+					// 채팅방이 존재함.
+					exist = true;
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return exist;
+	}
+	public int insertChatroom(Connection conn, Chatroom c) {
+		//준비
+        PreparedStatement pstmt = null;
+        int result = 0;
+        // insert into chatroom values(seq_chat_no.nextval, ?, ?, ?, default, default)
+        String sql = properties.getProperty("insertChatroom");
+        System.out.println(sql);
+        
+        try {
+        	pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, c.getSellerId());
+			pstmt.setString(2, c.getBuyerId());
+			pstmt.setInt(3, c.getProductId());
+			
+			result = pstmt.executeUpdate();
+			
+        }catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(pstmt);
+		}
         return result;
 	}
 }

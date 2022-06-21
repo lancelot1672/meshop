@@ -321,6 +321,7 @@ public class ProductDAOImpl implements ProductDAO{
 			if(rset.next()) {
 				product = handleProductExtResultSet(rset);
 				Member member = new Member();
+				member.setMemberId(rset.getString("member_id"));
 				member.setStoreName(rset.getString("store_name"));
 				product.setMember(member);
 			}
