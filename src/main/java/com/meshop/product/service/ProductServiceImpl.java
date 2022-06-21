@@ -65,7 +65,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public List<ProductExt> findAllOrderBy(Map<String, Integer> param, String sort) {
+	public List<ProductExt> findAllOrderBy(Map<String, Object> param, String sort) {
 		Connection conn = getConnection();
 		List<ProductExt> productList = productDAO.findAllOrderBy(conn, param, sort);
 		close(conn);
@@ -81,6 +81,30 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
+	public int getStatusPlaceTotalProducts(String place) {
+		Connection conn = getConnection();
+		int totalProducts = productDAO.getStatusPlaceTotalProducts(conn, place);
+		close(conn);
+		return totalProducts;
+	}
+	
+	@Override
+	public int getStatusTotalProducts() {
+		Connection conn = getConnection();
+		int totalProducts = productDAO.getStatusTotalProducts(conn);
+		close(conn);
+		return totalProducts;
+	}
+	
+	@Override
+	public int getPlaceTotalProducts(String place) {
+		Connection conn = getConnection();
+		int totalProducts = productDAO.getPlaceTotalProducts(conn, place);
+		close(conn);
+		return totalProducts;
+	}
+	
+	@Override
 	public ProductExt findOneByProductId(int productId) {
 		Connection conn = getConnection();
 		ProductExt product = productDAO.findOneByProductId(conn, productId);
@@ -88,4 +112,27 @@ public class ProductServiceImpl implements ProductService{
 		return product;
 	}
 
+	@Override
+	public List<ProductExt> findByStatusPlace(Map<String, Object> param, String sort) {
+		Connection conn = getConnection();
+		List<ProductExt> productList = productDAO.findByStatusPlace(conn, param, sort);
+		close(conn);
+		return productList;
+	}
+
+	@Override
+	public List<ProductExt> findByStatus(Map<String, Object> param, String sort) {
+		Connection conn = getConnection();
+		List<ProductExt> productList = productDAO.findByStatus(conn, param, sort);
+		close(conn);
+		return productList;
+	}
+
+	@Override
+	public List<ProductExt> findByPlace(Map<String, Object> param, String sort) {
+		Connection conn = getConnection();
+		List<ProductExt> productList = productDAO.findByPlace(conn, param, sort);
+		close(conn);
+		return productList;
+	}
 }
