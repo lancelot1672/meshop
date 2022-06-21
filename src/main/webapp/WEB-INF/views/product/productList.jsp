@@ -102,22 +102,30 @@
 // 새 상품, 내 동네 toggle
 document.querySelectorAll('#listSection-toggle input').forEach((input) => {
 	input.addEventListener('change', (e) => {
-		console.log(e.target.name);
+	<%
+		if(loginMember != null) {
+	%>
 		$.ajax({
 			url:"<%=request.getContextPath() %>/product/productSortToggle",
             data:{
-            	<% if(loginMember != null) %>
-            		place : <%= loginMember.getPlace() %>,
+            	place : "<%= loginMember.getPlace() %>",
                 statusToggle : statusToggle.checked,
                 placeToggle : placeToggle.checked
             },
             method : "GET",
             success(response){
-            	console.log("성공");
+            	for(let i = 0; i < response.length; i++) {
+            		
+            	}
             },
             error:console.log
 		})
+	<% } else { %>
+		alert('로그인이 필요합니다.');
+		e.target.checked = '';
+	<%	} %>
 	});
+
 });
 
 document.querySelectorAll('#categoryToggle span').forEach((span) => {
@@ -176,7 +184,7 @@ const wishBtnEvent = (e, productId, memberId) =>{
             error:console.log
         });
     }
-}
+};
 
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

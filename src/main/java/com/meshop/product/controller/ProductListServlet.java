@@ -40,7 +40,7 @@ public class ProductListServlet extends HttpServlet {
 				// 예외발생시 현재페이지 1
 			}
 			
-			Map<String, Integer> param = new HashMap<>();
+			Map<String, Object> param = new HashMap<>();
 			int start = (cPage - 1) * numPerPage + 1;
 			int end = cPage * numPerPage;
 			param.put("start", start);
@@ -57,7 +57,6 @@ public class ProductListServlet extends HttpServlet {
 			
 			// 3. 뷰단 위임
 			request.setAttribute("productList", list);
-			request.setAttribute("numPerPage", numPerPage);
 			request.setAttribute("pagebar", pagebar);
 			request.getRequestDispatcher("/WEB-INF/views/product/productList.jsp").forward(request, response);
 		} catch(Exception e) {
