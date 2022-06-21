@@ -20,5 +20,7 @@ public interface MemberService {
 	boolean storeDuplCheck(String storeName);
 	
 	List<Member> findAllMember();
+	
+	int updateMember(Member member);
 }
 

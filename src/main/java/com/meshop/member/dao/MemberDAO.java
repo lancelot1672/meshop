@@ -230,4 +230,26 @@ public class MemberDAO {
 		}
 		return list;
 	}
+	public int updateMember(Connection conn, Member member) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		//update member set (store_name=?, password=?, place=?) where member_id = ?
+		String sql = properties.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getStoreName());
+			pstmt.setString(2, member.getPassword());
+			pstmt.setString(3, member.getPlace());
+			pstmt.setString(4, member.getMemberId());
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			throw new MemberException("회원정보 수정 오류", e);
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }
