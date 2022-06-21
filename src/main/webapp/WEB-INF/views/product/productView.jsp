@@ -30,7 +30,11 @@
                 <span id="ht">♥</span>
                 <span id="ft">&nbsp;찜&nbsp;</span>
             </button>
-            <button id="buyBtn">구매하기</button>
+            <% if(loginMember == null){ %>
+            	<button id="buyBtn" onclick="location.href='<%=request.getContextPath()%>/login';">구매하기</button>
+            <% }else{ %>
+            	<button id="buyBtn" onclick="addBtnEvent('<%=product.getProductId() %>','<%=product.getMember().getMemberId() %>','<%=loginMember.getMemberId()%>');">구매하기</button>
+            <% } %>
         </div>
         <div class="date-place">
             <div>등록일</div>
@@ -73,5 +77,35 @@ inputs.forEach((input) => {
         }
     });
 });
+const addBtnEvent = (productId, sellerId, buyerId)=>{
+	console.log(productId, sellerId, buyerId);
+	const form = document.createElement('form');
+	
+	const input1 = document.createElement('input');
+    input1.setAttribute('type', 'hidden');
+    input1.setAttribute('name', 'productId');
+    input1.setAttribute('value', productId);
+
+	form.appendChild(input1);
+	
+	const input2 = document.createElement('input');
+    input2.setAttribute('type', 'hidden');
+    input2.setAttribute('name', 'sellerId');
+    input2.setAttribute('value', sellerId);
+
+	form.appendChild(input2);
+	
+	const input3 = document.createElement('input');
+    input3.setAttribute('type', 'hidden');
+    input3.setAttribute('name', 'buyerId');
+    input3.setAttribute('value', buyerId);
+
+	form.appendChild(input3);
+	form.setAttribute('method', 'post');
+    form.setAttribute('action', '<%=request.getContextPath()%>/chat');
+
+	document.body.appendChild(form);
+    form.submit();
+};
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
