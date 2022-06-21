@@ -14,7 +14,7 @@
 </head>
 <body>
 <!-- 로그인폼 시작 -->
-    <div id="header"><img src="<%=request.getContextPath() %>/resources/images/logo.png" id="logo"/></div>
+    <div id="header"><img onclick="location.href='<%= request.getContextPath() %>/main'" src="<%=request.getContextPath() %>/resources/images/logo.png" id="logo"/></div>
   <div class="login-wrapper">
      <div class="login_content">
         <form class="loginFrm" name="loginFrm" action="<%=request.getContextPath() %>/login" method="post">
