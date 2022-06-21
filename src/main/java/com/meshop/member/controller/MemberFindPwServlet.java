@@ -36,14 +36,14 @@ public class MemberFindPwServlet extends HttpServlet{
 		System.out.println("result "+ result);
 		
 		if(result != null) {
-			request.setAttribute("loginError","Incorrect password");
-//			PrintWriter out = response.getWriter();
-//			response.setContentType("text/html; charset=EUC-KR");
-//			response.setCharacterEncoding("EUC-KR");
-//			out.println("<script type=\"text/javascript\">");
-//			out.println("alert("+ result + ");");
+//			request.setAttribute("loginError","Incorrect password");
+			PrintWriter out = response.getWriter();
+			response.setContentType("text/html; charset=EUC-KR");
+			response.setCharacterEncoding("EUC-KR");
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('"+ result + "');");
 //			out.println("location='/meshop/member/login';");
-//			out.println("</script>");
+			out.println("</script>");
 			
 		}
 		

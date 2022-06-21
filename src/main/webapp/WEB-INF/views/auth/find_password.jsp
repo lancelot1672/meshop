@@ -24,7 +24,7 @@
           </h3>
             <input type="text"  name="id" id="id" placeholder="아이디"/>
         </div>
-        
+     
         <div class="login_btn_area">
           <input type="submit" value="비밀번호 찾기">
         </div>
