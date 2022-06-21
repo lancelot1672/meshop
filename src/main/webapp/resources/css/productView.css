@@ -104,16 +104,17 @@
 	display: inline-block;
     border-style: none;
     border-radius: 5px;
-    width: 200px;
     height: 50px;
     cursor: pointer;
 }
-#wishBtn #ht{
+.wish-btn{
     font-size: 18px;
+    width: 100px;
 }
 #buyBtn {
     background-color: rgb(219, 217, 217);
     margin-left: 10px;
+    width: 300px;
 }
 .date-place div {
     padding: 0 10px 0 0;
@@ -143,4 +144,9 @@
     text-decoration: none;
     color: black;
     font-size: 20px;
+}
+
+.wish-btn {
+    /*버튼 크기*/
+    font-size: 15px;
 }

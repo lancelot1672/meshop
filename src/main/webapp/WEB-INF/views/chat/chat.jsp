@@ -79,10 +79,14 @@
         
         //textarea 값 가져오기
         const value = document.querySelector('#chat_area').value;
+        
 		//정규식 검사
 		if(!/^(.|\n)+$/.test(value)) return;
 		
-        console.log(value);
+		if(receiverId == "" || chatroom_id == ""){
+			alert("채팅 상대를 선택해주세요.");
+			return;
+		}
         
 		//msg 객체 생성
 		const msg = {
