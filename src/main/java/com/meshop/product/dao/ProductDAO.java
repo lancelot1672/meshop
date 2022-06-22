@@ -37,6 +37,6 @@ public interface ProductDAO {
 
 	int getPlaceTotalProducts(Connection conn, String place);
 
-	
+	List<ProductExt> findByMemberId(Connection conn, String memberId);
 	
 }
