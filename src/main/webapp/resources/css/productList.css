@@ -172,9 +172,17 @@ input[name=wishBtn] + label {
 	display: flex;
 	justify-content: center;
 }
-#pagebar span {
+#pagebar span, #pagebar a {
 	padding: 30px 10px;
 	font-size: 14px;
+}
+
+#pagebar span.cPage {
+	font-weight: bold;
+}
+#pagebar a {
+	text-decoration: none;
+	color: rgb(146, 146, 146);
 }
 
 /* 찜 */
