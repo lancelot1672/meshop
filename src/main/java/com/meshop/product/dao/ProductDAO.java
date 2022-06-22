@@ -21,21 +21,21 @@ public interface ProductDAO {
 	
 	int getTotalProducts(Connection conn);
 
-	List<ProductExt> findAllOrderBy(Connection conn, Map<String, Object> param, String sort);
+	List<ProductExt> findAllOrderBy(Connection conn, Map<String, Object> param);
 
 	ProductExt findOneByProductId(Connection conn, int productId);
 
-	List<ProductExt> findByStatusPlace(Connection conn, Map<String, Object> param, String sort);
+	List<ProductExt> findByStatusPlace(Connection conn, Map<String, Object> param);
 
-	List<ProductExt> findByStatus(Connection conn, Map<String, Object> param, String sort);
+	List<ProductExt> findByStatus(Connection conn, Map<String, Object> param);
 
-	List<ProductExt> findByPlace(Connection conn, Map<String, Object> param, String sort);
+	List<ProductExt> findByPlace(Connection conn, Map<String, Object> param);
 
-	int getStatusPlaceTotalProducts(Connection conn, String place);
+	int getStatusPlaceTotalProducts(Connection conn, Map<String, Object> param);
 
-	int getStatusTotalProducts(Connection conn);
+	int getStatusTotalProducts(Connection conn, Map<String, Object> param);
 
-	int getPlaceTotalProducts(Connection conn, String place);
+	int getPlaceTotalProducts(Connection conn, Map<String, Object> param);
 
 	List<ProductExt> findAllByCategory(Connection conn, Map<String, Object> param);
 

@@ -65,9 +65,9 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public List<ProductExt> findAllOrderBy(Map<String, Object> param, String sort) {
+	public List<ProductExt> findAllOrderBy(Map<String, Object> param) {
 		Connection conn = getConnection();
-		List<ProductExt> productList = productDAO.findAllOrderBy(conn, param, sort);
+		List<ProductExt> productList = productDAO.findAllOrderBy(conn, param);
 		close(conn);
 		return productList;
 	}
@@ -81,25 +81,25 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public int getStatusPlaceTotalProducts(String place) {
+	public int getStatusPlaceTotalProducts(Map<String, Object> param) {
 		Connection conn = getConnection();
-		int totalProducts = productDAO.getStatusPlaceTotalProducts(conn, place);
+		int totalProducts = productDAO.getStatusPlaceTotalProducts(conn, param);
 		close(conn);
 		return totalProducts;
 	}
 	
 	@Override
-	public int getStatusTotalProducts() {
+	public int getStatusTotalProducts(Map<String, Object> param) {
 		Connection conn = getConnection();
-		int totalProducts = productDAO.getStatusTotalProducts(conn);
+		int totalProducts = productDAO.getStatusTotalProducts(conn, param);
 		close(conn);
 		return totalProducts;
 	}
 	
 	@Override
-	public int getPlaceTotalProducts(String place) {
+	public int getPlaceTotalProducts(Map<String, Object> param) {
 		Connection conn = getConnection();
-		int totalProducts = productDAO.getPlaceTotalProducts(conn, place);
+		int totalProducts = productDAO.getPlaceTotalProducts(conn, param);
 		close(conn);
 		return totalProducts;
 	}
@@ -113,25 +113,25 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<ProductExt> findByStatusPlace(Map<String, Object> param, String sort) {
+	public List<ProductExt> findByStatusPlace(Map<String, Object> param) {
 		Connection conn = getConnection();
-		List<ProductExt> productList = productDAO.findByStatusPlace(conn, param, sort);
+		List<ProductExt> productList = productDAO.findByStatusPlace(conn, param);
 		close(conn);
 		return productList;
 	}
 
 	@Override
-	public List<ProductExt> findByStatus(Map<String, Object> param, String sort) {
+	public List<ProductExt> findByStatus(Map<String, Object> param) {
 		Connection conn = getConnection();
-		List<ProductExt> productList = productDAO.findByStatus(conn, param, sort);
+		List<ProductExt> productList = productDAO.findByStatus(conn, param);
 		close(conn);
 		return productList;
 	}
 
 	@Override
-	public List<ProductExt> findByPlace(Map<String, Object> param, String sort) {
+	public List<ProductExt> findByPlace(Map<String, Object> param) {
 		Connection conn = getConnection();
-		List<ProductExt> productList = productDAO.findByPlace(conn, param, sort);
+		List<ProductExt> productList = productDAO.findByPlace(conn, param);
 		close(conn);
 		return productList;
 	}

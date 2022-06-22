@@ -35,9 +35,12 @@ public class ProductSortToggleServlet extends HttpServlet {
 			boolean statusBool = Boolean.valueOf(request.getParameter("statusToggle"));
 			boolean placeBool = Boolean.valueOf(request.getParameter("placeToggle"));
 			
+			System.out.println("------place = " + place);
+			System.out.println(category);
+			System.out.println(statusBool);
+			System.out.println(placeBool);
+			
 			// 1. 사용자 입력값 처리
-			String sort = request.getParameter("sort");
-			sort = sort != null ? sort : "reg_date";
 			int numPerPage = productService.NUM_PER_PAGE;
 			int cPage = 1;
 			try {
@@ -57,23 +60,29 @@ public class ProductSortToggleServlet extends HttpServlet {
 			List<ProductExt> productList = null;
 			int totalProducts = 0;
 			if(statusBool && placeBool) {
-				productList = productService.findByStatusPlace(param, sort);
-				totalProducts = productService.getStatusPlaceTotalProducts(place);
-				
+				productList = productService.findByStatusPlace(param);
+				totalProducts = productService.getStatusPlaceTotalProducts(param);
 			}
 			else if(statusBool && !placeBool) {
-				productList = productService.findByStatus(param, sort);
-				totalProducts = productService.getStatusTotalProducts();
+				productList = productService.findByStatus(param);
+				totalProducts = productService.getStatusTotalProducts(param);
 			}
 			else if(!statusBool && placeBool) {
-				productList = productService.findByPlace(param, sort);
-				totalProducts = productService.getPlaceTotalProducts(place);
+				productList = productService.findByPlace(param);
+				totalProducts = productService.getPlaceTotalProducts(param);
 			}
 			else {
-				productList = productService.findAllOrderBy(param, sort);
-				totalProducts = productService.getTotalProducts();
+				if("null".equals(category)) {
+					System.out.println("hi");
+					productList = productService.findAllOrderBy(param);
+					totalProducts = productService.getTotalProducts();
+				} else {
+					productList = productService.findAllByCategory(param);
+					totalProducts = productService.getTotalProductsByCategory(category);
+				}
 			}
 			
+			System.out.println(productList + " " + productList.size());
 			// 페이지바
 			String url = request.getRequestURI();
 			String pagebar = MeshopUtils.getPagebar(cPage, numPerPage, totalProducts, url);

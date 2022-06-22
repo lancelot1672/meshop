@@ -16,21 +16,21 @@ public interface ProductService {
 	
 	// product List
 	int NUM_PER_PAGE = 12;
-	List<ProductExt> findAllOrderBy(Map<String, Object> param, String sort);
+	List<ProductExt> findAllOrderBy(Map<String, Object> param);
 
 	ProductExt findOneByProductId(int productId);
 
-	List<ProductExt> findByStatusPlace(Map<String, Object> param, String sort);
+	List<ProductExt> findByStatusPlace(Map<String, Object> param);
 
-	List<ProductExt> findByStatus(Map<String, Object> param, String sort);
+	List<ProductExt> findByStatus(Map<String, Object> param);
 
-	List<ProductExt> findByPlace(Map<String, Object> param, String sort);
+	List<ProductExt> findByPlace(Map<String, Object> param);
 
-	int getStatusPlaceTotalProducts(String place);
+	int getStatusPlaceTotalProducts(Map<String, Object> param);
 
-	int getStatusTotalProducts();
+	int getStatusTotalProducts(Map<String, Object> param);
 
-	int getPlaceTotalProducts(String place);
+	int getPlaceTotalProducts(Map<String, Object> param);
 
 	List<ProductExt> findAllByCategory(Map<String, Object> param);
 
