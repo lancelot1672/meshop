@@ -24,6 +24,7 @@
 .productImg {
     width: 400px; height: 400px;
     border-radius: 10px 10px;
+    background-color: rgb(244, 244, 244);
     padding: 0;
 }
 .bullets {
@@ -51,22 +52,6 @@
 .productImg input[type=radio]:nth-child(3):checked~.bullets>label:nth-child(3){
     background-color: #fff;
 }
-   
-/* .productImg input[type=radio]:nth-child(1):checked~ul.subMenuList>li:nth-child(1){
-    opacity: 1;
-    transition: 1s;
-    z-index: 1;
-}
-.productImg input[type=radio]:nth-child(2):checked~ul.subMenuList>li:nth-child(2){
-    opacity: 1;
-    transition: 1s;
-    z-index: 1;
-}
-.productImg input[type=radio]:nth-child(3):checked~ul.subMenuList>li:nth-child(3){
-    opacity: 1;
-    transition: 1s;
-    z-index: 1;
-} */
 
 /* infoSection */
 .view-brand {
@@ -104,7 +89,7 @@
 	display: inline-block;
     border-style: none;
     border-radius: 5px;
-    height: 50px;
+    width: 100px; height: 50px;
     cursor: pointer;
 }
 .wish-btn{

@@ -9,6 +9,7 @@
     </div>
     <div class="chat-section">
        <div class="chatroom-info">
+       	<input type=hidden id="storeName">
            <h3 class="chatroom-title"></h3>
            <span></span>
        </div>
@@ -39,12 +40,22 @@
 		const payload = JSON.parse(e.data);
 		
 		//구조분해 할당
-		const {type, senderId, receiverId, chat, time} = payload;
-		console.log(type, senderId, receiverId, chat);
+		const {type, senderId, receiverId, chatroomId, chat, time} = payload;
+		const storeName = document.querySelector('#storeName').value;
 		
 		// 후에 Session에 storename 넣으면 바꾸기
 		alert(`\{senderId} : \${chat}`);
 		
+		//현재 채팅방에 있으면 메시지 출력
+		if(document.querySelector('#chatroom_id').value == chatroomId){
+			const ul = document.querySelector('.chat-container ul');
+	        let html = `<li class="you"><p class="who">\${storeName} : </p><p class="message">\${chat}</p></li>`;
+	        ul.insertAdjacentHTML('beforeend',html);
+	        
+			// 스크롤해서 하단부 노출!
+			showRecentChat();
+		}
+
 		//채팅방 리스트 새로고침
 		getChatList(memberId);
 	};
@@ -157,15 +168,14 @@
         e.style.backgroundColor = "rgb(231, 231, 231)";
         
     	//채팅 내용 가져오기
-    	console.log(chatroomId);
     	document.querySelector('.chatroom-info h3').innerHTML = title;
     	document.querySelector('.chatroom-info span').innerHTML = storeName;
     	
     	//전송버튼 chatroomId, 상대방 아이디 매핑
     	document.querySelector('#chatroom_id').value = chatroomId;
     	document.querySelector('#opponent').value = opponent;
+    	document.querySelector('#storeName').value = storeName;
     	
-    	console.log(document.querySelector('#chatroom_id').value);
     	//채팅 내용 가져오기
         $.ajax({
             url : "<%=request.getContextPath() %>/chat/content",

@@ -73,7 +73,7 @@
 						</div>
 						<div class="productInfo">
 	    					<div class="list-brand"><%= list.get(index).getBrand() %></div>
-							<div class="list-title"><%= list.get(index).getStatus() == ProductStatus.N ? "[새상품]" : "" %> <%= list.get(index).getTitle() %></div>
+							<div class="list-title"><%= list.get(index).getStatus() == ProductStatus.N ? "[새상품] " : "" %> <%= list.get(index).getTitle() %></div>
 							<div class="list-price"><%= df.format(list.get(index).getPrice()) %>원</div>
 							<div class="list-other">
 	    						<span class="list-place">서울시 <%= list.get(index).getPlace() %></span>
@@ -115,12 +115,75 @@ document.querySelectorAll('#listSection-toggle input').forEach((input) => {
             },
             method : "GET",
             success(response){
-            	for(let i = 0; i < response.length; i++) {
+            	const listSection = document.querySelector('#listSection-list');
+            	listSection.innerHTML = "";
+            	let index = 0;
+            	if(response.list !== null && response.list.length !== 0) {
+	            	for(let i = 0; i < Math.ceil(response.list.length / 4); i++) {
+	            
+		            	const productSection = document.createElement('div');
+		            	productSection.classList.add('productSection');
             		
+		            	for(let j = 0; j < 4; j++) {
+		            		const productBox = document.createElement('div');
+		            		productBox.classList.add('productBox');
+		            		
+		            		const productLink = document.createElement('a');
+		            		productLink.classList.add('productLink');
+		            		productLink.href = `<%= request.getContextPath() %>/product/productView?productId=\${response.list[index].productId}`;
+		            		console.log(response.list[index]);
+		            		
+		            		const productImage = document.createElement('div');
+		            		productImage.classList.add('productImage');
+		            		productImage.style = `background-image: url('<%= request.getContextPath() %>/images/\${response.list[index].attachment.renamedFilename}'); background-size: cover;`;
+		            		console.log(response.list[index].attachment.renamedFilename);
+		            		
+			            	const productInfo = document.createElement('div');
+			            	productInfo.classList.add('list-productInfo');
+			            	
+			            	const brand = document.createElement('div');
+			            	brand.classList.add('list-brand');
+			            	brand.textContent = response.list[index].brand;
+			            	
+			            	const title = document.createElement('div');
+			            	title.classList.add('list-title');
+			            	
+			            	let status = '';
+			            	if(response.list[index].status === 'N') status = '[새상품] ';
+			            	title.textContent = status + response.list[index].title;
+			            	
+			            	const price = document.createElement('div');
+			            	price.classList.add('list-price');
+			            	price.textContent = fr(response.list[index].price) + "원";
+			            	
+			            	const other = document.createElement('div');
+			            	other.classList.add('list-other');
+			            	
+			            	const place = document.createElement('span');
+			            	place.classList.add('list-place');
+			            	place.textContent = "서울시 " + response.list[index].place;
+			            	
+			            	const date = document.createElement('span');
+			            	date.classList.add('list-date');
+			            	date.textContent = response.list[index].regDate;
+			            	
+			            	other.append(place, date);
+			            	productInfo.append(brand, title, price, other);
+			            	productLink.append(productImage, productInfo);
+			            	productBox.append(productLink);
+			            	productSection.append(productBox);
+			            	index++;
+			            	if(index === response.list.length) break;
+		            	}
+	            		listSection.append(productSection);
+            		}
             	}
+            	const pagebar = document.querySelector('#pagebar');
+            	pagebar.innerHTML = response.pagebar;
+            	console.log(response.pagebar);
             },
             error:console.log
-		})
+			});
 	<% } else { %>
 		alert('로그인이 필요합니다.');
 		e.target.checked = '';
@@ -128,6 +191,7 @@ document.querySelectorAll('#listSection-toggle input').forEach((input) => {
 	});
 
 });
+const fr = number => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 document.querySelectorAll('#categoryToggle span').forEach((span) => {
     span.addEventListener('click', () => {

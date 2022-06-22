@@ -22,7 +22,7 @@
         <div class="view-brand"><%= product.getBrand() %></div>
         <div class="view-title"><%= product.getStatus() == ProductStatus.N ? "[새상품] " : ""%><%= product.getTitle() %></div>
         <div class="view-price">
-            <div><%= product.getPrice() %>&nbsp;원</div>
+            <div><%= df.format(product.getPrice()) %>&nbsp;원</div>
             <button onclick="location.href=''">신고하기</button>
         </div>
         <div class="view-btn">
