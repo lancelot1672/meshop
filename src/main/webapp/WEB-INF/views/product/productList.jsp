@@ -115,7 +115,7 @@ document.querySelectorAll('#listSection-toggle input').forEach((input) => {
             },
             method : "GET",
             success(response){
-            	html
+            	console.log(response)
             },
             error:console.log
 		})
