@@ -1,5 +1,7 @@
 package com.meshop.mystore.dao;
 
-public class MyproductDao {
+import java.util.Properties;
 
+public class MyproductDao {
+	String class
 }
