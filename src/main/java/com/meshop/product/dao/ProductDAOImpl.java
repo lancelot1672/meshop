@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import com.meshop.member.entity.Member;
 import com.meshop.product.entity.Attachment;
+import com.meshop.product.entity.Product;
 import com.meshop.product.entity.ProductExt;
 import com.meshop.product.entity.ProductStatus;
 import com.meshop.product.exception.ProductException;
@@ -411,6 +412,51 @@ public class ProductDAOImpl implements ProductDAO{
 		} finally {
 			close(rset);
 			close(pstmt);
+		}
+		return productList;
+	}
+	@Override
+	public List<ProductExt> findByMemberId(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		
+		//select 문을 작성하려면 ResultSet (데이터를 가져오는 객체)
+		ResultSet rs = null;
+		
+		// 조회한 데이터를 담을 그릇
+		List<ProductExt> productList = new ArrayList<>();
+		
+		// select * from product where member_id = ? << 여기다 달라지는걸 넣을거임
+		String sql = properties.getProperty("findByMemberId");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			//>>>>>> select * from product where member_id = 'abcd'
+			//select * from product p, (select * from attachment where image_status = 'T') a where p.product_id = a.product_id and p.member_id = ?
+			//조회한 결과를 담는다.
+			rs = pstmt.executeQuery();
+			
+			//다음 데이터가 없을때 까지 돌린다.
+			while(rs.next()) {
+				ProductExt p = new ProductExt();
+				p.setProductId(rs.getInt("product_id"));
+				p.setTitle(rs.getString("title"));
+				p.setContent(rs.getString("content"));
+				p.setCategory(rs.getString("category"));
+				p.setBrand(rs.getString("brand"));
+				p.setRegDate(rs.getDate("reg_date"));
+				
+				//이미지 가져오는 코드
+        		Attachment attach = new Attachment();
+        		attach.setOriginalFilename(rs.getString("original_name"));
+        		attach.setRenamedFilename(rs.getString("renamed_name"));
+        		
+        		p.setAttachment(attach);
+        		
+        		productList.add(p);
+			}
+			
+		}catch(SQLException e) {
+			throw new ProductException("내 동네 게시글 조회 오류", e);
 		}
 		return productList;
 	}

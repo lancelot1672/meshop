@@ -174,11 +174,19 @@ body {
 }
 /* 배너 */
 .banner {
-    background-color: bisque;
+    background-color: rgb(255,242,204);
     height: 400px;
     padding-top: 250px;
+    display: flex;
 }
-
+.banner>.img-section{
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+}
+.img-section>img {
+    width:100%;
+}
 /*판매중인 상품 글*/
 .product_section_title {
     margin: 0 300px;

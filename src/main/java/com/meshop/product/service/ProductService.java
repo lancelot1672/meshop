@@ -31,4 +31,6 @@ public interface ProductService {
 	int getStatusTotalProducts();
 
 	int getPlaceTotalProducts(String place);
+	
+	List<ProductExt> findByMemberId(String memberId);
 }

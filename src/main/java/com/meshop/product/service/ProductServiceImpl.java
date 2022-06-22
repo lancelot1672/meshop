@@ -135,4 +135,15 @@ public class ProductServiceImpl implements ProductService{
 		close(conn);
 		return productList;
 	}
+
+	@Override
+	public List<ProductExt> findByMemberId(String memberId) {
+		Connection conn = getConnection();
+		
+		List<ProductExt> productList;
+		productList = productDAO.findByMemberId(conn, memberId);
+		close(conn);
+		
+		return productList;
+	}
 }

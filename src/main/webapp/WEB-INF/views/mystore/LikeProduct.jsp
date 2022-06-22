@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
-	List<>
+
 
 %>
 <title>찜상품 목록</title>
