@@ -31,4 +31,8 @@ public interface ProductService {
 	int getStatusTotalProducts();
 
 	int getPlaceTotalProducts(String place);
+
+	List<ProductExt> findAllByCategory(Map<String, Object> param);
+
+	int getTotalProductsByCategory(String category);
 }
