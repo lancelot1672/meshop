@@ -135,7 +135,23 @@ public class ProductServiceImpl implements ProductService{
 		close(conn);
 		return productList;
 	}
+	
+	@Override
+	public List<ProductExt> findAllByCategory(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<ProductExt> productList = productDAO.findAllByCategory(conn, param);
+		close(conn);
+		return productList;
+	}
 
+	@Override
+	public int getTotalProductsByCategory(String category) {
+		Connection conn = getConnection();
+		int totalProducts = productDAO.getTotalProductsByCategory(conn, category);
+		close(conn);
+		return totalProducts;
+	}
+	
 	@Override
 	public List<ProductExt> findByMemberId(String memberId) {
 		Connection conn = getConnection();

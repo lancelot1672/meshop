@@ -37,6 +37,12 @@ public interface ProductDAO {
 
 	int getPlaceTotalProducts(Connection conn, String place);
 
+	List<ProductExt> findAllByCategory(Connection conn, Map<String, Object> param);
+
+	int getTotalProductsByCategory(Connection conn, String category);
+
+	
 	List<ProductExt> findByMemberId(Connection conn, String memberId);
+
 	
 }

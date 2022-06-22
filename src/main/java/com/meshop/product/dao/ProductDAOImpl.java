@@ -415,6 +415,53 @@ public class ProductDAOImpl implements ProductDAO{
 		}
 		return productList;
 	}
+	
+	@Override
+	public List<ProductExt> findAllByCategory(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<ProductExt> productList = new ArrayList<>();
+		String sql = properties.getProperty("findAllByCategory");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			// 오름차순, 내림차순
+			pstmt.setString(1, (String) param.get("category"));
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				ProductExt product = handleProductExtResultSet(rset);
+        		productList.add(product);
+			}
+		} catch(SQLException e) {
+			throw new ProductException("카테고리 분류 상품 게시글 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return productList;
+	}
+	
+	@Override
+	public int getTotalProductsByCategory(Connection conn, String category) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalProducts = 0;
+		String sql = properties.getProperty("getTotalProductsByCategory");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			rset = pstmt.executeQuery();
+			if(rset.next()) totalProducts = rset.getInt(1);
+		} catch(SQLException e) {
+			throw new ProductException("카테고리 분류 상품수 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalProducts;
+	}
+	
 	@Override
 	public List<ProductExt> findByMemberId(Connection conn, String memberId) {
 		PreparedStatement pstmt = null;
