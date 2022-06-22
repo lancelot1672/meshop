@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
-	List<>
+	
 
 %>
 <title>내가 올린 상품</title>
@@ -16,11 +16,11 @@
 
     <nav class="myhomeContainer">
         <ul>
-            <li class="homeItem"><a href="myProduct.html">내가 올린글</a></li>
-            <li class="homeItem"><a href="likeProduct.html">찜한 상품</a> </li>
-            <li class="homeItem"><a href="resvProcuct.html">예약중인 상품</a></li>
-            <li class="homeItem"><a href="completeProcuct.html">거래 완료 상품</a></li>
-            <li class="homeItem"><a href="reviewProduct.html">상품 후기</a></li>
+            <li class="homeItem"><a href="myProduct.jsp">내가 올린글</a></li>
+            <li class="homeItem"><a href="likeProduct.jsp">찜한 상품</a> </li>
+            <li class="homeItem"><a href="resvProcuct.jsp">예약중인 상품</a></li>
+            <li class="homeItem"><a href="completeProcuct.jsp">거래 완료 상품</a></li>
+            <li class="homeItem"><a href="reviewProduct.jsp">상품 후기</a></li>
         </ul> 
     </nav>
 
