@@ -31,6 +31,7 @@ public class ProductSortToggleServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String place = request.getParameter("place");
+			String category = request.getParameter("category");
 			boolean statusBool = Boolean.valueOf(request.getParameter("statusToggle"));
 			boolean placeBool = Boolean.valueOf(request.getParameter("placeToggle"));
 			
@@ -51,6 +52,7 @@ public class ProductSortToggleServlet extends HttpServlet {
 			param.put("start", start);
 			param.put("end", end);
 			param.put("place", place);
+			param.put("category", category);
 			
 			List<ProductExt> productList = null;
 			int totalProducts = 0;

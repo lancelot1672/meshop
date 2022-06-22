@@ -35,4 +35,6 @@ public interface ProductService {
 	List<ProductExt> findAllByCategory(Map<String, Object> param);
 
 	int getTotalProductsByCategory(String category);
+	
+	List<ProductExt> findByMemberId(String memberId);
 }

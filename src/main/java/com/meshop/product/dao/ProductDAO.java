@@ -42,5 +42,7 @@ public interface ProductDAO {
 	int getTotalProductsByCategory(Connection conn, String category);
 
 	
+	List<ProductExt> findByMemberId(Connection conn, String memberId);
+
 	
 }

@@ -7,7 +7,8 @@
 <% 
 	List<ProductExt> list = (List<ProductExt>) request.getAttribute("productList");
 	String pagebar = (String) request.getAttribute("pagebar");
-	
+	String category = (String) request.getAttribute("category");
+	System.out.println(category);
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/productList.css">
 <main>
@@ -16,11 +17,11 @@
             <span>카테고리</span>
             <span id="add">+</span>
         </div>
-        <span class="categoryList">상의</span>
-        <span class="categoryList">하의</span>
-        <span class="categoryList">신발</span>
-        <span class="categoryList">잡화</span>
-        <span class="categoryList">럭셔리</span>
+        <span class="categoryList" id="top" onclick="location.href='<%= request.getContextPath() %>/product/productListByCategory?category=top'">상의</span>
+        <span class="categoryList" id="bottom" onclick="location.href='<%= request.getContextPath() %>/product/productListByCategory?category=bottom'">하의</span>
+        <span class="categoryList" id="shoes" onclick="location.href='<%= request.getContextPath() %>/product/productListByCategory?category=shoes'">신발</span>
+        <span class="categoryList" id="stuff" onclick="location.href='<%= request.getContextPath() %>/product/productListByCategory?category=stuff'">잡화</span>
+        <span class="categoryList" id="luxury" onclick="location.href='<%= request.getContextPath() %>/product/productListByCategory?category=luxury'">럭셔리</span>
     </section>
     <section id="listSection">
         <section id="listSection-toggle">
@@ -110,6 +111,7 @@ document.querySelectorAll('#listSection-toggle input').forEach((input) => {
 			url:"<%=request.getContextPath() %>/product/productSortToggle",
             data:{
             	place : "<%= loginMember.getPlace() %>",
+            	category : "<%= category %>",
                 statusToggle : statusToggle.checked,
                 placeToggle : placeToggle.checked
             },
@@ -131,12 +133,10 @@ document.querySelectorAll('#listSection-toggle input').forEach((input) => {
 		            		const productLink = document.createElement('a');
 		            		productLink.classList.add('productLink');
 		            		productLink.href = `<%= request.getContextPath() %>/product/productView?productId=\${response.list[index].productId}`;
-		            		console.log(response.list[index]);
 		            		
 		            		const productImage = document.createElement('div');
 		            		productImage.classList.add('productImage');
 		            		productImage.style = `background-image: url('<%= request.getContextPath() %>/images/\${response.list[index].attachment.renamedFilename}'); background-size: cover;`;
-		            		console.log(response.list[index].attachment.renamedFilename);
 		            		
 			            	const productInfo = document.createElement('div');
 			            	productInfo.classList.add('list-productInfo');
@@ -205,14 +205,16 @@ document.querySelectorAll('#categoryToggle span').forEach((span) => {
     })
 });
 
+<% if(category != null) { %>
+window.onload = () => {
+	categorySection.classList.add('on');
+	add.innerHTML = '-';
+}
 document.querySelectorAll('.categoryList').forEach((span) => {
-    span.addEventListener('click' , (e) => {
-        document.querySelectorAll('.categoryList').forEach((sp) => {
-            sp.style.fontWeight = "normal";
-        })
-        e.target.style.fontWeight = "bold";
-    });
+    if(span.id === "<%= category %>") span.style.fontWeight = "bold";
 });
+<% } %>
+
 
 const wishBtnEvent = (e, productId, memberId) =>{
 	if(e.innerHTML === '<i class="fa-regular fa-heart"></i>'){

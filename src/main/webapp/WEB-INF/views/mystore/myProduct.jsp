@@ -1,99 +1,103 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
 <meta charset="UTF-8">
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<title>내가 올린 상품</title>
  <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/mystore.css">
- <div class="header">
+ <div class="frame">
+ <div class="abcd">
         <h2><span class="material-symbols-outlined md-78">location_away</span> 님, 안녕하세요</h2>
     </div>
 
     <nav class="myhomeContainer">
         <ul>
-            <li class="homeItem"><a href="myProduct.html">내가 올린글</a></li>
-            <li class="homeItem"><a href="likeProduct.html">찜한 상품</a> </li>
-            <li class="homeItem"><a href="resvProcuct.html">예약중인 상품</a></li>
-            <li class="homeItem"><a href="completeProcuct.html">거래 완료 상품</a></li>
-            <li class="homeItem"><a href="reviewProduct.html">상품 후기</a></li>
+            <li class="homeItem"><a href="myProduct.jsp">내가 올린글</a></li>
+            <li class="homeItem"><a href="likeProduct.jsp">찜한 상품</a> </li>
+            <li class="homeItem"><a href="resvProcuct.jsp">예약중인 상품</a></li>
+            <li class="homeItem"><a href="completeProcuct.jsp">거래 완료 상품</a></li>
+            <li class="homeItem"><a href="reviewProduct.jsp">상품 후기</a></li>
         </ul> 
     </nav>
 
+    <!-- 테이블 구역 -->
     <div class="board_list_wrap">
      <table class="board_list" id="tblMyProduct">
          <caption>내가 올린 상품 목록</caption>
          <!-- 테이블에서 열의 너비를 정해주는 태그 -->
          <colgroup>
-            <col style="width: 25%">
-            <col style="width: 25%">
-            <col style="width: 25%">
-            <col style="width: 25%">
+            <col style="width: 20%">
+            <col style="width: 40%">
+            <col style="width: 20%">
+            <col style="width: 10%">
+            <col style="width: 10%">
         </colgroup>
-         <thead>
-             <tr>
-                <th>사진</th>
-                <th>제목</th>
-                <th>상품 상태</th>
-                <th> 수정 및 삭제</th>
-             </tr>
-         </thead>
+
          <tbody>                  
-             <tr>
-                <td><img class="my_img" src="../img/grizzly.jpg" alt="사진"></td>
-                <td><a href="#">제목 입력창 </a></td>
-                <td>
-                    <select name="reserv_complete" class="reserv_complete" id="reserv_complete">
-                        <option value="" selected hidden>선택</option>
-                        <option value="reserv" >예약</option>
-                        <option value="sucess">판매 완료</option>
-                    </select>        
-                </td>
-                <td>
-                    <button type="button">수정</button>
-                    <button type="button">삭제</button>
-                </td>
-             </tr>
          </tbody>
 
      </table>
     </div>
-
+    </div>
     <script>
-        function tblMyProduct(prop){
-            const imgSrc = prop.imgSrc;
-            const subject = prop.subject;
+    window.addEventListener('load',()=>{
+    	//페이지 온로드 이벤트
+    	
+       //헤더 높이 구하기
+       const header = document.querySelector('.header');
 
-            const elTblMyProduct = document.querySelector('#tblMyProduct');
-            const elTbodyMyProduct = elTblMyProduct.querySelector('tbody');
-            const elAddTr = document.createElement('tr');
-            let _innerHtml = '';
-            _innerHtml += `<td><img class="my_img" src="${imgSrc}" alt=""></td>`;
-            _innerHtml += `<td><a href="#">${subject}</a></td>`;
-            _innerHtml += `<td>`;
-            _innerHtml += `    <select name="reserv_complete" class="reserv_complete">`;
-            _innerHtml += `        <option value="" selected hidden>선택</option>`;
-            _innerHtml += `        <option value="ko" >예약</option>`;
-            _innerHtml += `        <option value="ch">판매 완료</option> `;
-            _innerHtml += `    </select>`;
-            _innerHtml += `</td>`;
-            _innerHtml += `<td>`;
-            _innerHtml += `    <button type="button">수정</button>`;
-            _innerHtml += `    <button type="button">삭제</button>`;
-            _innerHtml += `</td>`;
-        
-            elAddTr.innerHTML = _innerHtml;
-            elTbodyMyProduct.append(elAddTr);
-        }
-        
-        document.addEventListener('DOMContentLoaded', ()=>{
-
-            tblMyProduct({
-                imgSrc: '../img/grizzly.jpg',
-                subject: '곰돌잉'
-            });
-        });
-
+       //메인 컨텐츠의 padding top 높이 조절하기
+       const frame = document.querySelector('.abcd');
+       frame.style.paddingTop = `\${header.offsetHeight}px`;
+       
+   	// 내가 올린 상품 목록 조회하기
+       getMyProduct();
+    });
+    
+    const getMyProduct = () =>{
+    	// 내가 올린 상품 목록 조회하기
+    	const memberId = "<%=loginMember.getMemberId()%>";
+    	
+    	//테이블 가져오기
+    	const table = document.querySelector(".board_list tbody");
+    	$.ajax({
+    		method:"POST",
+    		url:"<%=request.getContextPath()%>/mystore/myProduct",
+    		data : {
+    			memberId : memberId
+    		},
+    		success(productList){
+    			console.log(productList);
+    			
+    			productList.forEach((product)=>{
+    				//product를 리스트에서 하나씩 가져옴
+    				
+    				//구조분해 할당 (객체 하나씩 값을 빼온다..)
+    				const {attachment, title, productId} = product;
+    				
+    				//첨부파일에서 img 파일 명 꺼내오기
+    				const {renamedFilename} = attachment; 
+    				
+    				//html코드를 작성해주시면 됩니다....
+    				const html = `
+    					<tr>
+    						<td><img class="my_img" src="<%=request.getContextPath()%>/images/\${renamedFilename}"></td>
+    						<td><a href="">\${title}</a></td>
+    		                <td>
+    	                    <select name="reserv_complete" class="reserv_complete" id="reserv_complete">
+    	                        <option value="" selected hidden>선택</option>
+    	                        <option value="reserv" >예약</option>
+    	                        <option value="sucess">판매 완료</option>
+    	                    </select>        
+    	                	</td>
+	    	                <td><a href="#">수정</a></td>
+	    	                <td><a href="#">삭제</a></td>
+	    	            </tr>
+    				`;
+    				// table tbody에 하나씩 tr을 넣어준다.
+    				table.insertAdjacentHTML('beforeend',html);
+    			});
+    		},
+    		error : console.log
+    	});
+    }
     </script>
-
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
