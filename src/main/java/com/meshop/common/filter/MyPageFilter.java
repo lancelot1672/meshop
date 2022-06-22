@@ -14,9 +14,10 @@ import javax.servlet.http.HttpSession;
 
 import com.meshop.member.entity.Member;
 import com.meshop.member.entity.MemberRole;
-@WebFilter(
-    "/mypage/*"
-)
+@WebFilter({
+    "/mypage/*",
+    "/mystore/*"
+})
 public class MyPageFilter implements Filter{
 
 	@Override
