@@ -4,6 +4,10 @@
 <html>
 <meta charset="UTF-8">
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%
+	List<>
+
+%>
 <title>내가 올린 상품</title>
  <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/mystore.css">
  <div class="header">
@@ -34,25 +38,15 @@
              <tr>
                 <th>사진</th>
                 <th>제목</th>
-                <th>상품 상태</th>
-                <th> 수정 및 삭제</th>
+                <th>내용</th>
+              
              </tr>
          </thead>
          <tbody>                  
              <tr>
                 <td><img class="my_img" src="../img/grizzly.jpg" alt="사진"></td>
-                <td><a href="#">제목 입력창 </a></td>
-                <td>
-                    <select name="reserv_complete" class="reserv_complete" id="reserv_complete">
-                        <option value="" selected hidden>선택</option>
-                        <option value="reserv" >예약</option>
-                        <option value="sucess">판매 완료</option>
-                    </select>        
-                </td>
-                <td>
-                    <button type="button">수정</button>
-                    <button type="button">삭제</button>
-                </td>
+                <td><a href="#"><%= product.getStatus() == ProductStatus.N ? "[새상품] " : "" %><%=product.getTitle() %> </a></td>
+                <td><a href="#"></a><%= product.getContent() %></td>
              </tr>
          </tbody>
 
@@ -63,6 +57,7 @@
         function tblMyProduct(prop){
             const imgSrc = prop.imgSrc;
             const subject = prop.subject;
+            const
 
             const elTblMyProduct = document.querySelector('#tblMyProduct');
             const elTbodyMyProduct = elTblMyProduct.querySelector('tbody');
@@ -71,16 +66,10 @@
             _innerHtml += `<td><img class="my_img" src="${imgSrc}" alt=""></td>`;
             _innerHtml += `<td><a href="#">${subject}</a></td>`;
             _innerHtml += `<td>`;
-            _innerHtml += `    <select name="reserv_complete" class="reserv_complete">`;
-            _innerHtml += `        <option value="" selected hidden>선택</option>`;
-            _innerHtml += `        <option value="ko" >예약</option>`;
-            _innerHtml += `        <option value="ch">판매 완료</option> `;
-            _innerHtml += `    </select>`;
+            _innerHtml += `<td><a href="#"></a><%= product.getContent() %></td>`;
+
             _innerHtml += `</td>`;
-            _innerHtml += `<td>`;
-            _innerHtml += `    <button type="button">수정</button>`;
-            _innerHtml += `    <button type="button">삭제</button>`;
-            _innerHtml += `</td>`;
+      
         
             elAddTr.innerHTML = _innerHtml;
             elTbodyMyProduct.append(elAddTr);
