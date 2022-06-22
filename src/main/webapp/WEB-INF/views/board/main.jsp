@@ -50,7 +50,7 @@
             <%} %>
         </div>
         <div class="item-list">
-        <% for(int i=3; i<7; i++){ 
+        <% for(int i=4; i<8; i++){ 
         	ProductExt product = list.get(i);
         %>
             <div class="item-box">
@@ -81,9 +81,6 @@
             </div>
             <%} %>
         </div>
-    </div>
-    <div class="btn-section">
-        <button class="btn-more">더보기</button>
     </div>
 	<script>
         window.addEventListener('load',()=>{

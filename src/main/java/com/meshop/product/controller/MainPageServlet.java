@@ -1,6 +1,7 @@
 package com.meshop.product.controller;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -22,6 +23,9 @@ public class MainPageServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1. 데이터 요청
 		List<ProductExt> list = productService.findAll();
+		
+		//productList random shuffle
+		Collections.shuffle(list);
 		
 		// 2. 뷰에 전달
 		request.setAttribute("productList", list);
