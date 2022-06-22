@@ -17,7 +17,7 @@
             <span id="add">+</span>
         </div>
         <span class="categoryList">상의</span>
-        <span class="categoryList">하의</span> 57
+        <span class="categoryList">하의</span>
         <span class="categoryList">신발</span>
         <span class="categoryList">잡화</span>
         <span class="categoryList">럭셔리</span>
