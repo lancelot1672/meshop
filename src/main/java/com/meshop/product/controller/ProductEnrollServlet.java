@@ -45,13 +45,13 @@ public class ProductEnrollServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// MultipartRequest 객체 생성
-			ServletContext application = getServletContext();
-			String saveDirectory = application.getRealPath("/") + "/images";
+			String saveDirectory = request.getServletContext().getRealPath("/images");
+			System.out.println("saveDirectory :: " + saveDirectory);
+			
 			int maxPostSize = 1024 * 1024 * 10;
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new MeshopFileRenamePolicy();
 			MultipartRequest multiReq = new MultipartRequest(request, saveDirectory, maxPostSize, encoding, policy);
-			
 			
 			// 1. 사용자 입력값 처리
 			String boardType = multiReq.getParameter("boardType");
