@@ -30,8 +30,6 @@ public class ProductListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// 1. 사용자 입력값 처리
-			String sort = request.getParameter("sort");
-			sort = sort != null ? sort : "reg_date";
 			int numPerPage = productService.NUM_PER_PAGE;
 			int cPage = 1;
 			try {
@@ -48,7 +46,7 @@ public class ProductListServlet extends HttpServlet {
 			
 			// 2. 업무 로직
 			// 컨텐츠 영역
-			List<ProductExt> list = productService.findAllOrderBy(param, sort);
+			List<ProductExt> list = productService.findAllOrderBy(param);
 			
 			// 페이지바 영역
 			int totalProducts = productService.getTotalProducts();
