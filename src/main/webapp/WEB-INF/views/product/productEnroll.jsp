@@ -18,7 +18,7 @@
             <tr id="first">
                 <th rowspan="2">상품 이미지</th>
                 <td class="attachments">
-                    <input type="file" name="productImage" id="productImage">
+                    <input type="file" name="productImage" id="productImage" accept="image/*">
                     <label for="productImage">
                     </label>
                 </td>
@@ -123,7 +123,6 @@ document.querySelectorAll('.boardType input').forEach((input) => {
 });
 
 // 유효성 검사
-
 document.productEnrollFrm.onsubmit = (e) => {
 	const frm = e.target;
 	// 제목
