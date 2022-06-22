@@ -5,7 +5,7 @@
  <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/mystore.css">
  <div class="frame">
  <div class="abcd">
-        <h2><span class="material-symbols-outlined md-78">location_away</span> 님, 안녕하세요</h2>
+        <h2><span class="material-symbols-outlined md-78">location_away</span> <%=loginMember.getStoreName() %>님, 안녕하세요</h2>
     </div>
 
     <nav class="myhomeContainer">
@@ -31,7 +31,7 @@
             <col style="width: 10%">
         </colgroup>
 
-         <tbody>                  
+         <tbody>               
          </tbody>
 
      </table>

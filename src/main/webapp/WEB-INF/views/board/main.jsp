@@ -9,7 +9,9 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<!-- 바디 -->
     <div class="banner">
-    <img src="<%= request.getContextPath() %>/resources/images/banner2.PNG">
+    	<div class="img-section">
+    	    <img src="<%= request.getContextPath() %>/resources/images/banner.PNG">
+    	</div>
     </div>
     <div class="product_section_title">
         <div class="section_title">

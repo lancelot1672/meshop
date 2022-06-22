@@ -334,29 +334,30 @@ table.board_list {
     border-collapse: collapse;
     text-align: center;
     line-height: 1.5;
-  
+  	margin-top : 30px;
   }
-  table.board_list thead th {
-    padding: 1px;
-    font-weight: bold;
-    vertical-align: top;
-  }
-  table.board_list tbody th {
-    width: 150px;
-    padding: 1px;
-    font-weight: center;
-    vertical-align: top;
-    background: #f3f6f7;
-  }
-  table.board_list td {
-    width: 350px;
-    padding: 10px;
-    vertical-align: center;
-  }
-
+table.board_list thead th {
+  padding: 1px;
+  font-weight: bold;
+  vertical-align: top;
+}
+table.board_list tbody th {
+  width: 150px;
+  padding: 1px;
+  font-weight: center;
+  vertical-align: top;
+  background: #f3f6f7;
+}
+table.board_list td {
+  width: 350px;
+  padding: 10px;
+  vertical-align: center;
+}
+table.board_list tr {
+	border-top: 1px solid rgb(216, 215, 215);
+	padding : 20px;
+}
   .frame {
-    border: 1px solid black;
-    height: 100%;
     margin: 0 400px;
   }
 .board_list_wrap{
@@ -375,7 +376,6 @@ table.board_list {
 
 .board_list td {
     text-align: center;
-    height: 150px;
     
 }
 
@@ -386,4 +386,7 @@ a {
 a:hover{
     color: gray;
     text-decoration: underline;
+}
+img {
+	height: 200px;
 }
