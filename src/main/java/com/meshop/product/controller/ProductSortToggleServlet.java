@@ -35,11 +35,6 @@ public class ProductSortToggleServlet extends HttpServlet {
 			boolean statusBool = Boolean.valueOf(request.getParameter("statusToggle"));
 			boolean placeBool = Boolean.valueOf(request.getParameter("placeToggle"));
 			
-			System.out.println("------place = " + place);
-			System.out.println(category);
-			System.out.println(statusBool);
-			System.out.println(placeBool);
-			
 			// 1. 사용자 입력값 처리
 			int numPerPage = productService.NUM_PER_PAGE;
 			int cPage = 1;
