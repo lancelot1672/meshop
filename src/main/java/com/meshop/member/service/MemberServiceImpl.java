@@ -84,11 +84,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public boolean duplCheck(String memberId) {
+	public boolean doubleCheck(String memberId) {
 		boolean result;
 		Connection conn = getConnection();
 		try {
-			result = memberDAO.duplCheck(conn, memberId);
+			result = memberDAO.doubleCheck(conn, memberId);
 		} catch(Exception e) {
 			throw e;
 		} finally {
@@ -98,11 +98,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public boolean storeDuplCheck(String storeName) {
+	public boolean storeDoubleCheck(String storeName) {
 		boolean result;
 		Connection conn = getConnection();
 		try {
-			result = memberDAO.storeDuplCheck(conn, storeName);
+			result = memberDAO.storeDoubleCheck(conn, storeName);
 		} catch(Exception e) {
 			throw e;
 		} finally {

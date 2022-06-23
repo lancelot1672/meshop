@@ -140,12 +140,12 @@ public class MemberDAO {
 
 	
 	
-	public boolean duplCheck(Connection conn, String memberId) {
+	public boolean doubleCheck(Connection conn, String memberId) {
 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = properties.getProperty("memberIdDuplCheck");
+		String sql = properties.getProperty("memberIdDoubleCheck");
 		try {
 			
 			
@@ -155,9 +155,9 @@ public class MemberDAO {
 			rset = pstmt.executeQuery();
 			
 			rset.next();
-			int dupl_check = rset.getInt("dupl_check");
+			int double_check = rset.getInt("double_check");
 			
-			if(dupl_check == 1) {
+			if(double_check == 1) {
 				return false;
 			}
 			
@@ -170,12 +170,12 @@ public class MemberDAO {
 		}
 		return true;
 	}
-	public boolean storeDuplCheck(Connection conn, String storeName) {
+	public boolean storeDoubleCheck(Connection conn, String storeName) {
 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = properties.getProperty("storeDuplCheck");
+		String sql = properties.getProperty("storeDoubleCheck");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, storeName);
@@ -183,9 +183,9 @@ public class MemberDAO {
 			rset = pstmt.executeQuery();
 			
 			rset.next();
-			int dupl_check = rset.getInt("dupl_check");
+			int double_check = rset.getInt("double_check");
 			
-			if(dupl_check == 1) {
+			if(double_check == 1) {
 				return false;
 			}
 			
