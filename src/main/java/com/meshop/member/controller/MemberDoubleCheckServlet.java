@@ -33,7 +33,7 @@ public class MemberDoubleCheckServlet extends HttpServlet{
 		member.setMemberId(memberId);
 		
 		MemberService memberService = new MemberServiceImpl();
-		boolean result = memberService.duplCheck(memberId);
+		boolean result = memberService.doubleCheck(memberId);
 		
 		// 3. view 전달
 		PrintWriter out = response.getWriter();

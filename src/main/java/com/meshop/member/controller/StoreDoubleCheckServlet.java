@@ -30,7 +30,7 @@ public class StoreDoubleCheckServlet extends HttpServlet{
 		
 		// 2. DB 로직
 		MemberService memberService = new MemberServiceImpl();
-		boolean result = memberService.storeDuplCheck(storeName);
+		boolean result = memberService.storeDoubleCheck(storeName);
 		
 		// 3. view 전달
 		PrintWriter out = response.getWriter();
