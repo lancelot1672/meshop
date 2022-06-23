@@ -18,7 +18,7 @@ import com.meshop.member.service.MemberServiceImpl;
 import com.meshop.wish.service.WishService;
 import com.meshop.wish.service.WishServiceImpl;
 
-@WebServlet(name="storeDuplecheckServlet", urlPatterns = "/member/store-check")
+@WebServlet(name="storeDoublecheckServlet", urlPatterns = "/member/store-check")
 public class StoreDoubleCheckServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
