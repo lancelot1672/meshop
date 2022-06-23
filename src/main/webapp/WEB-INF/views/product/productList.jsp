@@ -8,7 +8,6 @@
 	List<ProductExt> list = (List<ProductExt>) request.getAttribute("productList");
 	String pagebar = (String) request.getAttribute("pagebar");
 	String category = (String) request.getAttribute("category");
-	System.out.println(category);
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/productList.css">
 <main>
