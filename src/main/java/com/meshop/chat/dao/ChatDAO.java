@@ -39,7 +39,7 @@ public class ChatDAO {
         List<Message> messageList = new ArrayList<>();
         
         // SQL
-        //select * from chat where ((sender_id=? and receiver_id=?) or (sender_id=? and receiver_id=?)) and product_id = ?
+        // select * from chat where chatroom_id = ? order by send_date asc
         String sql = properties.getProperty("findChat");
         
         try {
