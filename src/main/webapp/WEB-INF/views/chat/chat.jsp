@@ -44,7 +44,7 @@
 		const storeName = document.querySelector('#storeName').value;
 		
 		// 후에 Session에 storename 넣으면 바꾸기
-		alert(`\{senderId} : \${chat}`);
+		alert(`\${storeName} : \${chat}`);
 		
 		//현재 채팅방에 있으면 메시지 출력
 		if(document.querySelector('#chatroom_id').value == chatroomId){
